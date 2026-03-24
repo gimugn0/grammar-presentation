@@ -5,391 +5,304 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Past Perfect & Past Perfect Continuous</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  :root {
-    --bg:        #f5f4ef;
-    --surface:   #ffffff;
-    --text:      #181818;
-    --muted:     #737373;
-    --accent:    #1d4ed8;
-    --accent-bg: #eff6ff;
-    --border:    #e2e1db;
-    --green:     #15803d;
-    --green-bg:  #dcfce7;
-    --red:       #b91c1c;
-    --red-bg:    #fee2e2;
-    --tag-bg:    #eeeee9;
-    --pad-x:     72px;
-    --pad-top:   48px;
-    --body-top:  112px; /* subtitle bottom + gap */
-  }
+/* ═══════════════════════════════════════
+   1. FONT — system sans-serif, !important everywhere
+═══════════════════════════════════════ */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               Helvetica, Arial, sans-serif !important;
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ═══════════════════════════════════════
+   2. REVEAL BASE — kill centering
+═══════════════════════════════════════ */
+:root {
+  --bg:       #f5f4ef;
+  --surface:  #ffffff;
+  --text:     #181818;
+  --muted:    #6b6b6b;
+  --accent:   #1d4ed8;
+  --acbg:     #eff6ff;
+  --border:   #e2e1db;
+  --tagbg:    #eeede8;
+  --green:    #15803d;
+  --greenbg:  #dcfce7;
+  --red:      #b91c1c;
+  --redbg:    #fee2e2;
+  /* layout constants */
+  --px:       68px;   /* horizontal padding */
+  --tag-top:  44px;   /* subtitle pill from top */
+  --body-top: 108px;  /* content starts here */
+}
 
-  body { font-family: 'Outfit', sans-serif; background: var(--bg); }
+body { background: var(--bg); }
 
-  /* ═══ Reveal overrides ═══ */
-  .reveal { font-family: 'Outfit', sans-serif; }
+.reveal,
+.reveal .slides {
+  font-size: 16px !important;
+  color: var(--text) !important;
+  background: var(--bg) !important;
+  text-align: left !important;
+}
 
-  .reveal .slides {
-    text-align: left;
-  }
+/* 3. SECTION layout — padding-top pushes content below subtitle */
+.reveal .slides section {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  padding: var(--body-top) var(--px) 72px var(--px) !important;
+  text-align: left !important;
+  background: var(--bg) !important;
+  display: block !important;
+  overflow: hidden !important;
+}
 
-  /* All sections fill viewport, no centering */
-  .reveal .slides section {
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100vh !important;
-    padding: 0 !important;
-    background: var(--bg);
-    display: block !important;
-    overflow: hidden;
-  }
+/* ── Progress bar → TOP ── */
+.reveal .progress {
+  top: 0 !important; bottom: auto !important;
+  height: 3px !important;
+  background: var(--border) !important;
+  z-index: 1000;
+}
+.reveal .progress span {
+  background: var(--accent) !important;
+  transition: width 0.4s ease !important;
+}
 
-  /* ── Progress bar at TOP ── */
-  .reveal .progress {
-    top: 0 !important;
-    bottom: auto !important;
-    height: 3px !important;
-    background: var(--border) !important;
-    z-index: 1000;
-  }
-  .reveal .progress span {
-    background: var(--accent) !important;
-    transition: width 0.45s cubic-bezier(.4,0,.2,1) !important;
-  }
+/* hide default arrow controls */
+.reveal .controls { display: none !important; }
 
-  /* ── Hide default controls ── */
-  .reveal .controls { display: none !important; }
+/* ═══════════════════════════════════════
+   SUBTITLE PILL — position: absolute fixed
+═══════════════════════════════════════ */
+.s-tag {
+  position: absolute !important;
+  top: var(--tag-top) !important;
+  left: var(--px) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.13em !important;
+  text-transform: uppercase !important;
+  color: var(--accent) !important;
+  background: var(--acbg) !important;
+  padding: 5px 13px !important;
+  border-radius: 100px !important;
+  white-space: nowrap !important;
+  z-index: 20 !important;
+}
 
-  /* ════════════════════════════════
-     SLIDE ANATOMY
-     ════════════════════════════════ */
+/* ═══════════════════════════════════════
+   CONTENT WRAPPERS
+   — section padding-top already = var(--body-top)
+   — so everything inside just flows top-to-bottom
+═══════════════════════════════════════ */
+.s-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  justify-content: center;
+}
 
-  /* Fixed subtitle — same pixel position on every slide */
-  .s-tag {
-    position: absolute;
-    top: var(--pad-top);
-    left: var(--pad-x);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-bg);
-    padding: 5px 13px;
-    border-radius: 100px;
-    white-space: nowrap;
-    z-index: 10;
-  }
+/* ── TITLE SLIDE ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  /* override section padding for full height centering */
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  padding: 0 var(--px) !important;
+}
+.hero .eyebrow {
+  font-size: 11px !important; font-weight: 500 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 18px !important;
+}
+.hero h1 {
+  font-size: clamp(44px, 6.5vw, 72px) !important;
+  font-weight: 700 !important; line-height: 1.06 !important;
+  color: var(--text) !important; margin-bottom: 20px !important;
+  max-width: 820px !important;
+}
+.hero .tagline {
+  font-size: 20px !important; font-weight: 300 !important;
+  color: var(--muted) !important; margin-bottom: 48px !important;
+}
+.hero .presenter {
+  position: absolute !important;
+  bottom: 88px !important; left: var(--px) !important;
+  font-size: 12px !important; color: var(--muted) !important;
+}
+.hero .presenter span { color: var(--text) !important; font-weight: 600 !important; }
 
-  /* Body — starts at a fixed distance from top so it never shifts */
-  .s-body {
-    position: absolute;
-    top: var(--body-top);
-    left: var(--pad-x);
-    right: var(--pad-x);
-    bottom: 72px; /* leave room for nav bar */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 14px;
-  }
+/* ── INFO CARDS ── */
+.icard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  max-width: 860px;
+}
+.icard .lbl {
+  font-size: 10px !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 7px !important;
+}
+.icard .val {
+  font-size: 17px !important; line-height: 1.65 !important;
+  color: var(--text) !important;
+}
+.icard .val em {
+  font-style: normal !important; font-weight: 700 !important;
+  color: var(--accent) !important;
+}
+.icard .ex {
+  margin-top: 12px; padding: 12px 15px;
+  background: var(--tagbg); border-radius: 9px;
+  border-left: 3px solid var(--accent);
+}
+.icard .ex .en { font-size: 15px !important; font-weight: 500 !important; line-height: 1.6 !important; }
+.icard .ex .ko { font-size: 13px !important; color: var(--muted) !important; margin-top: 3px !important; }
 
-  /* ── Title slide ── */
-  .s-hero {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 var(--pad-x);
-  }
-  .s-hero .eyebrow {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
-  .s-hero h1 {
-    font-family: 'Lora', serif;
-    font-size: clamp(48px, 7vw, 76px);
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.06;
-    margin-bottom: 22px;
-    max-width: 820px;
-  }
-  .s-hero .tagline {
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--muted);
-    font-family: 'Lora', serif;
-    font-style: italic;
-    margin-bottom: 44px;
-  }
-  .s-hero .presenter {
-    position: absolute;
-    bottom: 84px; /* above nav bar */
-    left: var(--pad-x);
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 400;
-    letter-spacing: 0.03em;
-  }
-  .s-hero .presenter span { color: var(--text); font-weight: 500; }
+/* ── COMPARE GRID ── */
+.cgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 900px;
+}
+.ccard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.ccard .lbl {
+  font-size: 10px !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 5px !important;
+}
+.ccard .form {
+  font-size: 14px !important; font-weight: 700 !important;
+  color: var(--accent) !important; margin-bottom: 7px !important;
+}
+.ccard .desc {
+  font-size: 13px !important; color: var(--muted) !important;
+  line-height: 1.55 !important; margin-bottom: 10px !important;
+}
+.ccard .ex {
+  background: var(--tagbg); padding: 10px 12px;
+  border-radius: 8px; border-left: 3px solid var(--accent);
+}
+.ccard .ex .en { font-size: 13px !important; font-weight: 500 !important; line-height: 1.6 !important; }
+.ccard .ex .ko { font-size: 12px !important; color: var(--muted) !important; margin-top: 2px !important; }
 
-  /* ── TOC ── */
-  .toc-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 680px;
-  }
-  .toc-list li {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    font-size: 16px;
-    color: var(--text);
-  }
-  .toc-list li.grp {
-    background: var(--tag-bg);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-  }
-  .toc-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--accent-bg);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
+/* ── TOC ── */
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; max-width: 660px; }
+.toc-list li {
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 11px;
+  font-size: 15px !important; color: var(--text) !important;
+}
+.toc-list li.grp {
+  background: var(--tagbg);
+  font-size: 12px !important; font-weight: 600 !important; color: var(--muted) !important;
+}
+.toc-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--acbg); color: var(--accent) !important;
+  font-size: 11px !important; font-weight: 700 !important;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
 
-  /* ── Info cards ── */
-  .icard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 24px;
-    max-width: 860px;
-  }
-  .icard .lbl {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .icard .val {
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--text);
-  }
-  .icard .val em {
-    font-style: normal;
-    font-weight: 600;
-    color: var(--accent);
-  }
-  .icard .ex {
-    margin-top: 12px;
-    padding: 12px 16px;
-    background: var(--tag-bg);
-    border-radius: 9px;
-    border-left: 3px solid var(--accent);
-  }
-  .icard .ex .en { font-size: 15px; font-weight: 500; line-height: 1.6; }
-  .icard .ex .ko { font-size: 13px; color: var(--muted); margin-top: 3px; }
+/* ── VERDICT BADGES ── */
+.badge {
+  display: inline-block;
+  font-size: 10px !important; font-weight: 800 !important;
+  letter-spacing: 0.06em !important; text-transform: uppercase !important;
+  padding: 2px 7px; border-radius: 5px; margin-right: 6px;
+}
+.badge.ok { background: var(--greenbg); color: var(--green) !important; }
+.badge.no { background: var(--redbg);   color: var(--red)   !important; }
 
-  /* ── Compare grid ── */
-  .cgrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    max-width: 900px;
-  }
-  .ccard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 22px;
-  }
-  .ccard .lbl {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 6px;
-  }
-  .ccard .form {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .ccard .desc {
-    font-size: 13px; color: var(--muted);
-    line-height: 1.55; margin-bottom: 12px;
-  }
-  .ccard .ex {
-    background: var(--tag-bg);
-    padding: 10px 13px;
-    border-radius: 8px;
-    border-left: 3px solid var(--accent);
-  }
-  .ccard .ex .en { font-size: 13px; font-weight: 500; line-height: 1.6; }
-  .ccard .ex .ko { font-size: 12px; color: var(--muted); margin-top: 3px; }
+/* ═══════════════════════════════════════
+   QUIZ
+═══════════════════════════════════════ */
+.quiz-wrap { display: flex; flex-direction: column; gap: 22px; max-width: 860px; }
+.quiz-q {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 22px;
+}
+.quiz-q .q-num {
+  font-size: 10px !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 7px !important;
+}
+.quiz-q .q-text {
+  font-size: 17px !important; font-weight: 500 !important;
+  color: var(--text) !important; line-height: 1.5 !important;
+  margin-bottom: 14px !important;
+}
+.btn-row { display: flex; gap: 9px; flex-wrap: wrap; }
+.qbtn {
+  padding: 8px 18px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  background: var(--surface);
+  font-size: 14px !important; font-weight: 500 !important;
+  color: var(--text) !important;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+.qbtn:hover:not(:disabled) { background: var(--tagbg); }
+.qbtn:active { transform: scale(0.97); }
+.qbtn.correct {
+  background: var(--greenbg) !important; border-color: var(--green) !important;
+  color: var(--green) !important; font-weight: 700 !important;
+}
+.qbtn.wrong {
+  background: var(--redbg) !important; border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+.q-fb {
+  margin-top: 9px; font-size: 13px !important; font-weight: 600 !important; min-height: 18px;
+}
+.q-fb.ok { color: var(--green) !important; }
+.q-fb.no { color: var(--red)   !important; }
 
-  /* ── Verdict badges ── */
-  .badge {
-    display: inline-block;
-    font-size: 10px; font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 2px 7px;
-    border-radius: 5px;
-    margin-right: 6px;
-  }
-  .badge.ok { background: var(--green-bg); color: var(--green); }
-  .badge.no { background: var(--red-bg);   color: var(--red); }
-
-  /* ════════════════════════════════
-     QUIZ STYLES
-     ════════════════════════════════ */
-  .quiz-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    max-width: 860px;
-  }
-  .quiz-q {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 24px;
-  }
-  .quiz-q .q-num {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 8px;
-  }
-  .quiz-q .q-text {
-    font-size: 17px; font-weight: 500;
-    color: var(--text); line-height: 1.55;
-    margin-bottom: 16px;
-  }
-  .quiz-q .q-text strong { color: var(--accent); }
-  .btn-row {
-    display: flex; gap: 10px; flex-wrap: wrap;
-  }
-  .qbtn {
-    padding: 9px 20px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    cursor: pointer;
-    transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.12s;
-  }
-  .qbtn:hover { background: var(--tag-bg); border-color: #ccc; }
-  .qbtn:active { transform: scale(0.97); }
-  .qbtn.correct {
-    background: var(--green-bg) !important;
-    border-color: var(--green) !important;
-    color: var(--green) !important;
-    font-weight: 700;
-  }
-  .qbtn.wrong {
-    background: var(--red-bg) !important;
-    border-color: var(--red) !important;
-    color: var(--red) !important;
-  }
-  .q-feedback {
-    margin-top: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    min-height: 18px;
-    transition: opacity 0.2s;
-  }
-  .q-feedback.show-ok { color: var(--green); }
-  .q-feedback.show-no { color: var(--red); }
-
-  /* ════════════════════════════════
-     BOTTOM NAV BAR
-     ════════════════════════════════ */
-  #custom-nav {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 7px 18px;
-    z-index: 9999;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-  }
-  #custom-nav button {
-    width: 34px; height: 34px;
-    border: none; background: transparent;
-    cursor: pointer; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text); font-size: 18px;
-    transition: background 0.15s;
-  }
-  #custom-nav button:hover { background: var(--tag-bg); }
-  #page-counter {
-    font-size: 12px; font-weight: 600;
-    color: var(--muted);
-    min-width: 52px; text-align: center;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ── Decorative elements on title slide ── */
-  .hero-deco {
-    position: absolute;
-    right: var(--pad-x);
-    top: 50%;
-    transform: translateY(-50%);
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    opacity: 0.4;
-    pointer-events: none;
-  }
-  .hero-deco2 {
-    position: absolute;
-    right: calc(var(--pad-x) + 40px);
-    top: calc(50% + 40px);
-    transform: translateY(-50%);
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    opacity: 0.3;
-    pointer-events: none;
-  }
+/* ═══════════════════════════════════════
+   BOTTOM NAV BAR
+═══════════════════════════════════════ */
+#cnav {
+  position: fixed; bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 100px; padding: 7px 18px;
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+#cnav button {
+  width: 32px; height: 32px; border: none; background: transparent;
+  cursor: pointer; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text); transition: background 0.15s;
+}
+#cnav button:hover { background: var(--tagbg); }
+#pgnum {
+  font-size: 12px !important; font-weight: 600 !important;
+  color: var(--muted) !important; min-width: 52px; text-align: center;
+  font-variant-numeric: tabular-nums;
+}
 </style>
 </head>
 <body>
@@ -397,24 +310,22 @@
 <div class="reveal">
   <div class="slides">
 
-    <!-- ══ SLIDE 1: TITLE ══ -->
+    <!-- ── SLIDE 1: TITLE ── -->
     <section>
-      <div class="s-hero">
+      <div class="hero">
         <div class="eyebrow">English Grammar · Unit 14 &amp; 15</div>
-        <h1>Past Perfect &amp; Past Perfect Continuous</h1>
+        <h1>Past Perfect &amp;<br>Past Perfect Continuous</h1>
         <div class="tagline">Mastering "had done" and "had been doing" (Unit 14 &amp; 15)</div>
         <div class="presenter">
           Presenter: <span>Kim Woo-geun</span> &nbsp;/&nbsp; Student ID: <span>202212820</span>
         </div>
       </div>
-      <div class="hero-deco"></div>
-      <div class="hero-deco2"></div>
     </section>
 
-    <!-- ══ SLIDE 2: TOC ══ -->
+    <!-- ── SLIDE 2: TOC ── -->
     <section>
       <span class="s-tag">Table of Contents</span>
-      <div class="s-body">
+      <div class="s-col">
         <ul class="toc-list">
           <li class="grp"><span class="toc-num">14</span>Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)</li>
           <li><span class="toc-num">①</span>시제 비교: 현재 완료 / 단순 과거</li>
@@ -425,10 +336,10 @@
       </div>
     </section>
 
-    <!-- ══ SLIDE 3: Unit 14 핵심 ══ -->
+    <!-- ── SLIDE 3: Unit 14 핵심 ── -->
     <section>
       <span class="s-tag">Unit 14. Past Perfect</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="icard">
           <div class="lbl">형태</div>
           <div class="val"><em>had + 과거분사 (p.p)</em></div>
@@ -444,10 +355,10 @@
       </div>
     </section>
 
-    <!-- ══ SLIDE 4: Unit 14 비교 (1) ══ -->
+    <!-- ── SLIDE 4: Unit 14 비교(1) ── -->
     <section>
       <span class="s-tag">Unit 14. Present Perfect vs Past Perfect</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="cgrid">
           <div class="ccard">
             <div class="lbl">현재 완료</div>
@@ -471,10 +382,10 @@
       </div>
     </section>
 
-    <!-- ══ SLIDE 5: Unit 14 비교 (2) ══ -->
+    <!-- ── SLIDE 5: Unit 14 비교(2) ── -->
     <section>
       <span class="s-tag">Unit 14. Simple Past vs Past Perfect</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="cgrid">
           <div class="ccard">
             <div class="lbl">단순 과거</div>
@@ -498,10 +409,10 @@
       </div>
     </section>
 
-    <!-- ══ SLIDE 6: Unit 15 핵심 ══ -->
+    <!-- ── SLIDE 6: Unit 15 핵심 ── -->
     <section>
       <span class="s-tag">Unit 15. Past Perfect Continuous</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="icard">
           <div class="lbl">형태</div>
           <div class="val"><em>had been + 동사-ing</em></div>
@@ -517,10 +428,10 @@
       </div>
     </section>
 
-    <!-- ══ SLIDE 7: Unit 15 비교 ══ -->
+    <!-- ── SLIDE 7: Unit 15 비교 ── -->
     <section>
       <span class="s-tag">Unit 15. Present vs Past Continuous</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="cgrid">
           <div class="ccard">
             <div class="lbl">현재 완료 진행</div>
@@ -544,148 +455,124 @@
       </div>
     </section>
 
-    <!-- ══ SLIDE 8: Unit 15 예외 ══ -->
+    <!-- ── SLIDE 8: Unit 15 예외 ── -->
     <section>
       <span class="s-tag">Unit 15. Non-Continuous Verbs</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="icard">
           <div class="lbl">진행형 불가 동사</div>
           <div class="val"><em>know</em>(알다), <em>have</em>(소유하다) 같은 상태를 나타내는 동사는 일반적으로 진행형으로 쓰지 않습니다.</div>
         </div>
         <div class="icard">
           <div class="lbl">올바른 표현</div>
-          <div class="val"><span class="badge ok">O</span><strong>"We had known each other for years."</strong></div>
+          <div class="val"><span class="badge ok">O</span> <strong>"We had known each other for years."</strong></div>
           <div class="ex"><div class="ko">우리는 수년 동안 서로 아는 사이였다.</div></div>
         </div>
         <div class="icard">
           <div class="lbl">틀린 표현</div>
-          <div class="val"><span class="badge no">X</span><s style="color:#b91c1c">"We had been knowing each other for years."</s></div>
+          <div class="val"><span class="badge no">X</span> <span style="color:#b91c1c">"We had been knowing each other for years."</span></div>
         </div>
       </div>
     </section>
 
-    <!-- ══ SLIDE 9: QUIZ 1 ══ -->
+    <!-- ── SLIDE 9: QUIZ 1 ── -->
     <section>
       <span class="s-tag">Quiz 1. Unit 14</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="quiz-wrap">
-
-          <!-- Q1 -->
           <div class="quiz-q">
             <div class="q-num">Question 1</div>
             <div class="q-text">David wasn't at the party when I arrived. He _______ home.</div>
             <div class="btn-row">
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q9-1')">1. went</button>
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q9-1')">2. has gone</button>
-              <button class="qbtn" onclick="checkAnswer(this, true,  'q9-1')">3. had gone</button>
+              <button class="qbtn" onclick="pick(this,'q91',false)">1. went</button>
+              <button class="qbtn" onclick="pick(this,'q91',false)">2. has gone</button>
+              <button class="qbtn" onclick="pick(this,'q91',true)">3. had gone</button>
             </div>
-            <div class="q-feedback" id="q9-1"></div>
+            <div class="q-fb" id="q91"></div>
           </div>
-
-          <!-- Q2 -->
           <div class="quiz-q">
             <div class="q-num">Question 2</div>
             <div class="q-text">We weren't hungry. We _______ just had lunch.</div>
             <div class="btn-row">
-              <button class="qbtn" onclick="checkAnswer(this, true,  'q9-2')">1. had</button>
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q9-2')">2. have</button>
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q9-2')">3. did</button>
+              <button class="qbtn" onclick="pick(this,'q92',true)">1. had</button>
+              <button class="qbtn" onclick="pick(this,'q92',false)">2. have</button>
+              <button class="qbtn" onclick="pick(this,'q92',false)">3. did</button>
             </div>
-            <div class="q-feedback" id="q9-2"></div>
+            <div class="q-fb" id="q92"></div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ══ SLIDE 10: QUIZ 2 ══ -->
+    <!-- ── SLIDE 10: QUIZ 2 ── -->
     <section>
       <span class="s-tag">Quiz 2. Unit 15</span>
-      <div class="s-body">
+      <div class="s-col">
         <div class="quiz-wrap">
-
-          <!-- Q1 -->
           <div class="quiz-q">
             <div class="q-num">Question 1</div>
             <div class="q-text">The ground was very wet. It _______ raining.</div>
             <div class="btn-row">
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q10-1')">1. was</button>
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q10-1')">2. has been</button>
-              <button class="qbtn" onclick="checkAnswer(this, true,  'q10-1')">3. had been</button>
+              <button class="qbtn" onclick="pick(this,'q101',false)">1. was</button>
+              <button class="qbtn" onclick="pick(this,'q101',false)">2. has been</button>
+              <button class="qbtn" onclick="pick(this,'q101',true)">3. had been</button>
             </div>
-            <div class="q-feedback" id="q10-1"></div>
+            <div class="q-fb" id="q101"></div>
           </div>
-
-          <!-- Q2 -->
           <div class="quiz-q">
             <div class="q-num">Question 2</div>
             <div class="q-text">We were good friends. We _______ each other for years.</div>
             <div class="btn-row">
-              <button class="qbtn" onclick="checkAnswer(this, true,  'q10-2')">1. had known</button>
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q10-2')">2. had been knowing</button>
-              <button class="qbtn" onclick="checkAnswer(this, false, 'q10-2')">3. knew</button>
+              <button class="qbtn" onclick="pick(this,'q102',true)">1. had known</button>
+              <button class="qbtn" onclick="pick(this,'q102',false)">2. had been knowing</button>
+              <button class="qbtn" onclick="pick(this,'q102',false)">3. knew</button>
             </div>
-            <div class="q-feedback" id="q10-2"></div>
+            <div class="q-fb" id="q102"></div>
           </div>
-
         </div>
       </div>
     </section>
 
-  </div><!-- .slides -->
-</div><!-- .reveal -->
+  </div>
+</div>
 
-<!-- Bottom Nav -->
-<div id="custom-nav">
-  <button id="btn-prev" title="이전">
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-      <path d="M9.5 11.5L5.5 7.5L9.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Bottom nav -->
+<div id="cnav">
+  <button id="bprev" title="이전">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-  <span id="page-counter">1 / 10</span>
-  <button id="btn-next" title="다음">
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-      <path d="M5.5 3.5L9.5 7.5L5.5 11.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <span id="pgnum">1 / 10</span>
+  <button id="bnext" title="다음">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script>
-
-  /* ── Quiz logic ── */
-  function checkAnswer(btn, isCorrect, groupId) {
-    // Find all buttons in the same btn-row
+  /* ── Quiz ── */
+  function pick(btn, fbId, correct) {
     const row = btn.closest('.btn-row');
-    const allBtns = row.querySelectorAll('.qbtn');
-    allBtns.forEach(b => { b.disabled = true; });
-
-    const fb = document.getElementById(groupId);
-
-    if (isCorrect) {
-      btn.classList.add('correct');
-      fb.textContent = '✓ 정답입니다!';
-      fb.className = 'q-feedback show-ok';
-    } else {
-      btn.classList.add('wrong');
-      fb.textContent = '✗ 틀렸습니다. 다시 생각해 보세요.';
-      fb.className = 'q-feedback show-no';
-      // Briefly shake
-      btn.style.animation = 'none';
-      btn.offsetHeight; // reflow
-    }
+    row.querySelectorAll('.qbtn').forEach(b => b.disabled = true);
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    const fb = document.getElementById(fbId);
+    fb.textContent = correct ? '✓ 정답입니다!' : '✗ 틀렸습니다. 다시 생각해 보세요.';
+    fb.className = 'q-fb ' + (correct ? 'ok' : 'no');
   }
 
-  /* ── Reveal init ── */
+  /* ── Reveal.js — center: false is the critical fix ── */
   Reveal.initialize({
-    hash: true,
-    transition: 'none',
+    hash: false,
+    center: false,          /* ← prevents vertical centering */
+    transition: 'slide',
     transitionSpeed: 'fast',
     backgroundTransition: 'none',
     progress: true,
     controls: false,
     slideNumber: false,
-    center: false,
     width: '100%',
     height: '100%',
     margin: 0,
@@ -693,18 +580,16 @@
     maxScale: 1,
   });
 
-  function updateCounter() {
-    const total = Reveal.getTotalSlides();
-    const current = Reveal.getIndices().h + 1;
-    document.getElementById('page-counter').textContent = current + ' / ' + total;
+  /* ── Page counter ── */
+  function updatePg() {
+    document.getElementById('pgnum').textContent =
+      (Reveal.getIndices().h + 1) + ' / ' + Reveal.getTotalSlides();
   }
+  Reveal.on('ready', updatePg);
+  Reveal.on('slidechanged', updatePg);
 
-  Reveal.on('slidechanged', updateCounter);
-  Reveal.on('ready', updateCounter);
-
-  document.getElementById('btn-prev').addEventListener('click', () => Reveal.prev());
-  document.getElementById('btn-next').addEventListener('click', () => Reveal.next());
-
+  document.getElementById('bprev').onclick = () => Reveal.prev();
+  document.getElementById('bnext').onclick = () => Reveal.next();
 </script>
 </body>
 </html>
