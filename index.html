@@ -3,292 +3,631 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Past Perfect</title>
+<title>Past Perfect & Past Perfect Continuous</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e5e4df;
+    --tag-bg: #f0efeb;
+    --correct: #16a34a;
+    --wrong: #dc2626;
+  }
 
-:root {
-  --bg: #f5f0e8;
-  --surface: #ede8df;
-  --surface2: #e8e2d8;
-  --border: #d8d0c4;
-  --accent: #c96442;
-  --text: #2d2520;
-  --muted: #8a7e74;
-  --sub: #a09488;
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--bg); }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+  }
 
-.reveal { font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); font-size: 20px; }
-.reveal .slides { zoom: 1.4; }
-.reveal .slides { background: var(--bg); }
-.reveal .slides section {
-  width: 100%; height: 100%;
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 2em 3em;
-  text-align: left;
-  background: var(--bg);
-}
+  /* ── Progress bar at TOP ── */
+  .reveal .progress {
+    top: 0 !important;
+    bottom: auto !important;
+    height: 3px !important;
+    background: var(--border) !important;
+    z-index: 1000;
+  }
+  .reveal .progress span {
+    background: var(--accent) !important;
+    transition: width 0.4s ease !important;
+  }
 
-.unit-tag {
-  font-size: 0.6em;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 0.7em;
-}
-.reveal h1 {
-  font-size: 2.1em;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.25;
-  margin-bottom: 0.4em;
-}
-.reveal h1 span { color: var(--accent); }
-.reveal h2 {
-  font-size: 1.25em;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 0.8em;
-  line-height: 1.35;
-}
-.reveal h2 em { font-style: normal; color: var(--accent); }
+  /* ── Hide default controls ── */
+  .reveal .controls { display: none !important; }
 
-.title-desc {
-  font-size: 0.82em;
-  color: var(--muted);
-  font-weight: 300;
-  line-height: 1.8;
-  margin-top: 0.3em;
-}
-.divider {
-  width: 32px; height: 2px;
-  background: var(--accent);
-  border-radius: 2px;
-  margin: 0.8em 0 1em;
-  opacity: 0.5;
-}
+  /* ── Slides base ── */
+  .reveal .slides {
+    text-align: left;
+  }
+  .reveal .slides section {
+    top: 0 !important;
+    height: 100vh;
+    padding: 0 !important;
+    background: var(--bg);
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
+  }
 
-.block {
-  width: 100%;
-  margin-bottom: 0.6em;
-  padding: 0.75em 1em;
-  border-radius: 10px;
-  font-size: 0.82em;
-  line-height: 1.75;
-  color: var(--text);
-}
-.block .label {
-  font-size: 0.72em;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 0.3em;
-}
-.block strong { color: var(--accent); font-weight: 600; }
-.block-rule    { background: var(--surface); border-left: 2px solid var(--accent); }
-.block-concept { background: var(--surface2); border-left: 2px solid var(--border); }
-.block-example { background: transparent; border: 1.5px solid var(--border); color: var(--muted); }
-.block-example em { color: var(--accent); font-style: italic; }
+  /* ── Slide inner wrapper ── */
+  .slide-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 64px 80px 80px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
-.compare-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75em;
-  width: 100%;
-}
-.card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 1em 1.1em;
-  font-size: 0.8em;
-  line-height: 1.75;
-  color: var(--muted);
-  border-top: 2px solid var(--border);
-}
-.card.hi { border-top-color: var(--accent); }
-.card .card-title {
-  font-size: 1em;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 0.45em;
-}
-.card em { color: var(--accent); font-style: italic; }
-.card strong { color: var(--text); font-weight: 500; }
+  /* ── Subtitle / tag — fixed top-left ── */
+  .slide-tag {
+    position: absolute;
+    top: 36px;
+    left: 80px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 5px 12px;
+    border-radius: 100px;
+  }
 
-.warn {
-  width: 100%;
-  background: #f5ede8;
-  border-left: 2px solid var(--accent);
-  border-radius: 10px;
-  padding: 0.7em 1em;
-  font-size: 0.78em;
-  color: var(--muted);
-  line-height: 1.65;
-  margin-top: 0.6em;
-}
-.warn strong { color: var(--accent); font-weight: 600; }
+  /* ── Title slide specifics ── */
+  .slide-title-main {
+    margin-top: 80px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slide-title-main .eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .slide-title-main h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 72px;
+    line-height: 1.05;
+    color: var(--text-primary);
+    font-weight: 400;
+    margin-bottom: 28px;
+    max-width: 760px;
+  }
+  .slide-title-main .subtitle-line {
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-family: 'DM Serif Display', serif;
+    margin-bottom: 48px;
+  }
+  .slide-title-main .unit-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+  .unit-badge .dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
 
-.slide-num {
-  position: absolute;
-  bottom: 1.2em; right: 1.8em;
-  font-size: 0.5em;
-  color: var(--border);
-  letter-spacing: 0.1em;
-}
+  /* ── Section heading ── */
+  .slide-body {
+    margin-top: 80px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+  .slide-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 36px;
+    line-height: 1.15;
+  }
 
-.reveal .controls { color: var(--accent); }
-.reveal .progress { height: 2px; color: var(--accent); }
-.reveal .progress span { background: var(--accent); }
-.reveal .controls button { opacity: 0.35; }
-.reveal .controls button:hover { opacity: 0.9; }
+  /* ── TOC list ── */
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 700px;
+  }
+  .toc-list li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 17px;
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+  .toc-list li.group-header {
+    background: var(--tag-bg);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .toc-num {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Info card ── */
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    max-width: 860px;
+    width: 100%;
+  }
+  .info-card .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+  .info-card .card-text {
+    font-size: 18px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .info-card .card-text em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .info-card .example {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: var(--tag-bg);
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    border-left: 3px solid var(--accent);
+  }
+  .info-card .example .en { font-weight: 500; }
+  .info-card .example .ko { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+
+  /* ── Comparison grid ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .compare-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .compare-card .cc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .compare-card .cc-form {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+  }
+  .compare-card .cc-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .compare-card .cc-ex {
+    background: var(--tag-bg);
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.7;
+    border-left: 3px solid var(--accent);
+  }
+  .compare-card .cc-ex .en { font-weight: 500; font-size: 13px; }
+  .compare-card .cc-ex .ko { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
+
+  /* ── Right/Wrong ── */
+  .verdict {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-left: 8px;
+  }
+  .verdict.ok { background: #dcfce7; color: var(--correct); }
+  .verdict.no { background: #fee2e2; color: var(--wrong); }
+
+  /* ── Custom nav bar ── */
+  #custom-nav {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 20px;
+    z-index: 9999;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+  #custom-nav button {
+    width: 36px; height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-primary);
+    font-size: 18px;
+    transition: background 0.15s;
+  }
+  #custom-nav button:hover { background: var(--tag-bg); }
+  #custom-nav button:active { background: var(--border); }
+  #page-counter {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    min-width: 56px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Decorative lines on title slide ── */
+  .deco-line {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .deco-dot {
+    position: absolute;
+    right: 80px; bottom: 80px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    opacity: 0.5;
+  }
+
+  /* Fragment transitions */
+  .reveal .slides section .fragment {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .reveal .slides section .fragment.visible {
+    opacity: 1;
+    transform: none;
+  }
 </style>
 </head>
 <body>
+
 <div class="reveal">
   <div class="slides">
 
+    <!-- SLIDE 1: Title -->
     <section>
-      <div class="unit-tag">Grammar in Use · Unit 14–15</div>
-      <h1>Past Perfect &amp;<br><span>Past Perfect Continuous</span></h1>
-      <div class="divider"></div>
-      <div class="title-desc">과거의 사건보다 더 이전에 일어난 일을<br>정확하게 표현하는 방법을 배웁니다.</div>
-      <div class="slide-num">01 / 07</div>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 14 &amp; 15 · Grammar in Use Intermediate</span>
+        <div class="slide-title-main">
+          <div class="eyebrow">English Grammar</div>
+          <h1>Past Perfect &amp; Past Perfect Continuous</h1>
+          <div class="subtitle-line">Mastering "had done" and "had been doing"</div>
+          <div class="unit-badge">
+            <span class="dot"></span>
+            Unit 14 &amp; 15 — Grammar in Use Intermediate
+          </div>
+        </div>
+        <div class="deco-line"></div>
+        <div class="deco-dot"></div>
+      </div>
     </section>
 
+    <!-- SLIDE 2: TOC -->
     <section>
-      <div class="unit-tag">Unit 14 · Past Perfect</div>
-      <h2><em>I had done</em> — 핵심 개념</h2>
-      <div class="block block-rule">
-        <div class="label">형태 (Form)</div>
-        <strong>had</strong> + past participle &nbsp;→&nbsp; gone / seen / finished …
-      </div>
-      <div class="block block-concept">
-        <div class="label">용법 (Use)</div>
-        과거의 특정 시점보다 <strong>더 앞서 일어난 일</strong>을 표현할 때 사용합니다.
-      </div>
-      <div class="block block-example">
-        <div class="label">예시</div>
-        <em>"When Sarah arrived at the party, Nick had already gone home."</em>
-      </div>
-      <div class="slide-num">02 / 07</div>
-    </section>
-
-    <section>
-      <div class="unit-tag">Unit 14 · 비교</div>
-      <h2>현재와 연결 vs. <em>과거와 연결</em></h2>
-      <div class="compare-grid">
-        <div class="card hi">
-          <div class="card-title">Present Perfect</div>
-          과거의 행동이 <strong>지금</strong>과 연결됩니다.<br><br>
-          <em>"We aren't hungry.<br>We've just had lunch."</em>
-        </div>
-        <div class="card">
-          <div class="card-title">Past Perfect</div>
-          과거의 행동이 <strong>더 이전의 과거</strong>와 연결됩니다.<br><br>
-          <em>"We weren't hungry.<br>We'd just had lunch."</em>
-        </div>
-      </div>
-      <div class="slide-num">03 / 07</div>
-    </section>
-
-    <section>
-      <div class="unit-tag">Unit 14 · 비교</div>
-      <h2>사건의 순서 — <em>Simple Past vs. Past Perfect</em></h2>
-      <div class="compare-grid">
-        <div class="card hi">
-          <div class="card-title">Simple Past</div>
-          사건이 <strong>시간 순서대로</strong> 일어났음을 나타냅니다.<br><br>
-          <em>"Yes, but he left<br>soon afterwards."</em>
-        </div>
-        <div class="card">
-          <div class="card-title">Past Perfect</div>
-          다른 사건이 시작됐을 때 이미 <strong>완료된 사건</strong>을 나타냅니다.<br><br>
-          <em>"No, he'd already left."</em>
+      <div class="slide-inner">
+        <span class="slide-tag">Table of Contents</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">목차</h2>
+          <ul class="toc-list">
+            <li class="group-header">
+              <span class="toc-num">14</span>
+              Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)
+            </li>
+            <li>
+              <span class="toc-num">①</span>
+              시제 비교: 현재 완료 / 단순 과거
+            </li>
+            <li class="group-header">
+              <span class="toc-num">15</span>
+              Unit 15 &nbsp;·&nbsp; 과거 완료 진행 (Past Perfect Continuous)
+            </li>
+            <li>
+              <span class="toc-num">②</span>
+              시제 비교 및 진행형 불가 예외 동사
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="slide-num">04 / 07</div>
     </section>
 
+    <!-- SLIDE 3: Unit 14 핵심 -->
     <section>
-      <div class="unit-tag">Unit 15 · Past Perfect Continuous</div>
-      <h2><em>I had been doing</em> — 핵심 개념</h2>
-      <div class="block block-rule">
-        <div class="label">형태 (Form)</div>
-        <strong>had been</strong> + -ing &nbsp;→&nbsp; doing / working / playing …
-      </div>
-      <div class="block block-concept">
-        <div class="label">용법 (Use)</div>
-        어떤 일이 일어나기 <strong>직전까지 계속되고 있던 동작</strong>을 표현할 때 사용합니다.
-      </div>
-      <div class="block block-example">
-        <div class="label">예시</div>
-        <em>"The sun was shining, but the ground was very wet. It had been raining."</em>
-      </div>
-      <div class="slide-num">05 / 07</div>
-    </section>
-
-    <section>
-      <div class="unit-tag">Unit 15 · 비교</div>
-      <h2>지금 이전 vs. <em>그때 이전</em></h2>
-      <div class="compare-grid">
-        <div class="card hi">
-          <div class="card-title">Present Perfect Continuous</div>
-          <strong>지금</strong> 이전까지 계속된 동작.<br><br>
-          <em>"I've been waiting<br>for 20 minutes."</em>
-        </div>
-        <div class="card">
-          <div class="card-title">Past Perfect Continuous</div>
-          <strong>과거의 특정 시점</strong> 이전까지 계속된 동작.<br><br>
-          <em>"I'd been waiting<br>for 20 minutes."</em>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 14. Past Perfect</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">과거 완료 핵심 개념</h2>
+          <div class="info-card">
+            <div class="card-label">형태</div>
+            <div class="card-text"><em>had + 과거분사 (p.p)</em></div>
+          </div>
+          <div class="info-card">
+            <div class="card-label">개념</div>
+            <div class="card-text">이야기의 기준이 되는 과거 시점보다 <em>더 먼저 일어난 일(대과거)</em>을 표현할 때 사용합니다.</div>
+            <div class="example">
+              <div class="en">"When Sarah arrived at the party, Nick had already gone home."</div>
+              <div class="ko">사라가 파티에 도착했을 때, 닉은 이미 집에 가고 없었다.</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="slide-num">06 / 07</div>
     </section>
 
+    <!-- SLIDE 4: 현재 완료 vs 과거 완료 -->
     <section>
-      <div class="unit-tag">Unit 15 · 주의사항</div>
-      <h2>연속형을 쓰지 않는 동사들</h2>
-      <div class="block block-rule">
-        <div class="label">규칙</div>
-        <strong>know, have, like</strong> 등 일부 동사는 원칙적으로 <strong>-ing 형태를 사용하지 않습니다.</strong>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 14. Present Perfect vs Past Perfect</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">현재 완료 vs 과거 완료</h2>
+          <div class="compare-grid">
+            <div class="compare-card">
+              <div class="cc-label">현재 완료</div>
+              <div class="cc-form">have p.p</div>
+              <div class="cc-desc">과거의 일이 <strong>현재 시점</strong>에 영향을 줍니다.</div>
+              <div class="cc-ex">
+                <div class="en">"We aren't hungry. We've just had lunch."</div>
+                <div class="ko">우리 지금 안 배고파. 방금 점심 먹었거든.</div>
+              </div>
+            </div>
+            <div class="compare-card">
+              <div class="cc-label">과거 완료</div>
+              <div class="cc-form">had p.p</div>
+              <div class="cc-desc">과거보다 더 이전의 일이 <strong>과거 시점</strong>에 영향을 줍니다.</div>
+              <div class="cc-ex">
+                <div class="en">"We weren't hungry. We'd just had lunch."</div>
+                <div class="ko">우리 그때 안 배고팠어. 막 점심을 먹었었거든.</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="block block-example">
-        <div class="label">올바른 표현</div>
-        <em>"We had known each other for years."</em>
-      </div>
-      <div class="warn">
-        <strong>⚠ 틀린 표현:</strong> &nbsp;"had been knowing" — <strong>had known</strong>으로 써야 합니다.
-      </div>
-      <div class="slide-num">07 / 07</div>
     </section>
 
-  </div>
+    <!-- SLIDE 5: 단순 과거 vs 과거 완료 -->
+    <section>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 14. Simple Past vs Past Perfect</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">단순 과거 vs 과거 완료</h2>
+          <div class="compare-grid">
+            <div class="compare-card">
+              <div class="cc-label">단순 과거</div>
+              <div class="cc-form">Simple Past</div>
+              <div class="cc-desc">사건이 일어난 <strong>시간 순서대로</strong> 말할 때.</div>
+              <div class="cc-ex">
+                <div class="en">"Was Tom there when you arrived? Yes, but he left soon afterwards."</div>
+                <div class="ko">도착했을 때 톰 있었어? 응, 근데 곧 떠났어.</div>
+              </div>
+            </div>
+            <div class="compare-card">
+              <div class="cc-label">과거 완료</div>
+              <div class="cc-form">Past Perfect</div>
+              <div class="cc-desc">기준 과거 시점에 <strong>이미 완료</strong>된 사건을 말할 때.</div>
+              <div class="cc-ex">
+                <div class="en">"Was Tom there when you arrived? No, he'd already left."</div>
+                <div class="ko">도착했을 때 톰 있었어? 아니, 이미 떠났었어.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Unit 15 핵심 -->
+    <section>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 15. Past Perfect Continuous</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">과거 완료 진행 핵심 개념</h2>
+          <div class="info-card">
+            <div class="card-label">형태</div>
+            <div class="card-text"><em>had been + 동사-ing</em></div>
+          </div>
+          <div class="info-card">
+            <div class="card-label">개념</div>
+            <div class="card-text">과거의 어떤 사건이 일어나기 전까지 <em>계속 진행 중이던 행동이나 원인</em>을 강조할 때 사용합니다.</div>
+            <div class="example">
+              <div class="en">"The sun was shining, but the ground was very wet. It had been raining."</div>
+              <div class="ko">해는 빛나고 있었지만, 땅은 매우 젖어 있었다. 비가 계속 내렸던 것이다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: 현재 완료 진행 vs 과거 완료 진행 -->
+    <section>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 15. Present vs Past Continuous</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">현재 완료 진행 vs 과거 완료 진행</h2>
+          <div class="compare-grid">
+            <div class="compare-card">
+              <div class="cc-label">현재 완료 진행</div>
+              <div class="cc-form">have been -ing</div>
+              <div class="cc-desc"><strong>지금(현재)</strong>을 기준으로 그 전까지 진행되던 일.</div>
+              <div class="cc-ex">
+                <div class="en">"I hope the bus comes soon. I've been waiting for 20 minutes."</div>
+                <div class="ko">버스 빨리 오면 좋겠다. 20분째 기다리고 있어.</div>
+              </div>
+            </div>
+            <div class="compare-card">
+              <div class="cc-label">과거 완료 진행</div>
+              <div class="cc-form">had been -ing</div>
+              <div class="cc-desc"><strong>그때(과거)</strong>를 기준으로 그 전까지 진행되던 일.</div>
+              <div class="cc-ex">
+                <div class="en">"The bus finally came. I'd been waiting for 20 minutes."</div>
+                <div class="ko">마침내 버스가 왔다. 20분 동안 기다리던 참이었다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Non-Continuous Verbs -->
+    <section>
+      <div class="slide-inner">
+        <span class="slide-tag">Unit 15. Non-Continuous Verbs</span>
+        <div class="slide-body">
+          <h2 class="slide-heading">주의해야 할 예외</h2>
+          <div class="info-card">
+            <div class="card-label">진행형 불가 동사</div>
+            <div class="card-text"><em>know</em>(알다), <em>have</em>(소유하다) 같은 상태를 나타내는 동사는 일반적으로 진행형으로 쓰지 않습니다.</div>
+          </div>
+          <div class="info-card">
+            <div class="card-label">올바른 표현</div>
+            <div class="card-text">
+              <span class="verdict ok">O</span>
+              <strong>"We had known each other for years."</strong>
+            </div>
+            <div class="example">
+              <div class="ko">우리는 수년 동안 서로 아는 사이였다.</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="card-label">틀린 표현</div>
+            <div class="card-text">
+              <span class="verdict no">X</span>
+              <s style="color:#dc2626">"We had been knowing each other for years."</s>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- .slides -->
+</div><!-- .reveal -->
+
+<!-- Custom Navigation -->
+<div id="custom-nav">
+  <button id="btn-prev" title="이전 슬라이드">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <span id="page-counter">1 / 8</span>
+  <button id="btn-next" title="다음 슬라이드">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script>
   Reveal.initialize({
-    controls: true,
-    progress: true,
-    center: true,
-    transition: 'fade',
+    hash: true,
+    transition: 'none',
     transitionSpeed: 'fast',
-    keyboard: true,
-    touch: true,
-    width: 900,
-    height: 600,
+    backgroundTransition: 'none',
+    progress: true,
+    controls: false,
+    slideNumber: false,
+    center: false,
+    width: '100%',
+    height: '100%',
     margin: 0,
     minScale: 1,
     maxScale: 1,
   });
+
+  function updateCounter() {
+    const idx = Reveal.getState();
+    const total = Reveal.getTotalSlides();
+    const current = Reveal.getIndices().h + 1;
+    document.getElementById('page-counter').textContent = current + ' / ' + total;
+  }
+
+  Reveal.on('slidechanged', updateCounter);
+  Reveal.on('ready', updateCounter);
+
+  document.getElementById('btn-prev').addEventListener('click', () => Reveal.prev());
+  document.getElementById('btn-next').addEventListener('click', () => Reveal.next());
 </script>
 </body>
 </html>
