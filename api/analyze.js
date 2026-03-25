@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --accent: #c8b4ff;
+    --accent2: #7ee8c8;
+    --accent3: #ff8c6b;
+    --gold: #f5d76e;
+    --glow: rgba(200,180,255,0.15);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(120,80,255,0.12), transparent),
+      radial-gradient(ellipse 60% 30% at 80% 80%, rgba(100,220,180,0.06), transparent);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 2.5rem 3rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .logo-mark {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .logo-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .version-badge {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2rem;
+  }
+
+  /* ── MAIN ── */
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 2rem 6rem;
+    min-height: calc(100vh - 80px);
+  }
+
+  .hero-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: center;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── INPUT AREA ── */
+  .input-container {
+    width: 100%;
+    max-width: 760px;
+    position: relative;
+  }
+
+  .textarea-wrapper {
+    position: relative;
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+  }
+
+  .textarea-wrapper:focus-within {
+    border-color: rgba(200,180,255,0.3);
+    box-shadow: 0 0 0 4px rgba(200,180,255,0.06), 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .textarea-label {
+    position: absolute;
+    top: 1.1rem;
+    left: 1.4rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 2.6rem 1.4rem 1.4rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text);
+    resize: none;
+  }
+
+  textarea::placeholder { color: rgba(255,255,255,0.15); font-style: italic; }
+
+  .input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .char-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .analyze-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--accent), #9b78ff);
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .analyze-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .analyze-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(150,100,255,0.4); }
+  .analyze-btn:hover::before { opacity: 1; }
+  .analyze-btn:active { transform: translateY(0); }
+
+  .btn-icon { font-size: 0.8rem; transition: transform 0.3s; }
+  .analyze-btn:hover .btn-icon { transform: rotate(15deg); }
+
+  /* ── SAMPLE PILLS ── */
+  .samples {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .sample-pill {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .sample-pill:hover {
+    border-color: rgba(200,180,255,0.3);
+    color: var(--accent);
+    background: rgba(200,180,255,0.05);
+  }
+
+  /* ── RANDOM STORY BUTTON ── */
+  .random-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(126,232,200,0.25);
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(126,232,200,0.06);
+    color: var(--accent2);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .random-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(126,232,200,0.12);
+    border-color: rgba(126,232,200,0.45);
+    box-shadow: 0 6px 24px rgba(126,232,200,0.15);
+  }
+  .random-btn:active { transform: translateY(0); }
+  .random-btn .dice {
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .random-btn:hover .dice { transform: rotate(180deg) scale(1.2); }
+  .random-btn.rolling .dice { animation: diceRoll 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes diceRoll {
+    0%   { transform: rotate(0deg) scale(1); }
+    40%  { transform: rotate(270deg) scale(1.3); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  /* typewriter cursor */
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: var(--accent2);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.8s step-end infinite;
+  }
+
+  /* ── TIMELINE SECTION ── */
+  #timeline-section {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+
+  #timeline-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: rgba(126,232,200,0.08);
+    border: 1px solid rgba(126,232,200,0.15);
+    padding: 0.2rem 0.7rem;
+    border-radius: 2rem;
+  }
+
+  .section-divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ORIGINAL TEXT ── */
+  .original-text-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 2.5rem;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── CANVAS TIMELINE ── */
+  .timeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .timeline-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(200,180,255,0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  canvas {
+    width: 100%;
+    display: block;
+  }
+
+  /* ── EVENT CARDS ── */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .event-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
+    cursor: default;
+  }
+
+  .event-card:hover { border-color: rgba(200,180,255,0.2); }
+
+  .event-card.shown { opacity: 1; transform: translateY(0); }
+
+  .event-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.15em;
+  }
+
+  .event-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.05rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .event-phrase {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .tense-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2rem;
+  }
+
+  .tense-past-perfect { background: rgba(200,180,255,0.1); color: var(--accent); border: 1px solid rgba(200,180,255,0.2); }
+  .tense-past-simple  { background: rgba(126,232,200,0.1); color: var(--accent2); border: 1px solid rgba(126,232,200,0.2); }
+  .tense-past-continuous { background: rgba(255,140,107,0.1); color: var(--accent3); border: 1px solid rgba(255,140,107,0.2); }
+  .tense-present-perfect { background: rgba(245,215,110,0.1); color: var(--gold); border: 1px solid rgba(245,215,110,0.2); }
+  .tense-default { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── TENSE TOOLTIP ── */
+  .tense-explain-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tense-explain-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    font-size: 8px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    margin-left: 5px;
+    opacity: 0.55;
+    cursor: help;
+    vertical-align: middle;
+    transition: opacity 0.15s;
+    line-height: 1;
+    position: relative;
+    top: -1px;
+  }
+  .tense-explain-wrap:hover .tense-explain-icon { opacity: 1; }
+
+  .tense-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1e1e2e;
+    border: 1px solid rgba(200,180,255,0.2);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    width: 220px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    line-height: 1.55;
+    color: rgba(232,232,240,0.9);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16,1,0.3,1);
+    z-index: 100;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    white-space: normal;
+    text-align: left;
+  }
+  .tense-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(200,180,255,0.2);
+  }
+  .tense-tooltip::before {
+    content: '';
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1e1e2e;
+    z-index: 1;
+  }
+  .tense-explain-wrap:hover .tense-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .tense-tooltip strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── LOADING ── */
+  .loading-bar {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    display: none;
+  }
+
+  .loading-bar.active { display: block; }
+
+  .loading-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 1px;
+    animation: loadBar 1.2s cubic-bezier(0.65,0,0.35,1) forwards;
+  }
+
+  @keyframes loadBar {
+    0%   { width: 0%; }
+    40%  { width: 60%; }
+    80%  { width: 85%; }
+    100% { width: 100%; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ── TAB NAVIGATION ── */
+  .tab-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.3rem;
+    margin: 2rem auto 0;
+    width: fit-content;
+  }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--muted);
+    transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    position: relative;
+    white-space: nowrap;
+  }
+  .tab-btn .tab-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    opacity: 0.6;
+  }
+  .tab-btn.active {
+    background: var(--surface2);
+    color: var(--text);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .tab-btn.active.mode1 { color: var(--accent); }
+  .tab-btn.active.mode2 { color: var(--accent2); }
+
+  /* ── TAB PANELS ── */
+  .tab-panel {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeInUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .tab-panel.active { display: flex; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MODE 2 STYLES ── */
+  .m2-hero-label { color: var(--accent2); }
+  .m2-h1 {
+    background: linear-gradient(135deg, #fff 0%, var(--accent2) 55%, var(--gold) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  .m2-workspace {
+    width: 100%;
+    max-width: 860px;
+    margin-top: 0.5rem;
+  }
+
+  .m2-hint {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-bottom: 1.4rem;
+    letter-spacing: 0.05em;
+  }
+  .m2-hint span {
+    color: var(--accent2);
+    opacity: 0.8;
+  }
+
+  /* Interactive canvas card */
+  .m2-canvas-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    cursor: crosshair;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    overflow: visible;
+  }
+  .m2-canvas-card:hover {
+    border-color: rgba(126,232,200,0.2);
+    box-shadow: 0 0 0 4px rgba(126,232,200,0.04);
+  }
+  .m2-canvas-card.full {
+    cursor: default;
+    border-color: rgba(126,232,200,0.12);
+  }
+
+  #m2Canvas { width: 100%; display: block; }
+
+  /* Node input labels (positioned absolutely over canvas) */
+  .node-label-wrap {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transform: translateX(-50%);
+    pointer-events: auto;
+    z-index: 10;
+  }
+  .node-dot-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 8px rgba(126,232,200,0.6);
+    flex-shrink: 0;
+  }
+  .node-input {
+    width: 110px;
+    background: rgba(26,26,38,0.95);
+    border: 1px solid rgba(126,232,200,0.3);
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent2);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .node-input::placeholder { color: rgba(126,232,200,0.3); font-style: italic; }
+  .node-input:focus {
+    border-color: rgba(126,232,200,0.7);
+    box-shadow: 0 0 0 3px rgba(126,232,200,0.08);
+  }
+  .node-order-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* Reset button */
+  .m2-reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.9rem auto 0;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    letter-spacing: 0.08em;
+  }
+  .m2-reset-btn:hover { color: var(--accent3); border-color: rgba(255,140,107,0.3); }
+
+  /* Node count indicator */
+  .node-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .node-pip {
+    width: 28px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .node-pip.filled {
+    background: var(--accent2);
+    box-shadow: 0 0 8px rgba(126,232,200,0.4);
+  }
+  .node-counter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* Generate button */
+  .m2-generate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 860px;
+    margin-top: 1.8rem;
+    padding: 1rem 2rem;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, rgba(126,232,200,0.15), rgba(126,232,200,0.08));
+    border: 1px solid rgba(126,232,200,0.2);
+    color: var(--accent2);
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s, opacity 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .m2-generate-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(126,232,200,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .m2-generate-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(126,232,200,0.22), rgba(126,232,200,0.12));
+    box-shadow: 0 8px 30px rgba(126,232,200,0.15);
+    transform: translateY(-1px);
+  }
+  .m2-generate-btn:hover:not(:disabled)::before { opacity: 1; }
+  .m2-generate-btn:active:not(:disabled) { transform: translateY(0); }
+  .m2-generate-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* Result output */
+  .m2-result-section {
+    width: 100%;
+    max-width: 860px;
+    margin-top: 2rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+  .m2-result-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .m2-result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .m2-result-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(126,232,200,0.03), transparent 60%);
+    pointer-events: none;
+  }
+
+  .m2-result-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .m2-result-tag {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: rgba(126,232,200,0.08);
+    border: 1px solid rgba(126,232,200,0.15);
+    padding: 0.18rem 0.65rem;
+    border-radius: 2rem;
+  }
+  .m2-result-phase {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    margin-left: auto;
+    letter-spacing: 0.08em;
+  }
+
+  .m2-result-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text);
+    min-height: 3.5rem;
+  }
+  .m2-result-text .highlight-past-perfect {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .m2-result-text .highlight-past-simple {
+    color: var(--accent2);
+    font-style: italic;
+  }
+  .m2-result-text .phase-note {
+    display: block;
+    margin-top: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-style: normal;
+    border-top: 1px solid var(--border);
+    padding-top: 0.7rem;
+  }
+
+  .m2-typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--accent2);
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    animation: blink 0.75s step-end infinite;
+  }
+
+  /* Node pop animation */
+  @keyframes nodePop {
+    0%   { transform: scale(0); opacity: 0; }
+    60%  { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes inputSlide {
+    from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-mark">Tl</span>
+  <span class="logo-text">Grammar Timeline</span>
+  <span class="version-badge">v2.0 · Phase 2</span>
+</header>
+
+<!-- TAB NAVIGATION -->
+<nav class="tab-nav">
+  <button class="tab-btn mode1 active" data-tab="mode1">
+    <span class="tab-num">01</span> Text → Timeline
+  </button>
+  <button class="tab-btn mode2" data-tab="mode2">
+    <span class="tab-num">02</span> Timeline → Text
+  </button>
+</nav>
+
+<main>
+
+  <!-- ══════════════════════════════════════════
+       MODE 1 PANEL  (existing functionality)
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel active" id="panel-mode1">
+
+    <p class="hero-label">English Tense Visualizer</p>
+    <h1>See Time. <br>Understand Grammar.</h1>
+    <p class="subtitle">Enter a sentence to map its events across a chronological timeline.</p>
+
+    <div class="input-container">
+      <div class="textarea-wrapper">
+        <span class="textarea-label">English Sentence</span>
+        <textarea id="sentenceInput" placeholder="I arrived at the station, but the train had already left." rows="3"></textarea>
+        <div class="input-footer">
+          <span class="char-count" id="charCount">0 chars</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <button class="random-btn" id="randomBtn"><span class="dice">⚄</span> Random Story</button>
+            <button class="analyze-btn" id="analyzeBtn">
+              <span class="btn-icon">◈</span>
+              Analyze
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="samples">
+      <button class="sample-pill" data-text="I arrived at the station, but the train had already left.">Train &amp; Station</button>
+      <button class="sample-pill" data-text="By the time she called, he had already eaten dinner.">Dinner Call</button>
+      <button class="sample-pill" data-text="When I woke up, it had been raining all night.">Rainy Night</button>
+    </div>
+
+    <div class="loading-bar" id="loadingBar"><div class="loading-bar-inner"></div></div>
+
+    <div id="timeline-section">
+      <div class="section-header">
+        <span class="section-tag">Chronological View</span>
+        <div class="section-divider"></div>
+      </div>
+      <div class="original-text-box" id="originalText"></div>
+      <div class="timeline-card">
+        <canvas id="timelineCanvas"></canvas>
+      </div>
+      <div class="events-grid" id="eventsGrid"></div>
+    </div>
+
+  </div><!-- /panel-mode1 -->
+
+
+  <!-- ══════════════════════════════════════════
+       MODE 2 PANEL  (reverse: timeline → text)
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-mode2">
+
+    <p class="hero-label m2-hero-label">Reverse Timeline Generator</p>
+    <h1 class="m2-h1">Draw Time.<br>Generate Grammar.</h1>
+    <p class="subtitle">Click the timeline to place events, then generate a grammatically correct sentence.</p>
+
+    <div class="m2-workspace">
+      <p class="m2-hint">Click anywhere on the line to place an event node — <span>max 2 nodes</span></p>
+
+      <!-- Interactive canvas -->
+      <div class="m2-canvas-card" id="m2CanvasCard">
+        <canvas id="m2Canvas"></canvas>
+        <!-- Node label inputs injected here by JS -->
+      </div>
+
+      <!-- Node count pips -->
+      <div class="node-counter">
+        <div class="node-pip" id="pip1"></div>
+        <span class="node-counter-label" id="nodeCounterLabel">0 / 2 nodes placed</span>
+        <div class="node-pip" id="pip2"></div>
+      </div>
+
+      <!-- Reset -->
+      <button class="m2-reset-btn" id="m2ResetBtn">↺ Reset Timeline</button>
+    </div>
+
+    <!-- Generate button -->
+    <button class="m2-generate-btn" id="m2GenerateBtn" disabled>
+      <span style="font-size:1rem">✦</span>
+      Generate Sentence
+    </button>
+
+    <!-- Result -->
+    <div class="m2-result-section" id="m2ResultSection">
+      <div class="m2-result-card">
+        <div class="m2-result-header">
+          <span class="m2-result-tag">AI Output Preview</span>
+          <span class="m2-result-phase">Phase 4 · Mock Output</span>
+        </div>
+        <div class="m2-result-text" id="m2ResultText"></div>
+      </div>
+    </div>
+
+  </div><!-- /panel-mode2 -->
+
+</main>
+
+<script>
+// ── SAMPLE DATA ──
+const SAMPLE_DATA = [
+  {
+    document_id: "req_12345",
+    original_text: "I arrived at the station, but the train had already left.",
+    events: [
+      {
+        event_id: "evt_001",
+        chronological_order: 1,
+        event_name: "The train leaves",
+        extracted_phrase: "the train had already left",
+        tense: "Past Perfect",
+        tense_explanation: "<strong>Had left</strong> = past perfect. The train leaving happened <em>before</em> the reference point (arriving). English signals this earlier past with <em>had + past participle</em>.",
+        text_appearance_order: 2,
+        relative_time_offset: -50,
+        interval_hint: "unspecified_past"
+      },
+      {
+        event_id: "evt_002",
+        chronological_order: 2,
+        event_name: "I arrive at the station",
+        extracted_phrase: "I arrived at the station",
+        tense: "Past Simple",
+        tense_explanation: "<strong>Arrived</strong> = past simple. This is the reference point — the moment the story is anchored to. All other events are measured earlier than this one.",
+        text_appearance_order: 1,
+        relative_time_offset: 0,
+        interval_hint: "reference_point"
+      }
+    ]
+  }
+];
+
+// Additional sample datasets
+const SAMPLE_DATASETS = {
+  "By the time she called, he had already eaten dinner.": [
+    {
+      document_id: "req_dinner",
+      original_text: "By the time she called, he had already eaten dinner.",
+      events: [
+        { event_id: "e1", chronological_order: 1, event_name: "He eats dinner", extracted_phrase: "had already eaten dinner", tense: "Past Perfect", tense_explanation: "<strong>Had eaten</strong> = past perfect. Dinner was finished <em>before</em> the phone call. 'Already' emphasises the completed gap in time.", text_appearance_order: 2, relative_time_offset: -60, interval_hint: "unspecified_past" },
+        { event_id: "e2", chronological_order: 2, event_name: "She calls", extracted_phrase: "By the time she called", tense: "Past Simple", tense_explanation: "<strong>Called</strong> = past simple. This is the reference point. 'By the time' sets it up as the later of the two events.", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
+      ]
+    }
+  ],
+  "When I woke up, it had been raining all night.": [
+    {
+      document_id: "req_rain",
+      original_text: "When I woke up, it had been raining all night.",
+      events: [
+        { event_id: "r1", chronological_order: 1, event_name: "Rain begins (all night)", extracted_phrase: "had been raining all night", tense: "Past Perfect Continuous", tense_explanation: "<strong>Had been raining</strong> = past perfect continuous. The rain was an <em>ongoing activity</em> that started before waking and continued right up to that moment. The continuous form stresses duration.", text_appearance_order: 2, relative_time_offset: -80, interval_hint: "extended_past" },
+        { event_id: "r2", chronological_order: 2, event_name: "I wake up", extracted_phrase: "When I woke up", tense: "Past Simple", tense_explanation: "<strong>Woke</strong> = past simple. A single completed action in the past that acts as the reference point.", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
+      ]
+    }
+  ]
+};
+
+// ── STATE ──
+let currentAnimFrame = null;
+let animationProgress = 0;
+
+// ── UI ──
+const textarea = document.getElementById('sentenceInput');
+const charCount = document.getElementById('charCount');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const loadingBar = document.getElementById('loadingBar');
+const timelineSection = document.getElementById('timeline-section');
+const originalTextEl = document.getElementById('originalText');
+const eventsGrid = document.getElementById('eventsGrid');
+const canvas = document.getElementById('timelineCanvas');
+const ctx = canvas.getContext('2d');
+
+textarea.addEventListener('input', () => {
+  charCount.textContent = `${textarea.value.length} chars`;
+});
+
+document.querySelectorAll('.sample-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    textarea.value = pill.dataset.text;
+    charCount.textContent = `${textarea.value.length} chars`;
+    textarea.focus();
+  });
+});
+
+analyzeBtn.addEventListener('click', () => {
+  const text = textarea.value.trim();
+  if (!text) { textarea.focus(); return; }
+  runAnalysis(text);
+});
+
+textarea.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') analyzeBtn.click();
+});
+
+// ── ANALYSIS FLOW ──
+async function runAnalysis(text) {
+  analyzeBtn.disabled = true;
+  analyzeBtn.innerHTML = '<span class="btn-icon" style="animation:spin 1s linear infinite">◈</span> Analyzing…';
+
+  loadingBar.innerHTML = '<div class="loading-bar-inner"></div>';
+  loadingBar.classList.add('active');
+
+  try {
+    const res = await fetch('https://grammar-presentation.vercel.app/api/analyze', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ sentence: text })
+    });
+
+    if (!res.ok) throw new Error('API error ' + res.status);
+
+    const data = await res.json();
+    renderTimeline([data]);
+
+  } catch (err) {
+    console.error(err);
+    // Fallback to mock data on error
+    const data = resolveData(text);
+    renderTimeline(data);
+  } finally {
+    loadingBar.classList.remove('active');
+    analyzeBtn.disabled = false;
+    analyzeBtn.innerHTML = '<span class="btn-icon">◈</span> Analyze';
+  }
+}
+
+function resolveData(text) {
+  if (SAMPLE_DATASETS[text]) return SAMPLE_DATASETS[text];
+  // Use default sample with the user's text
+  const d = JSON.parse(JSON.stringify(SAMPLE_DATA));
+  d[0].original_text = text;
+  return d;
+}
+
+// ── RENDER ──
+function renderTimeline(dataArray) {
+  const doc = dataArray[0];
+  const events = [...doc.events].sort((a,b) => a.chronological_order - b.chronological_order);
+
+  originalTextEl.textContent = doc.original_text;
+  eventsGrid.innerHTML = '';
+
+  // Show section
+  timelineSection.classList.add('visible');
+  timelineSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Setup canvas
+  setupCanvas(events);
+
+  // Animate event cards
+  events.forEach((evt, i) => {
+    const card = buildEventCard(evt, i + 1);
+    eventsGrid.appendChild(card);
+    setTimeout(() => card.classList.add('shown'), 600 + i * 180);
+  });
+}
+
+// ── CANVAS SETUP ──
+function setupCanvas(events) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.offsetWidth - 64; // card padding
+  const H = 220;
+
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+
+  if (currentAnimFrame) cancelAnimationFrame(currentAnimFrame);
+  animationProgress = 0;
+
+  const startTime = performance.now();
+  const duration = 1800;
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    animationProgress = easeOutExpo(t);
+    drawTimeline(events, W, H, animationProgress);
+    if (t < 1) currentAnimFrame = requestAnimationFrame(animate);
+  }
+
+  currentAnimFrame = requestAnimationFrame(animate);
+}
+
+function easeOutExpo(x) {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+function easeOutBack(x) {
+  const c1 = 1.70158, c3 = c1 + 1;
+  return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+}
+
+// ── DRAW ──
+function drawTimeline(events, W, H, progress) {
+  ctx.clearRect(0, 0, W, H);
+
+  // Solid background fill — prevents the card's CSS gradient from showing through
+  ctx.save();
+  ctx.fillStyle = '#12121a';
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  const PAD_L = 60, PAD_R = 60;
+  const lineY = H * 0.52;
+  const usableW = W - PAD_L - PAD_R;
+
+  // Compute node positions
+  const offsets = events.map(e => e.relative_time_offset);
+  const minOff = Math.min(...offsets);
+  const maxOff = Math.max(...offsets);
+  const range = maxOff - minOff || 100;
+
+  const nodes = events.map(evt => ({
+    ...evt,
+    x: PAD_L + ((evt.relative_time_offset - minOff) / range) * usableW,
+    y: lineY
+  }));
+
+  // ── Axis line
+  const lineEndX = PAD_L + usableW * progress;
+
+  // Glowing line
+  const grad = ctx.createLinearGradient(PAD_L, 0, lineEndX, 0);
+  grad.addColorStop(0, 'rgba(200,180,255,0.12)');
+  grad.addColorStop(0.5, 'rgba(200,180,255,0.5)');
+  grad.addColorStop(1, 'rgba(126,232,200,0.8)');
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(200,180,255,0.4)';
+  ctx.shadowBlur = 10;
+  ctx.beginPath();
+  ctx.moveTo(PAD_L, lineY);
+  ctx.lineTo(lineEndX, lineY);
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.restore();
+
+  // Arrow tip
+  if (progress > 0.9) {
+    const tip = lineEndX;
+    const arrowAlpha = (progress - 0.9) / 0.1;
+    ctx.save();
+    ctx.globalAlpha = arrowAlpha;
+    ctx.fillStyle = 'rgba(126,232,200,0.8)';
+    ctx.beginPath();
+    ctx.moveTo(tip + 8, lineY);
+    ctx.lineTo(tip, lineY - 5);
+    ctx.lineTo(tip, lineY + 5);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // "PAST" label
+    ctx.save();
+    ctx.globalAlpha = arrowAlpha * 0.5;
+    ctx.font = '500 9px DM Mono, monospace';
+    ctx.fillStyle = '#6b6b80';
+    ctx.letterSpacing = '0.15em';
+    ctx.fillText('PAST', PAD_L - 2, lineY - 18);
+    ctx.fillText('NOW', W - PAD_R + 14, lineY - 18);
+    ctx.restore();
+  }
+
+  // ── Nodes
+  nodes.forEach((node, i) => {
+    const nodeProgress = Math.max(0, Math.min(1,
+      (progress - (i / nodes.length) * 0.4) / 0.6
+    ));
+    if (nodeProgress <= 0) return;
+
+    const scale = easeOutBack(Math.min(nodeProgress * 1.5, 1));
+    const nx = node.x;
+    const ny = node.y;
+
+    const color = getTenseColor(node.tense);
+
+    // Connector to label
+    const labelY = i % 2 === 0 ? ny - 80 : ny + 60;
+    const connAlpha = Math.min(nodeProgress * 2, 1) * 0.35;
+    ctx.save();
+    ctx.globalAlpha = connAlpha;
+    ctx.setLineDash([2, 4]);
+    ctx.strokeStyle = color.main;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(nx, ny);
+    ctx.lineTo(nx, labelY + (i % 2 === 0 ? 12 : -12));
+    ctx.stroke();
+    ctx.restore();
+
+    // Glow ring
+    const glowAlpha = 0.12 * scale;
+    ctx.save();
+    ctx.globalAlpha = glowAlpha;
+    const glowGrad = ctx.createRadialGradient(nx, ny, 0, nx, ny, 28 * scale);
+    glowGrad.addColorStop(0, color.main);
+    glowGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = glowGrad;
+    ctx.beginPath();
+    ctx.arc(nx, ny, 28 * scale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Node circle
+    ctx.save();
+    ctx.shadowColor = color.main;
+    ctx.shadowBlur = 14 * scale;
+    ctx.globalAlpha = scale;
+
+    // Outer ring
+    ctx.beginPath();
+    ctx.arc(nx, ny, 12 * scale, 0, Math.PI * 2);
+    ctx.strokeStyle = color.main;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Inner fill
+    const nodeGrad = ctx.createRadialGradient(nx - 3*scale, ny - 3*scale, 0, nx, ny, 9*scale);
+    nodeGrad.addColorStop(0, color.light);
+    nodeGrad.addColorStop(1, color.main);
+    ctx.beginPath();
+    ctx.arc(nx, ny, 8 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = nodeGrad;
+    ctx.fill();
+
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(nx, ny, 2.5 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.restore();
+
+    // Order badge
+    ctx.save();
+    ctx.globalAlpha = Math.min(nodeProgress * 2, 1);
+    ctx.font = `600 10px Syne, sans-serif`;
+    ctx.fillStyle = color.main;
+    ctx.textAlign = 'center';
+    ctx.fillText(`#${node.chronological_order}`, nx, lineY + (i % 2 === 0 ? 28 : -20));
+    ctx.restore();
+
+    // Event label
+    const labelAlpha = Math.min((nodeProgress - 0.4) * 2.5, 1);
+    if (labelAlpha <= 0) return;
+    ctx.save();
+    ctx.globalAlpha = labelAlpha;
+    ctx.textAlign = 'center';
+
+    // Pill background — drawn at full alpha so glow never bleeds through
+    ctx.save();
+    ctx.globalAlpha = labelAlpha;
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+
+    const labelText = node.event_name;
+    ctx.font = `600 11px Syne, sans-serif`;
+    const tw = ctx.measureText(labelText).width;
+    const pw = tw + 20, ph = 22;
+    const px = nx - pw/2;
+    const py = i % 2 === 0 ? ny - 95 : ny + 48;
+
+    // Fill pill with fully opaque solid color (ignore globalAlpha for fill only)
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#12121a';
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    ctx.roundRect(px, py, pw, ph, 4);
+    ctx.fill();
+
+    // Border
+    ctx.globalAlpha = labelAlpha * 0.5;
+    ctx.strokeStyle = color.main;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Event name text
+    ctx.globalAlpha = labelAlpha;
+    ctx.fillStyle = '#e8e8f0';
+    ctx.textAlign = 'center';
+    ctx.fillText(labelText, nx, py + 15);
+
+    // Tense label
+    ctx.font = `400 9px DM Mono, monospace`;
+    ctx.fillStyle = color.main;
+    ctx.globalAlpha = labelAlpha * 0.8;
+    ctx.fillText(node.tense, nx, i % 2 === 0 ? py - 6 : py + ph + 12);
+
+    ctx.restore();
+  });
+}
+
+function getTenseColor(tense) {
+  const t = (tense || '').toLowerCase();
+  if (t.includes('past perfect') && t.includes('continuous')) return { main: '#ff8c6b', light: '#ffb59b' };
+  if (t.includes('past perfect')) return { main: '#c8b4ff', light: '#ddd0ff' };
+  if (t.includes('past simple') || t.includes('simple past')) return { main: '#7ee8c8', light: '#aef2df' };
+  if (t.includes('past continuous')) return { main: '#ff8c6b', light: '#ffb59b' };
+  if (t.includes('present perfect')) return { main: '#f5d76e', light: '#f9e89e' };
+  if (t.includes('present')) return { main: '#6ee7f5', light: '#9ef0f9' };
+  return { main: '#a0a0b8', light: '#c0c0d0' };
+}
+
+// ── EVENT CARD ──
+function buildEventCard(evt, idx) {
+  const card = document.createElement('div');
+  card.className = 'event-card';
+
+  const tenseClass = getTenseClass(evt.tense);
+  const explanation = evt.tense_explanation || null;
+
+  const badgeHTML = explanation
+    ? `<span class="tense-explain-wrap">
+        <span class="tense-badge ${tenseClass}">${evt.tense}</span>
+        <span class="tense-explain-icon">?</span>
+        <div class="tense-tooltip">${explanation}</div>
+       </span>`
+    : `<span class="tense-badge ${tenseClass}">${evt.tense}</span>`;
+
+  card.innerHTML = `
+    <div class="event-number">EVENT ${String(idx).padStart(2,'0')} · CHRONOLOGICAL #${evt.chronological_order}</div>
+    <div class="event-name">${evt.event_name}</div>
+    <div class="event-phrase">"${evt.extracted_phrase}"</div>
+    ${badgeHTML}
+  `;
+
+  return card;
+}
+
+function getTenseClass(tense) {
+  const t = (tense || '').toLowerCase();
+  if (t.includes('past perfect') && t.includes('continuous')) return 'tense-past-continuous';
+  if (t.includes('past perfect')) return 'tense-past-perfect';
+  if (t.includes('past simple') || t.includes('simple past')) return 'tense-past-simple';
+  if (t.includes('past continuous')) return 'tense-past-continuous';
+  if (t.includes('present perfect')) return 'tense-present-perfect';
+  return 'tense-default';
+}
+
+// ── RANDOM STORIES ──
+const RANDOM_STORIES = [
+  {
+    text: "She had been working on the novel for three years before she finally submitted it to the publisher, who had already read two of her earlier drafts.",
+    data: [{
+      document_id: "rnd_01", original_text: "She had been working on the novel for three years before she finally submitted it to the publisher, who had already read two of her earlier drafts.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Publisher reads drafts", extracted_phrase:"had already read two of her earlier drafts", tense:"Past Perfect", tense_explanation:"<strong>Had read</strong> = past perfect. The publisher's reading happened <em>before</em> the submission — the earliest event in the chain. 'Already' confirms it was fully done.", text_appearance_order:3, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"She works on the novel", extracted_phrase:"had been working on the novel for three years", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been working</strong> = past perfect continuous. An activity that stretched over a long period (<em>three years</em>) and was still ongoing right up until it stopped. The continuous form stresses duration.", text_appearance_order:1, relative_time_offset:-30, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"She submits the manuscript", extracted_phrase:"she finally submitted it", tense:"Past Simple", tense_explanation:"<strong>Submitted</strong> = past simple. The reference point — a single completed act in the past that everything else is measured against.", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "By the time the rescue team reached the village, the storm had destroyed most of the buildings that the locals had constructed over generations.",
+    data: [{
+      document_id: "rnd_02", original_text: "By the time the rescue team reached the village, the storm had destroyed most of the buildings that the locals had constructed over generations.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Locals build the buildings", extracted_phrase:"the locals had constructed over generations", tense:"Past Perfect", tense_explanation:"<strong>Had constructed</strong> = past perfect. The oldest event: buildings built across many generations, long before the storm. The past perfect places this deepest in the past.", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Storm destroys buildings", extracted_phrase:"the storm had destroyed most of the buildings", tense:"Past Perfect", tense_explanation:"<strong>Had destroyed</strong> = past perfect. The destruction was already complete by the time the team arrived — another event earlier than the reference point.", text_appearance_order:2, relative_time_offset:-20, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Rescue team arrives", extracted_phrase:"the rescue team reached the village", tense:"Past Simple", tense_explanation:"<strong>Reached</strong> = past simple. The reference point. 'By the time' makes this the latest event — everything else had already happened before this moment.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "Marcus realized he had forgotten his passport only after he had already checked in his luggage, and the gate was closing.",
+    data: [{
+      document_id: "rnd_03", original_text: "Marcus realized he had forgotten his passport only after he had already checked in his luggage, and the gate was closing.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Marcus forgets his passport", extracted_phrase:"he had forgotten his passport", tense:"Past Perfect", tense_explanation:"<strong>Had forgotten</strong> = past perfect. The forgetting happened at an unspecified point <em>before</em> everything else — it was already a fait accompli when the story begins.", text_appearance_order:2, relative_time_offset:-80, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"He checks in luggage", extracted_phrase:"he had already checked in his luggage", tense:"Past Perfect", tense_explanation:"<strong>Had checked in</strong> = past perfect. This happened before Marcus realized. 'Already' emphasises it was done and couldn't be undone.", text_appearance_order:3, relative_time_offset:-30, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Gate is closing", extracted_phrase:"the gate was closing", tense:"Past Continuous", tense_explanation:"<strong>Was closing</strong> = past continuous. An <em>ongoing background action</em> happening at the same moment as the realization. It describes the scene rather than a completed event.", text_appearance_order:4, relative_time_offset:-5, interval_hint:"simultaneous" },
+        { event_id:"r4", chronological_order:4, event_name:"Marcus realizes the problem", extracted_phrase:"Marcus realized", tense:"Past Simple", tense_explanation:"<strong>Realized</strong> = past simple. The reference point — the moment of sudden awareness that anchors the whole story.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
+    data: [{
+      document_id: "rnd_04", original_text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Ancient healers use the compound", extracted_phrase:"ancient healers had been using for centuries", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been using</strong> = past perfect continuous. A repeated, habitual practice sustained over a very long time (<em>centuries</em>). The continuous form highlights the unbroken duration.", text_appearance_order:2, relative_time_offset:-120, interval_hint:"extended_past" },
+        { event_id:"r2", chronological_order:2, event_name:"No one understands its mechanism", extracted_phrase:"no one had ever understood why it worked", tense:"Past Perfect", tense_explanation:"<strong>Had understood</strong> (negative) = past perfect. 'Ever' + past perfect signals a gap that persisted all the way from the distant past up to the discovery.", text_appearance_order:3, relative_time_offset:-40, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Scientist discovers the compound", extracted_phrase:"The scientist has discovered", tense:"Present Perfect", tense_explanation:"<strong>Has discovered</strong> = present perfect. The discovery happened recently and is relevant <em>right now</em>. Present perfect connects a past action to the present moment.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
+    data: [{
+      document_id: "rnd_05", original_text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"She sings the melody", extracted_phrase:"the melody she had sung", tense:"Past Perfect", tense_explanation:"<strong>Had sung</strong> = past perfect. The performance happened during the concert — earlier than every other event. Past perfect anchors it as the oldest action.", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Concert ends", extracted_phrase:"the concert had ended", tense:"Past Perfect", tense_explanation:"<strong>Had ended</strong> = past perfect. Completed <em>before</em> she sat down. 'After' introduces past perfect because the ending is a prerequisite for what follows.", text_appearance_order:1, relative_time_offset:-30, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Crowd disperses", extracted_phrase:"the crowd had dispersed", tense:"Past Perfect", tense_explanation:"<strong>Had dispersed</strong> = past perfect. Also completed before the main scene. Two past perfect clauses here signal two things that were both already done.", text_appearance_order:2, relative_time_offset:-15, interval_hint:"unspecified_past" },
+        { event_id:"r4", chronological_order:4, event_name:"She sits humming alone", extracted_phrase:"she sat alone, still humming", tense:"Past Simple", tense_explanation:"<strong>Sat</strong> is the main action — past simple sets the scene. <strong>Humming</strong> happens at the <em>exact same time</em> as sitting; it's a simultaneous background action, not a separate event.", text_appearance_order:3, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
+    data: [{
+      document_id: "rnd_06", original_text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Grandfather grows up in the city", extracted_phrase:"his grandfather had grown up", tense:"Past Perfect", tense_explanation:"<strong>Had grown up</strong> = past perfect. The grandfather's childhood is the oldest event — placed furthest in the past relative to the speaker's lifetime.", text_appearance_order:2, relative_time_offset:-110, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Family tells stories", extracted_phrase:"his family had been telling him stories his whole life", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been telling</strong> = past perfect continuous. A repeated action that continued throughout his whole life up to the present — continuous form stresses the unbroken habit.", text_appearance_order:3, relative_time_offset:-40, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"He still hasn't visited", extracted_phrase:"He has never visited the city", tense:"Present Perfect", tense_explanation:"<strong>Has never visited</strong> = present perfect negative. 'Never' + present perfect describes something that <em>hasn't happened</em> in a period from the past up to now — and may still happen.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
+    data: [{
+      document_id: "rnd_07", original_text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Intruder enters the building", extracted_phrase:"someone had entered the building", tense:"Past Perfect", tense_explanation:"<strong>Had entered</strong> = past perfect. 'Long before' makes this the earliest event — the entry predates even the alarm.", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Alarm is triggered", extracted_phrase:"the alarm had been triggered", tense:"Past Perfect", tense_explanation:"<strong>Had been triggered</strong> = past perfect passive. The alarm going off was also before the discovery, so past perfect is used — even though it came after the entry.", text_appearance_order:4, relative_time_offset:-50, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Investigators review footage", extracted_phrase:"investigators were reviewing the footage", tense:"Past Continuous", tense_explanation:"<strong>Were reviewing</strong> = past continuous. An <em>ongoing activity</em> in progress when the discovery was made. 'While' signals this is the background action, not the main event.", text_appearance_order:1, relative_time_offset:-10, interval_hint:"simultaneous" },
+        { event_id:"r4", chronological_order:4, event_name:"Investigators make the discovery", extracted_phrase:"they found", tense:"Past Simple", tense_explanation:"<strong>Found</strong> = past simple. The main event — a completed act of discovery that interrupts the ongoing review. Past simple cuts through the continuous background.", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
+    data: [{
+      document_id: "rnd_08", original_text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Plants die in the frost", extracted_phrase:"the plants that had died in the frost", tense:"Past Perfect", tense_explanation:"<strong>Had died</strong> = past perfect. The frost damage happened before Elena's work began — past perfect within a past perfect context, pushing it furthest back.", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Elena tends the garden", extracted_phrase:"Elena had spent every weekend tending it", tense:"Past Perfect", tense_explanation:"<strong>Had spent</strong> = past perfect. A repeated past action (every weekend) that was completed before the present result. The effort explains <em>why</em> it looks beautiful now.", text_appearance_order:2, relative_time_offset:-50, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Elena replaces the dead plants", extracted_phrase:"had replaced all the plants", tense:"Past Perfect", tense_explanation:"<strong>Had replaced</strong> = past perfect. Also done before now — another completed preparation that feeds into the present beautiful state.", text_appearance_order:3, relative_time_offset:-20, interval_hint:"unspecified_past" },
+        { event_id:"r4", chronological_order:4, event_name:"Garden looks beautiful now", extracted_phrase:"The garden looks beautiful now", tense:"Present Simple", tense_explanation:"<strong>Looks</strong> = present simple. The current state — the result of everything that happened before. Present simple describes an ongoing truth right now.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  }
+];
+
+let lastRandomIndex = -1;
+
+function getRandomStory() {
+  let idx;
+  do { idx = Math.floor(Math.random() * RANDOM_STORIES.length); }
+  while (idx === lastRandomIndex && RANDOM_STORIES.length > 1);
+  lastRandomIndex = idx;
+  return RANDOM_STORIES[idx];
+}
+
+// Typewriter effect
+function typewriterEffect(targetEl, text, onDone) {
+  targetEl.value = '';
+  charCount.textContent = '0 chars';
+  let i = 0;
+  const speed = Math.max(18, Math.min(38, Math.floor(1800 / text.length)));
+
+  // Show cursor
+  targetEl.style.caretColor = 'var(--accent2)';
+
+  function tick() {
+    if (i <= text.length) {
+      targetEl.value = text.slice(0, i);
+      charCount.textContent = `${targetEl.value.length} chars`;
+      i++;
+      setTimeout(tick, speed + Math.random() * 18);
+    } else {
+      if (onDone) onDone();
+    }
+  }
+  tick();
+}
+
+// Wire up random button
+const randomBtn = document.getElementById('randomBtn');
+let _lastRandomData = null;
+
+randomBtn.addEventListener('click', () => {
+  const story = getRandomStory();
+  _lastRandomData = story.data;
+
+  // Dice roll animation
+  randomBtn.classList.add('rolling');
+  setTimeout(() => randomBtn.classList.remove('rolling'), 500);
+
+  randomBtn.disabled = true;
+  analyzeBtn.disabled = true;
+
+  typewriterEffect(textarea, story.text, () => {
+    randomBtn.disabled = false;
+    analyzeBtn.disabled = false;
+    // Register this data so analyze uses it
+    SAMPLE_DATASETS[story.text] = story.data;
+  });
+});
+// ── END RANDOM STORIES ──
+
+const style = document.createElement('style');
+style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
+document.head.appendChild(style);
+
+// ── RESIZE ──
+window.addEventListener('resize', () => {
+  if (timelineSection.classList.contains('visible') && eventsGrid.children.length > 0) {
+    // Re-draw canvas with last events
+    // (simple: just re-run draw at full progress)
+    const events = [...SAMPLE_DATA[0].events].sort((a,b) => a.chronological_order - b.chronological_order);
+    const W = canvas.parentElement.offsetWidth - 64;
+    const H = 220;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+    drawTimeline(events, W, H, 1);
+  }
+});
+
+// Default textarea value
+textarea.value = "I arrived at the station, but the train had already left.";
+charCount.textContent = `${textarea.value.length} chars`;
+
+// ════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ════════════════════════════════════════════════════
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + target).classList.add('active');
+
+    // Init Mode 2 canvas on first switch
+    if (target === 'mode2') initM2Canvas();
+  });
+});
+
+// ════════════════════════════════════════════════════
+//  MODE 2 — INTERACTIVE TIMELINE → TEXT
+// ════════════════════════════════════════════════════
+const m2Card       = document.getElementById('m2CanvasCard');
+const m2Canvas     = document.getElementById('m2Canvas');
+const m2Ctx        = m2Canvas.getContext('2d');
+const pip1El       = document.getElementById('pip1');
+const pip2El       = document.getElementById('pip2');
+const nodeCounterLabelEl = document.getElementById('nodeCounterLabel');
+const m2GenerateBtn = document.getElementById('m2GenerateBtn');
+const m2ResetBtn   = document.getElementById('m2ResetBtn');
+const m2ResultSection = document.getElementById('m2ResultSection');
+const m2ResultText = document.getElementById('m2ResultText');
+
+// ── State
+let m2Nodes = [];           // [{x, xRatio, inputEl, wrapEl}]
+let m2Initialized = false;
+let m2W = 0, m2H = 180;
+const M2_PAD = 50;
+const M2_LINE_Y_RATIO = 0.52;
+
+function initM2Canvas() {
+  if (m2Initialized) { m2DrawBase(); return; }
+  m2Initialized = true;
+  m2ResizeCanvas();
+  m2DrawBase();
+  m2Canvas.addEventListener('click', onM2Click);
+  window.addEventListener('resize', () => { if (document.getElementById('panel-mode2').classList.contains('active')) { m2ResizeCanvas(); m2DrawBase(); m2RedrawNodes(); } });
+}
+
+function m2ResizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  m2W = m2Card.offsetWidth - 64;
+  m2H = 180;
+  m2Canvas.style.width  = m2W + 'px';
+  m2Canvas.style.height = m2H + 'px';
+  m2Canvas.width  = m2W * dpr;
+  m2Canvas.height = m2H * dpr;
+  m2Ctx.scale(dpr, dpr);
+}
+
+// ── Draw the base empty timeline
+function m2DrawBase() {
+  const W = m2W, H = m2H;
+  const lineY = H * M2_LINE_Y_RATIO;
+  m2Ctx.clearRect(0, 0, W, H);
+
+  // Opaque background — prevents card CSS gradient bleeding through
+  m2Ctx.save();
+  m2Ctx.fillStyle = '#12121a';
+  m2Ctx.fillRect(0, 0, W, H);
+  m2Ctx.restore();
+
+  // Dashed background guide line
+  m2Ctx.save();
+  m2Ctx.setLineDash([4, 8]);
+  m2Ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  m2Ctx.lineWidth = 1;
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(M2_PAD, lineY);
+  m2Ctx.lineTo(W - M2_PAD, lineY);
+  m2Ctx.stroke();
+  m2Ctx.restore();
+
+  // Solid glowing line
+  const grad = m2Ctx.createLinearGradient(M2_PAD, 0, W - M2_PAD, 0);
+  grad.addColorStop(0,   'rgba(126,232,200,0.05)');
+  grad.addColorStop(0.5, 'rgba(126,232,200,0.45)');
+  grad.addColorStop(1,   'rgba(245,215,110,0.35)');
+  m2Ctx.save();
+  m2Ctx.setLineDash([]);
+  m2Ctx.shadowColor = 'rgba(126,232,200,0.25)';
+  m2Ctx.shadowBlur = 8;
+  m2Ctx.strokeStyle = grad;
+  m2Ctx.lineWidth = 1.5;
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(M2_PAD, lineY);
+  m2Ctx.lineTo(W - M2_PAD, lineY);
+  m2Ctx.stroke();
+  m2Ctx.restore();
+
+  // Arrow
+  m2Ctx.save();
+  m2Ctx.fillStyle = 'rgba(245,215,110,0.6)';
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(W - M2_PAD + 10, lineY);
+  m2Ctx.lineTo(W - M2_PAD,      lineY - 5);
+  m2Ctx.lineTo(W - M2_PAD,      lineY + 5);
+  m2Ctx.closePath();
+  m2Ctx.fill();
+  m2Ctx.restore();
+
+  // Labels
+  m2Ctx.save();
+  m2Ctx.font = '500 9px DM Mono, monospace';
+  m2Ctx.fillStyle = 'rgba(107,107,128,0.6)';
+  m2Ctx.textAlign = 'left';
+  m2Ctx.fillText('PAST', M2_PAD, lineY - 18);
+  m2Ctx.textAlign = 'right';
+  m2Ctx.fillText('PRESENT', W - M2_PAD, lineY - 18);
+  m2Ctx.restore();
+
+  // Click hint when empty
+  if (m2Nodes.length === 0) {
+    m2Ctx.save();
+    m2Ctx.font = '400 11px DM Mono, monospace';
+    m2Ctx.fillStyle = 'rgba(107,107,128,0.35)';
+    m2Ctx.textAlign = 'center';
+    m2Ctx.fillText('click to place event', W / 2, lineY + 30);
+    m2Ctx.restore();
+  }
+}
+
+// ── Draw all placed nodes onto canvas
+function m2RedrawNodes() {
+  m2DrawBase();
+  m2Nodes.forEach((node, i) => m2DrawNode(node.x, i, 1));
+}
+
+function m2DrawNode(x, idx, scale) {
+  const lineY = m2H * M2_LINE_Y_RATIO;
+  const color = idx === 0 ? '#c8b4ff' : '#7ee8c8';
+  const colorLight = idx === 0 ? '#ddd0ff' : '#aef2df';
+
+  // Stem line
+  m2Ctx.save();
+  m2Ctx.setLineDash([2, 4]);
+  m2Ctx.strokeStyle = color + '55';
+  m2Ctx.lineWidth = 1;
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(x, lineY - 10 * scale);
+  m2Ctx.lineTo(x, lineY - 55);
+  m2Ctx.stroke();
+  m2Ctx.restore();
+
+  // Glow
+  if (scale > 0.01) {
+  m2Ctx.save();
+  const gG = m2Ctx.createRadialGradient(x, lineY, 0, x, lineY, Math.max(0.1, 24 * scale));
+  gG.addColorStop(0, color + '22');
+  gG.addColorStop(1, 'transparent');
+  m2Ctx.fillStyle = gG;
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 24 * scale), 0, Math.PI * 2);
+  m2Ctx.fill();
+  m2Ctx.restore();
+  }
+
+  // Outer ring
+  m2Ctx.save();
+  m2Ctx.shadowColor = color;
+  m2Ctx.shadowBlur = 12 * scale;
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 11 * scale), 0, Math.PI * 2);
+  m2Ctx.strokeStyle = color;
+  m2Ctx.lineWidth = 1.5;
+  m2Ctx.stroke();
+
+  // Fill
+  const safeR = Math.max(0.1, 8 * scale);
+  const ng = m2Ctx.createRadialGradient(x - 2*scale, lineY - 2*scale, 0, x, lineY, safeR);
+  ng.addColorStop(0, colorLight);
+  ng.addColorStop(1, color);
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 7 * scale), 0, Math.PI * 2);
+  m2Ctx.fillStyle = ng;
+  m2Ctx.fill();
+
+  // Center dot
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 2 * scale), 0, Math.PI * 2);
+  m2Ctx.fillStyle = '#fff';
+  m2Ctx.fill();
+  m2Ctx.restore();
+
+  // Chronological badge
+  m2Ctx.save();
+  m2Ctx.font = '600 9px Syne, sans-serif';
+  m2Ctx.fillStyle = color;
+  m2Ctx.textAlign = 'center';
+  m2Ctx.fillText('#' + (idx + 1), x, lineY + 26);
+  m2Ctx.restore();
+}
+
+// ── Handle click on canvas
+function onM2Click(e) {
+  if (m2Nodes.length >= 2) return;
+  if (m2Card.classList.contains('full') && m2Nodes.length >= 2) return;
+
+  const rect = m2Canvas.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const lineY = m2H * M2_LINE_Y_RATIO;
+
+  // Only register clicks near the line (±40px)
+  const clickY = e.clientY - rect.top;
+  if (Math.abs(clickY - lineY) > 60) return;
+
+  // Clamp x within valid range
+  const x = Math.max(M2_PAD + 20, Math.min(m2W - M2_PAD - 20, clickX));
+  const xRatio = (x - M2_PAD) / (m2W - 2 * M2_PAD);
+
+  const idx = m2Nodes.length;
+
+  // Pop animation via quick redraw loop
+  let popT = 0;
+  const popDur = 300;
+  const popStart = performance.now();
+  function popAnimate(now) {
+    popT = Math.min((now - popStart) / popDur, 1);
+    const s = easeOutBack(Math.min(popT * 1.6, 1));
+    m2RedrawNodes();
+    m2DrawNode(x, idx, s);
+    if (popT < 1) requestAnimationFrame(popAnimate);
+    else { m2RedrawNodes(); } // finalize
+  }
+  requestAnimationFrame(popAnimate);
+
+  // Create input label
+  const wrap = createNodeInput(x, idx);
+  m2Nodes.push({ x, xRatio, wrapEl: wrap, inputEl: wrap.querySelector('input') });
+
+  updateNodeCounter();
+
+  if (m2Nodes.length === 2) {
+    m2Card.classList.add('full');
+    m2GenerateBtn.disabled = false;
+  }
+}
+
+function createNodeInput(x, idx) {
+  const cardRect = m2Card.getBoundingClientRect();
+  const canvasRect = m2Canvas.getBoundingClientRect();
+  const lineY_px = m2H * M2_LINE_Y_RATIO;
+  // Position relative to card
+  const topOffset = (canvasRect.top - cardRect.top) + lineY_px - 75;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'node-label-wrap';
+  wrap.style.cssText = `left:${x + 32}px; top:${topOffset}px; animation: inputSlide 0.3s cubic-bezier(0.16,1,0.3,1) both;`;
+
+  const colors = ['#c8b4ff', '#7ee8c8'];
+  const placeholders = ['e.g. arrive', 'e.g. leave'];
+
+  wrap.innerHTML = `
+    <span class="node-order-badge" style="color:${colors[idx]}">EVENT ${idx + 1}</span>
+    <input class="node-input" type="text" placeholder="${placeholders[idx]}" 
+           style="border-color:${colors[idx]}44; color:${colors[idx]};"
+           maxlength="20" spellcheck="false" autocomplete="off" />
+  `;
+  m2Card.appendChild(wrap);
+  setTimeout(() => wrap.querySelector('input').focus(), 80);
+  return wrap;
+}
+
+function updateNodeCounter() {
+  const n = m2Nodes.length;
+  pip1El.classList.toggle('filled', n >= 1);
+  pip2El.classList.toggle('filled', n >= 2);
+  if (n === 2) {
+    nodeCounterLabelEl.textContent = '2 / 2 nodes — ready!';
+    nodeCounterLabelEl.style.color = 'var(--accent2)';
+  } else if (n === 1) {
+    nodeCounterLabelEl.textContent = '1 / 2 nodes placed';
+    nodeCounterLabelEl.style.color = '';
+  } else {
+    nodeCounterLabelEl.textContent = '0 / 2 nodes placed';
+    nodeCounterLabelEl.style.color = '';
+  }
+}
+
+// ── Reset
+m2ResetBtn.addEventListener('click', () => {
+  m2Nodes.forEach(n => n.wrapEl.remove());
+  m2Nodes = [];
+  m2Card.classList.remove('full');
+  m2GenerateBtn.disabled = true;
+  m2ResultSection.classList.remove('visible');
+  m2ResultText.innerHTML = '';
+  updateNodeCounter();
+  m2DrawBase();
+});
+
+// ── Generate mock sentence
+m2GenerateBtn.addEventListener('click', () => {
+  if (m2Nodes.length < 2) return;
+
+  // Sort nodes left → right (chronological order)
+  const sorted = [...m2Nodes].sort((a, b) => a.x - b.x);
+  const firstWord  = sorted[0].inputEl.value.trim() || 'Event A';
+  const secondWord = sorted[1].inputEl.value.trim() || 'Event B';
+
+  // Capitalise first letter
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+  const mockParts = [
+    { text: `${cap(firstWord)} happened first `, cls: 'highlight-past-perfect' },
+    { text: '(Past Perfect). ', cls: '' },
+    { text: `${cap(secondWord)} happened second `, cls: 'highlight-past-simple' },
+    { text: '(Simple Past). ', cls: '' },
+    { text: '✦ AI generated sentence will appear here in Phase 4!', cls: 'phase-note' }
+  ];
+
+  // Build full plain text for typewriter
+  const fullText = mockParts.map(p => p.text).join('');
+
+  m2ResultSection.classList.add('visible');
+  m2ResultText.innerHTML = '';
+
+  // Typewriter with rich formatting
+  let charIdx = 0;
+  let partIdx = 0;
+  let partCharIdx = 0;
+  let currentSpan = null;
+
+  const speed = 28;
+
+  function tick() {
+    if (partIdx >= mockParts.length) {
+      // Remove cursor
+      const cur = m2ResultText.querySelector('.m2-typing-cursor');
+      if (cur) cur.remove();
+      return;
+    }
+
+    const part = mockParts[partIdx];
+    if (partCharIdx === 0) {
+      // Create new span for this part
+      currentSpan = document.createElement(part.cls === 'phase-note' ? 'span' : 'span');
+      if (part.cls) currentSpan.className = part.cls;
+      m2ResultText.appendChild(currentSpan);
+    }
+
+    currentSpan.textContent += part.text[partCharIdx];
+    partCharIdx++;
+
+    if (partCharIdx >= part.text.length) {
+      partIdx++;
+      partCharIdx = 0;
+    }
+
+    // Move/update cursor
+    let cursor = m2ResultText.querySelector('.m2-typing-cursor');
+    if (!cursor) {
+      cursor = document.createElement('span');
+      cursor.className = 'm2-typing-cursor';
+    }
+    m2ResultText.appendChild(cursor);
+
+    setTimeout(tick, speed + Math.random() * 14);
+  }
+
+  setTimeout(tick, 200);
+});
+</script>
+</body>
+</html>
