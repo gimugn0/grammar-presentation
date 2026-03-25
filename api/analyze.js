@@ -4,7 +4,18 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  const { sentence } = req.body;
+  // Parse body manually if needed
+  let body = req.body;
+  if (typeof body === 'string') {
+    try { body = JSON.parse(body); } catch (e) {}
+  }
+  if (!body) {
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    try { body = JSON.parse(Buffer.concat(chunks).toString()); } catch (e) {}
+  }
+
+  const { sentence } = body;
 
   const prompt = `You are a grammar analysis engine. Analyze the English sentence below and return ONLY a valid JSON object — no markdown, no explanation, no code fences.
 
@@ -51,16 +62,10 @@ Sentence to analyze: "${sentence}"`;
     );
 
     const data = await response.json();
-
-    // Log the full response so we can debug
     console.log('Gemini raw response:', JSON.stringify(data));
 
     if (!data.candidates || !data.candidates[0]) {
-      console.error('No candidates in response:', JSON.stringify(data));
-      return res.status(500).json({ 
-        error: 'No candidates returned', 
-        gemini_response: data 
-      });
+      return res.status(500).json({ error: 'No candidates returned', gemini_response: data });
     }
 
     const raw = data.candidates[0].content.parts[0].text;
