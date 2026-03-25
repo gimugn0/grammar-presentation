@@ -16,34 +16,6 @@ export default async function handler(req, res) {
 
   const { sentence } = body;
 
-  const prompt = `You are a grammar analysis engine. Analyze the English sentence below and return ONLY a valid JSON object — no markdown, no explanation, no code fences.
-
-The JSON must follow this exact structure:
-{
-  "document_id": "req_001",
-  "original_text": "<the original sentence>",
-  "events": [
-    {
-      "event_id": "evt_001",
-      "chronological_order": 1,
-      "event_name": "<short label, max 5 words>",
-      "extracted_phrase": "<the exact clause from the sentence>",
-      "tense": "<e.g. Past Perfect, Past Simple, Present Perfect, Past Continuous>",
-      "tense_explanation": "<one sentence explaining why this tense is used, with the key verb in <strong> tags>",
-      "text_appearance_order": 1,
-      "relative_time_offset": -60
-    }
-  ]
-}
-
-Rules:
-- chronological_order: 1 = earliest event in real time
-- relative_time_offset: 0 = the reference/anchor event, negative = earlier, spacing reflects relative gap
-- Include every clause that represents a distinct event
-- tense_explanation must be plain English, educational, suitable for a grammar learner
-
-Sentence to analyze: "${sentence}"`;
-
   try {
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -55,9 +27,7 @@ Sentence to analyze: "${sentence}"`;
         model: 'llama-3.3-70b-versatile',
         temperature: 0.1,
         response_format: { type: 'json_object' },
-        messages: [
-          { role: 'user', content: prompt }
-        ]
+        messages: [{ role: 'user', content: sentence }]
       })
     });
 
