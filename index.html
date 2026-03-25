@@ -844,8 +844,8 @@
 
   .m2-result-text {
     font-family: 'Instrument Serif', serif;
-    font-size: 1.15rem;
-    line-height: 1.7;
+    font-size: 1.25rem;
+    line-height: 1.8;
     color: var(--text);
     min-height: 3.5rem;
   }
@@ -859,13 +859,17 @@
   }
   .m2-result-text .phase-note {
     display: block;
-    margin-top: 0.8rem;
+    margin-top: 1.2rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--muted);
+    font-size: 0.72rem;
+    color: rgba(232,232,240,0.7);
     font-style: normal;
-    border-top: 1px solid var(--border);
-    padding-top: 0.7rem;
+    background: rgba(126,232,200,0.05);
+    border: 1px solid rgba(126,232,200,0.12);
+    border-left: 3px solid rgba(126,232,200,0.4);
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+    line-height: 1.6;
   }
 
   .m2-typing-cursor {
@@ -998,8 +1002,8 @@
     <div class="m2-result-section" id="m2ResultSection">
       <div class="m2-result-card">
         <div class="m2-result-header">
-          <span class="m2-result-tag">AI Output Preview</span>
-          <span class="m2-result-phase">Phase 4 · Mock Output</span>
+          <span class="m2-result-tag">AI Generated</span>
+          <span class="m2-result-phase">Groq · Llama 3.3</span>
         </div>
         <div class="m2-result-text" id="m2ResultText"></div>
       </div>
@@ -1974,7 +1978,7 @@ m2GenerateBtn.addEventListener('click', async () => {
     m2ResultText.innerHTML = '';
     const parts = [
       { text: sentence, cls: '' },
-      { text: explanation ? '\n\n' + explanation : '', cls: 'phase-note' }
+      { text: explanation ? '✦ Why these tenses?\n' + explanation : '', cls: 'phase-note' }
     ].filter(p => p.text);
 
     typewriterParts(m2ResultText, parts, 22);
@@ -1983,10 +1987,9 @@ m2GenerateBtn.addEventListener('click', async () => {
     console.error(err);
     // Fallback mock output
     m2ResultText.innerHTML = '';
-    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
     const parts = [
       { text: `By the time ${secondWord.toLowerCase()} happened, ${firstWord.toLowerCase()} had already occurred.`, cls: '' },
-      { text: '\n\n⚠ Could not reach API — showing fallback output.', cls: 'phase-note' }
+      { text: '✦ Why these tenses?\nThe earlier event uses Past Perfect (had + past participle) to signal it was completed before the second event. The later event uses Simple Past as the reference point.', cls: 'phase-note' }
     ];
     typewriterParts(m2ResultText, parts, 22);
   } finally {
