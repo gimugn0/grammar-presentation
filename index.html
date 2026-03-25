@@ -1371,7 +1371,7 @@ function drawTimeline(events, W, H, progress) {
     ctx.font = `600 11px Syne, sans-serif`;
     const tw = ctx.measureText(labelText).width;
     const pw = tw + 20, ph = 22;
-    const px = nx - pw/2;
+    const px = Math.max(4, Math.min(W - pw - 4, nx - pw/2));
     const py = i % 2 === 0 ? ny - 95 : ny + 48;
 
     // Fill pill with fully opaque solid color (ignore globalAlpha for fill only)
@@ -1392,13 +1392,14 @@ function drawTimeline(events, W, H, progress) {
     ctx.globalAlpha = labelAlpha;
     ctx.fillStyle = '#e8e8f0';
     ctx.textAlign = 'center';
-    ctx.fillText(labelText, nx, py + 15);
+    ctx.fillText(labelText, px + pw/2, py + 15);
 
     // Tense label
     ctx.font = `400 9px DM Mono, monospace`;
     ctx.fillStyle = color.main;
     ctx.globalAlpha = labelAlpha * 0.8;
-    ctx.fillText(node.tense, nx, i % 2 === 0 ? py - 6 : py + ph + 12);
+    const tenseX = Math.max(40, Math.min(W - 40, nx));
+    ctx.fillText(node.tense, tenseX, i % 2 === 0 ? py - 6 : py + ph + 12);
 
     ctx.restore();
   });
