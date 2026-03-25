@@ -17,13 +17,21 @@ module.exports = async function handler(req, res) {
   const { sentence, mode } = body;
 
   const systemPrompt = mode === 'generate'
-    ? `You are a grammar engine. Return ONLY a valid JSON object with this shape:
-       {"sentence": "...", "explanation": "..."}
-       sentence: a natural English sentence using Past Perfect for the first event and Simple Past for the second.
-       explanation: one sentence explaining the tense choice.`
-    : `You are a grammar analysis engine. Analyze the English sentence and return ONLY a valid JSON object.
+    ? `You are a grammar engine. Return ONLY a valid JSON object:
+       {
+         "sentence": "...",
+         "explanation": "...",
+         "verbs": [
+           { "verb": "had already left", "tense": "past-perfect", "explanation": "Past Perfect — completed before the reference point." },
+           { "verb": "arrived", "tense": "past-simple", "explanation": "Simple Past — the anchor event in the story." }
+         ]
+       }
+       - sentence: one natural English sentence using Past Perfect for the first event, Simple Past for the second.
+       - explanation: one sentence explaining the tense choice overall.
+       - verbs: every key verb phrase in the sentence, each with its tense class (past-perfect or past-simple) and a short tooltip explanation (max 12 words).`
+    : `You are a grammar analysis engine. Analyze the English sentence and return ONLY valid JSON:
        {"document_id":"req_001","original_text":"...","events":[{"event_id":"evt_001","chronological_order":1,"event_name":"...","extracted_phrase":"...","tense":"...","tense_explanation":"...","text_appearance_order":1,"relative_time_offset":-60}]}
-       Rules: chronological_order 1 = earliest. relative_time_offset 0 = anchor/reference event, negative = earlier. tense_explanation uses <strong> tags around the key verb.`;
+       Rules: chronological_order 1 = earliest. relative_time_offset 0 = anchor event, negative = earlier. tense_explanation uses <strong> tags around the key verb.`;
 
   try {
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
