@@ -543,6 +543,351 @@
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ── TAB NAVIGATION ── */
+  .tab-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.3rem;
+    margin: 2rem auto 0;
+    width: fit-content;
+  }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--muted);
+    transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    position: relative;
+    white-space: nowrap;
+  }
+  .tab-btn .tab-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    opacity: 0.6;
+  }
+  .tab-btn.active {
+    background: var(--surface2);
+    color: var(--text);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .tab-btn.active.mode1 { color: var(--accent); }
+  .tab-btn.active.mode2 { color: var(--accent2); }
+
+  /* ── TAB PANELS ── */
+  .tab-panel {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeInUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .tab-panel.active { display: flex; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MODE 2 STYLES ── */
+  .m2-hero-label { color: var(--accent2); }
+  .m2-h1 {
+    background: linear-gradient(135deg, #fff 0%, var(--accent2) 55%, var(--gold) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  .m2-workspace {
+    width: 100%;
+    max-width: 860px;
+    margin-top: 0.5rem;
+  }
+
+  .m2-hint {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-bottom: 1.4rem;
+    letter-spacing: 0.05em;
+  }
+  .m2-hint span {
+    color: var(--accent2);
+    opacity: 0.8;
+  }
+
+  /* Interactive canvas card */
+  .m2-canvas-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    cursor: crosshair;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    overflow: visible;
+  }
+  .m2-canvas-card:hover {
+    border-color: rgba(126,232,200,0.2);
+    box-shadow: 0 0 0 4px rgba(126,232,200,0.04);
+  }
+  .m2-canvas-card.full {
+    cursor: default;
+    border-color: rgba(126,232,200,0.12);
+  }
+
+  #m2Canvas { width: 100%; display: block; }
+
+  /* Node input labels (positioned absolutely over canvas) */
+  .node-label-wrap {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transform: translateX(-50%);
+    pointer-events: auto;
+    z-index: 10;
+  }
+  .node-dot-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 8px rgba(126,232,200,0.6);
+    flex-shrink: 0;
+  }
+  .node-input {
+    width: 110px;
+    background: rgba(26,26,38,0.95);
+    border: 1px solid rgba(126,232,200,0.3);
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent2);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .node-input::placeholder { color: rgba(126,232,200,0.3); font-style: italic; }
+  .node-input:focus {
+    border-color: rgba(126,232,200,0.7);
+    box-shadow: 0 0 0 3px rgba(126,232,200,0.08);
+  }
+  .node-order-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* Reset button */
+  .m2-reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.9rem auto 0;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    letter-spacing: 0.08em;
+  }
+  .m2-reset-btn:hover { color: var(--accent3); border-color: rgba(255,140,107,0.3); }
+
+  /* Node count indicator */
+  .node-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .node-pip {
+    width: 28px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .node-pip.filled {
+    background: var(--accent2);
+    box-shadow: 0 0 8px rgba(126,232,200,0.4);
+  }
+  .node-counter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* Generate button */
+  .m2-generate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 860px;
+    margin-top: 1.8rem;
+    padding: 1rem 2rem;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, rgba(126,232,200,0.15), rgba(126,232,200,0.08));
+    border: 1px solid rgba(126,232,200,0.2);
+    color: var(--accent2);
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s, opacity 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .m2-generate-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(126,232,200,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .m2-generate-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(126,232,200,0.22), rgba(126,232,200,0.12));
+    box-shadow: 0 8px 30px rgba(126,232,200,0.15);
+    transform: translateY(-1px);
+  }
+  .m2-generate-btn:hover:not(:disabled)::before { opacity: 1; }
+  .m2-generate-btn:active:not(:disabled) { transform: translateY(0); }
+  .m2-generate-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* Result output */
+  .m2-result-section {
+    width: 100%;
+    max-width: 860px;
+    margin-top: 2rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+  .m2-result-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .m2-result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .m2-result-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(126,232,200,0.03), transparent 60%);
+    pointer-events: none;
+  }
+
+  .m2-result-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .m2-result-tag {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: rgba(126,232,200,0.08);
+    border: 1px solid rgba(126,232,200,0.15);
+    padding: 0.18rem 0.65rem;
+    border-radius: 2rem;
+  }
+  .m2-result-phase {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    margin-left: auto;
+    letter-spacing: 0.08em;
+  }
+
+  .m2-result-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text);
+    min-height: 3.5rem;
+  }
+  .m2-result-text .highlight-past-perfect {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .m2-result-text .highlight-past-simple {
+    color: var(--accent2);
+    font-style: italic;
+  }
+  .m2-result-text .phase-note {
+    display: block;
+    margin-top: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-style: normal;
+    border-top: 1px solid var(--border);
+    padding-top: 0.7rem;
+  }
+
+  .m2-typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--accent2);
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    animation: blink 0.75s step-end infinite;
+  }
+
+  /* Node pop animation */
+  @keyframes nodePop {
+    0%   { transform: scale(0); opacity: 0; }
+    60%  { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes inputSlide {
+    from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
 </style>
 </head>
 <body>
@@ -550,53 +895,118 @@
 <header>
   <span class="logo-mark">Tl</span>
   <span class="logo-text">Grammar Timeline</span>
-  <span class="version-badge">v1.0</span>
+  <span class="version-badge">v2.0 · Phase 2</span>
 </header>
 
-<main>
-  <p class="hero-label">English Tense Visualizer</p>
-  <h1>See Time. <br>Understand Grammar.</h1>
-  <p class="subtitle">Enter a sentence to map its events across a chronological timeline.</p>
+<!-- TAB NAVIGATION -->
+<nav class="tab-nav">
+  <button class="tab-btn mode1 active" data-tab="mode1">
+    <span class="tab-num">01</span> Text → Timeline
+  </button>
+  <button class="tab-btn mode2" data-tab="mode2">
+    <span class="tab-num">02</span> Timeline → Text
+  </button>
+</nav>
 
-  <div class="input-container">
-    <div class="textarea-wrapper">
-      <span class="textarea-label">English Sentence</span>
-      <textarea id="sentenceInput" placeholder="I arrived at the station, but the train had already left." rows="3"></textarea>
-      <div class="input-footer">
-        <span class="char-count" id="charCount">0 chars</span>
-        <div style="display:flex;gap:0.5rem;align-items:center;">
-        <button class="random-btn" id="randomBtn"><span class="dice">⚄</span> Random Story</button>
-        <button class="analyze-btn" id="analyzeBtn">
-          <span class="btn-icon">◈</span>
-          Analyze
-        </button>
+<main>
+
+  <!-- ══════════════════════════════════════════
+       MODE 1 PANEL  (existing functionality)
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel active" id="panel-mode1">
+
+    <p class="hero-label">English Tense Visualizer</p>
+    <h1>See Time. <br>Understand Grammar.</h1>
+    <p class="subtitle">Enter a sentence to map its events across a chronological timeline.</p>
+
+    <div class="input-container">
+      <div class="textarea-wrapper">
+        <span class="textarea-label">English Sentence</span>
+        <textarea id="sentenceInput" placeholder="I arrived at the station, but the train had already left." rows="3"></textarea>
+        <div class="input-footer">
+          <span class="char-count" id="charCount">0 chars</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <button class="random-btn" id="randomBtn"><span class="dice">⚄</span> Random Story</button>
+            <button class="analyze-btn" id="analyzeBtn">
+              <span class="btn-icon">◈</span>
+              Analyze
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="samples">
-    <button class="sample-pill" data-text="I arrived at the station, but the train had already left.">Train &amp; Station</button>
-    <button class="sample-pill" data-text="By the time she called, he had already eaten dinner.">Dinner Call</button>
-    <button class="sample-pill" data-text="When I woke up, it had been raining all night.">Rainy Night</button>
-  </div>
-
-  <div class="loading-bar" id="loadingBar"><div class="loading-bar-inner"></div></div>
-
-  <div id="timeline-section">
-    <div class="section-header">
-      <span class="section-tag">Chronological View</span>
-      <div class="section-divider"></div>
+    <div class="samples">
+      <button class="sample-pill" data-text="I arrived at the station, but the train had already left.">Train &amp; Station</button>
+      <button class="sample-pill" data-text="By the time she called, he had already eaten dinner.">Dinner Call</button>
+      <button class="sample-pill" data-text="When I woke up, it had been raining all night.">Rainy Night</button>
     </div>
 
-    <div class="original-text-box" id="originalText"></div>
+    <div class="loading-bar" id="loadingBar"><div class="loading-bar-inner"></div></div>
 
-    <div class="timeline-card">
-      <canvas id="timelineCanvas"></canvas>
+    <div id="timeline-section">
+      <div class="section-header">
+        <span class="section-tag">Chronological View</span>
+        <div class="section-divider"></div>
+      </div>
+      <div class="original-text-box" id="originalText"></div>
+      <div class="timeline-card">
+        <canvas id="timelineCanvas"></canvas>
+      </div>
+      <div class="events-grid" id="eventsGrid"></div>
     </div>
 
-    <div class="events-grid" id="eventsGrid"></div>
-  </div>
+  </div><!-- /panel-mode1 -->
+
+
+  <!-- ══════════════════════════════════════════
+       MODE 2 PANEL  (reverse: timeline → text)
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-mode2">
+
+    <p class="hero-label m2-hero-label">Reverse Timeline Generator</p>
+    <h1 class="m2-h1">Draw Time.<br>Generate Grammar.</h1>
+    <p class="subtitle">Click the timeline to place events, then generate a grammatically correct sentence.</p>
+
+    <div class="m2-workspace">
+      <p class="m2-hint">Click anywhere on the line to place an event node — <span>max 2 nodes</span></p>
+
+      <!-- Interactive canvas -->
+      <div class="m2-canvas-card" id="m2CanvasCard">
+        <canvas id="m2Canvas"></canvas>
+        <!-- Node label inputs injected here by JS -->
+      </div>
+
+      <!-- Node count pips -->
+      <div class="node-counter">
+        <div class="node-pip" id="pip1"></div>
+        <span class="node-counter-label" id="nodeCounterLabel">0 / 2 nodes placed</span>
+        <div class="node-pip" id="pip2"></div>
+      </div>
+
+      <!-- Reset -->
+      <button class="m2-reset-btn" id="m2ResetBtn">↺ Reset Timeline</button>
+    </div>
+
+    <!-- Generate button -->
+    <button class="m2-generate-btn" id="m2GenerateBtn" disabled>
+      <span style="font-size:1rem">✦</span>
+      Generate Sentence
+    </button>
+
+    <!-- Result -->
+    <div class="m2-result-section" id="m2ResultSection">
+      <div class="m2-result-card">
+        <div class="m2-result-header">
+          <span class="m2-result-tag">AI Output Preview</span>
+          <span class="m2-result-phase">Phase 4 · Mock Output</span>
+        </div>
+        <div class="m2-result-text" id="m2ResultText"></div>
+      </div>
+    </div>
+
+  </div><!-- /panel-mode2 -->
+
 </main>
 
 <script>
@@ -784,6 +1194,12 @@ function easeOutBack(x) {
 function drawTimeline(events, W, H, progress) {
   ctx.clearRect(0, 0, W, H);
 
+  // Solid background fill — prevents the card's CSS gradient from showing through
+  ctx.save();
+  ctx.fillStyle = '#12121a';
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
   const PAD_L = 60, PAD_R = 60;
   const lineY = H * 0.52;
   const usableW = W - PAD_L - PAD_R;
@@ -931,7 +1347,12 @@ function drawTimeline(events, W, H, progress) {
     ctx.globalAlpha = labelAlpha;
     ctx.textAlign = 'center';
 
-    // Pill background
+    // Pill background — drawn at full alpha so glow never bleeds through
+    ctx.save();
+    ctx.globalAlpha = labelAlpha;
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+
     const labelText = node.event_name;
     ctx.font = `600 11px Syne, sans-serif`;
     const tw = ctx.measureText(labelText).width;
@@ -939,15 +1360,24 @@ function drawTimeline(events, W, H, progress) {
     const px = nx - pw/2;
     const py = i % 2 === 0 ? ny - 95 : ny + 48;
 
-    ctx.fillStyle = 'rgba(18,18,26,0.9)';
+    // Fill pill with fully opaque solid color (ignore globalAlpha for fill only)
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#12121a';
+    ctx.globalAlpha = 1;
     ctx.beginPath();
     ctx.roundRect(px, py, pw, ph, 4);
     ctx.fill();
-    ctx.strokeStyle = color.main + '44';
+
+    // Border
+    ctx.globalAlpha = labelAlpha * 0.5;
+    ctx.strokeStyle = color.main;
     ctx.lineWidth = 1;
     ctx.stroke();
 
+    // Event name text
+    ctx.globalAlpha = labelAlpha;
     ctx.fillStyle = '#e8e8f0';
+    ctx.textAlign = 'center';
     ctx.fillText(labelText, nx, py + 15);
 
     // Tense label
@@ -1185,6 +1615,376 @@ window.addEventListener('resize', () => {
 // Default textarea value
 textarea.value = "I arrived at the station, but the train had already left.";
 charCount.textContent = `${textarea.value.length} chars`;
+
+// ════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ════════════════════════════════════════════════════
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + target).classList.add('active');
+
+    // Init Mode 2 canvas on first switch
+    if (target === 'mode2') initM2Canvas();
+  });
+});
+
+// ════════════════════════════════════════════════════
+//  MODE 2 — INTERACTIVE TIMELINE → TEXT
+// ════════════════════════════════════════════════════
+const m2Card       = document.getElementById('m2CanvasCard');
+const m2Canvas     = document.getElementById('m2Canvas');
+const m2Ctx        = m2Canvas.getContext('2d');
+const pip1El       = document.getElementById('pip1');
+const pip2El       = document.getElementById('pip2');
+const nodeCounterLabelEl = document.getElementById('nodeCounterLabel');
+const m2GenerateBtn = document.getElementById('m2GenerateBtn');
+const m2ResetBtn   = document.getElementById('m2ResetBtn');
+const m2ResultSection = document.getElementById('m2ResultSection');
+const m2ResultText = document.getElementById('m2ResultText');
+
+// ── State
+let m2Nodes = [];           // [{x, xRatio, inputEl, wrapEl}]
+let m2Initialized = false;
+let m2W = 0, m2H = 180;
+const M2_PAD = 50;
+const M2_LINE_Y_RATIO = 0.52;
+
+function initM2Canvas() {
+  if (m2Initialized) { m2DrawBase(); return; }
+  m2Initialized = true;
+  m2ResizeCanvas();
+  m2DrawBase();
+  m2Canvas.addEventListener('click', onM2Click);
+  window.addEventListener('resize', () => { if (document.getElementById('panel-mode2').classList.contains('active')) { m2ResizeCanvas(); m2DrawBase(); m2RedrawNodes(); } });
+}
+
+function m2ResizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  m2W = m2Card.offsetWidth - 64;
+  m2H = 180;
+  m2Canvas.style.width  = m2W + 'px';
+  m2Canvas.style.height = m2H + 'px';
+  m2Canvas.width  = m2W * dpr;
+  m2Canvas.height = m2H * dpr;
+  m2Ctx.scale(dpr, dpr);
+}
+
+// ── Draw the base empty timeline
+function m2DrawBase() {
+  const W = m2W, H = m2H;
+  const lineY = H * M2_LINE_Y_RATIO;
+  m2Ctx.clearRect(0, 0, W, H);
+
+  // Opaque background — prevents card CSS gradient bleeding through
+  m2Ctx.save();
+  m2Ctx.fillStyle = '#12121a';
+  m2Ctx.fillRect(0, 0, W, H);
+  m2Ctx.restore();
+
+  // Dashed background guide line
+  m2Ctx.save();
+  m2Ctx.setLineDash([4, 8]);
+  m2Ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  m2Ctx.lineWidth = 1;
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(M2_PAD, lineY);
+  m2Ctx.lineTo(W - M2_PAD, lineY);
+  m2Ctx.stroke();
+  m2Ctx.restore();
+
+  // Solid glowing line
+  const grad = m2Ctx.createLinearGradient(M2_PAD, 0, W - M2_PAD, 0);
+  grad.addColorStop(0,   'rgba(126,232,200,0.05)');
+  grad.addColorStop(0.5, 'rgba(126,232,200,0.45)');
+  grad.addColorStop(1,   'rgba(245,215,110,0.35)');
+  m2Ctx.save();
+  m2Ctx.setLineDash([]);
+  m2Ctx.shadowColor = 'rgba(126,232,200,0.25)';
+  m2Ctx.shadowBlur = 8;
+  m2Ctx.strokeStyle = grad;
+  m2Ctx.lineWidth = 1.5;
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(M2_PAD, lineY);
+  m2Ctx.lineTo(W - M2_PAD, lineY);
+  m2Ctx.stroke();
+  m2Ctx.restore();
+
+  // Arrow
+  m2Ctx.save();
+  m2Ctx.fillStyle = 'rgba(245,215,110,0.6)';
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(W - M2_PAD + 10, lineY);
+  m2Ctx.lineTo(W - M2_PAD,      lineY - 5);
+  m2Ctx.lineTo(W - M2_PAD,      lineY + 5);
+  m2Ctx.closePath();
+  m2Ctx.fill();
+  m2Ctx.restore();
+
+  // Labels
+  m2Ctx.save();
+  m2Ctx.font = '500 9px DM Mono, monospace';
+  m2Ctx.fillStyle = 'rgba(107,107,128,0.6)';
+  m2Ctx.textAlign = 'left';
+  m2Ctx.fillText('PAST', M2_PAD, lineY - 18);
+  m2Ctx.textAlign = 'right';
+  m2Ctx.fillText('PRESENT', W - M2_PAD, lineY - 18);
+  m2Ctx.restore();
+
+  // Click hint when empty
+  if (m2Nodes.length === 0) {
+    m2Ctx.save();
+    m2Ctx.font = '400 11px DM Mono, monospace';
+    m2Ctx.fillStyle = 'rgba(107,107,128,0.35)';
+    m2Ctx.textAlign = 'center';
+    m2Ctx.fillText('click to place event', W / 2, lineY + 30);
+    m2Ctx.restore();
+  }
+}
+
+// ── Draw all placed nodes onto canvas
+function m2RedrawNodes() {
+  m2DrawBase();
+  m2Nodes.forEach((node, i) => m2DrawNode(node.x, i, 1));
+}
+
+function m2DrawNode(x, idx, scale) {
+  const lineY = m2H * M2_LINE_Y_RATIO;
+  const color = idx === 0 ? '#c8b4ff' : '#7ee8c8';
+  const colorLight = idx === 0 ? '#ddd0ff' : '#aef2df';
+
+  // Stem line
+  m2Ctx.save();
+  m2Ctx.setLineDash([2, 4]);
+  m2Ctx.strokeStyle = color + '55';
+  m2Ctx.lineWidth = 1;
+  m2Ctx.beginPath();
+  m2Ctx.moveTo(x, lineY - 10 * scale);
+  m2Ctx.lineTo(x, lineY - 55);
+  m2Ctx.stroke();
+  m2Ctx.restore();
+
+  // Glow
+  if (scale > 0.01) {
+  m2Ctx.save();
+  const gG = m2Ctx.createRadialGradient(x, lineY, 0, x, lineY, Math.max(0.1, 24 * scale));
+  gG.addColorStop(0, color + '22');
+  gG.addColorStop(1, 'transparent');
+  m2Ctx.fillStyle = gG;
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 24 * scale), 0, Math.PI * 2);
+  m2Ctx.fill();
+  m2Ctx.restore();
+  }
+
+  // Outer ring
+  m2Ctx.save();
+  m2Ctx.shadowColor = color;
+  m2Ctx.shadowBlur = 12 * scale;
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 11 * scale), 0, Math.PI * 2);
+  m2Ctx.strokeStyle = color;
+  m2Ctx.lineWidth = 1.5;
+  m2Ctx.stroke();
+
+  // Fill
+  const safeR = Math.max(0.1, 8 * scale);
+  const ng = m2Ctx.createRadialGradient(x - 2*scale, lineY - 2*scale, 0, x, lineY, safeR);
+  ng.addColorStop(0, colorLight);
+  ng.addColorStop(1, color);
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 7 * scale), 0, Math.PI * 2);
+  m2Ctx.fillStyle = ng;
+  m2Ctx.fill();
+
+  // Center dot
+  m2Ctx.beginPath();
+  m2Ctx.arc(x, lineY, Math.max(0.1, 2 * scale), 0, Math.PI * 2);
+  m2Ctx.fillStyle = '#fff';
+  m2Ctx.fill();
+  m2Ctx.restore();
+
+  // Chronological badge
+  m2Ctx.save();
+  m2Ctx.font = '600 9px Syne, sans-serif';
+  m2Ctx.fillStyle = color;
+  m2Ctx.textAlign = 'center';
+  m2Ctx.fillText('#' + (idx + 1), x, lineY + 26);
+  m2Ctx.restore();
+}
+
+// ── Handle click on canvas
+function onM2Click(e) {
+  if (m2Nodes.length >= 2) return;
+  if (m2Card.classList.contains('full') && m2Nodes.length >= 2) return;
+
+  const rect = m2Canvas.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const lineY = m2H * M2_LINE_Y_RATIO;
+
+  // Only register clicks near the line (±40px)
+  const clickY = e.clientY - rect.top;
+  if (Math.abs(clickY - lineY) > 60) return;
+
+  // Clamp x within valid range
+  const x = Math.max(M2_PAD + 20, Math.min(m2W - M2_PAD - 20, clickX));
+  const xRatio = (x - M2_PAD) / (m2W - 2 * M2_PAD);
+
+  const idx = m2Nodes.length;
+
+  // Pop animation via quick redraw loop
+  let popT = 0;
+  const popDur = 300;
+  const popStart = performance.now();
+  function popAnimate(now) {
+    popT = Math.min((now - popStart) / popDur, 1);
+    const s = easeOutBack(Math.min(popT * 1.6, 1));
+    m2RedrawNodes();
+    m2DrawNode(x, idx, s);
+    if (popT < 1) requestAnimationFrame(popAnimate);
+    else { m2RedrawNodes(); } // finalize
+  }
+  requestAnimationFrame(popAnimate);
+
+  // Create input label
+  const wrap = createNodeInput(x, idx);
+  m2Nodes.push({ x, xRatio, wrapEl: wrap, inputEl: wrap.querySelector('input') });
+
+  updateNodeCounter();
+
+  if (m2Nodes.length === 2) {
+    m2Card.classList.add('full');
+    m2GenerateBtn.disabled = false;
+  }
+}
+
+function createNodeInput(x, idx) {
+  const cardRect = m2Card.getBoundingClientRect();
+  const canvasRect = m2Canvas.getBoundingClientRect();
+  const lineY_px = m2H * M2_LINE_Y_RATIO;
+  // Position relative to card
+  const topOffset = (canvasRect.top - cardRect.top) + lineY_px - 75;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'node-label-wrap';
+  wrap.style.cssText = `left:${x + 32}px; top:${topOffset}px; animation: inputSlide 0.3s cubic-bezier(0.16,1,0.3,1) both;`;
+
+  const colors = ['#c8b4ff', '#7ee8c8'];
+  const placeholders = ['e.g. arrive', 'e.g. leave'];
+
+  wrap.innerHTML = `
+    <span class="node-order-badge" style="color:${colors[idx]}">EVENT ${idx + 1}</span>
+    <input class="node-input" type="text" placeholder="${placeholders[idx]}" 
+           style="border-color:${colors[idx]}44; color:${colors[idx]};"
+           maxlength="20" spellcheck="false" autocomplete="off" />
+  `;
+  m2Card.appendChild(wrap);
+  setTimeout(() => wrap.querySelector('input').focus(), 80);
+  return wrap;
+}
+
+function updateNodeCounter() {
+  const n = m2Nodes.length;
+  pip1El.classList.toggle('filled', n >= 1);
+  pip2El.classList.toggle('filled', n >= 2);
+  if (n === 2) {
+    nodeCounterLabelEl.textContent = '2 / 2 nodes — ready!';
+    nodeCounterLabelEl.style.color = 'var(--accent2)';
+  } else if (n === 1) {
+    nodeCounterLabelEl.textContent = '1 / 2 nodes placed';
+    nodeCounterLabelEl.style.color = '';
+  } else {
+    nodeCounterLabelEl.textContent = '0 / 2 nodes placed';
+    nodeCounterLabelEl.style.color = '';
+  }
+}
+
+// ── Reset
+m2ResetBtn.addEventListener('click', () => {
+  m2Nodes.forEach(n => n.wrapEl.remove());
+  m2Nodes = [];
+  m2Card.classList.remove('full');
+  m2GenerateBtn.disabled = true;
+  m2ResultSection.classList.remove('visible');
+  m2ResultText.innerHTML = '';
+  updateNodeCounter();
+  m2DrawBase();
+});
+
+// ── Generate mock sentence
+m2GenerateBtn.addEventListener('click', () => {
+  if (m2Nodes.length < 2) return;
+
+  // Sort nodes left → right (chronological order)
+  const sorted = [...m2Nodes].sort((a, b) => a.x - b.x);
+  const firstWord  = sorted[0].inputEl.value.trim() || 'Event A';
+  const secondWord = sorted[1].inputEl.value.trim() || 'Event B';
+
+  // Capitalise first letter
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+  const mockParts = [
+    { text: `${cap(firstWord)} happened first `, cls: 'highlight-past-perfect' },
+    { text: '(Past Perfect). ', cls: '' },
+    { text: `${cap(secondWord)} happened second `, cls: 'highlight-past-simple' },
+    { text: '(Simple Past). ', cls: '' },
+    { text: '✦ AI generated sentence will appear here in Phase 4!', cls: 'phase-note' }
+  ];
+
+  // Build full plain text for typewriter
+  const fullText = mockParts.map(p => p.text).join('');
+
+  m2ResultSection.classList.add('visible');
+  m2ResultText.innerHTML = '';
+
+  // Typewriter with rich formatting
+  let charIdx = 0;
+  let partIdx = 0;
+  let partCharIdx = 0;
+  let currentSpan = null;
+
+  const speed = 28;
+
+  function tick() {
+    if (partIdx >= mockParts.length) {
+      // Remove cursor
+      const cur = m2ResultText.querySelector('.m2-typing-cursor');
+      if (cur) cur.remove();
+      return;
+    }
+
+    const part = mockParts[partIdx];
+    if (partCharIdx === 0) {
+      // Create new span for this part
+      currentSpan = document.createElement(part.cls === 'phase-note' ? 'span' : 'span');
+      if (part.cls) currentSpan.className = part.cls;
+      m2ResultText.appendChild(currentSpan);
+    }
+
+    currentSpan.textContent += part.text[partCharIdx];
+    partCharIdx++;
+
+    if (partCharIdx >= part.text.length) {
+      partIdx++;
+      partCharIdx = 0;
+    }
+
+    // Move/update cursor
+    let cursor = m2ResultText.querySelector('.m2-typing-cursor');
+    if (!cursor) {
+      cursor = document.createElement('span');
+      cursor.className = 'm2-typing-cursor';
+    }
+    m2ResultText.appendChild(cursor);
+
+    setTimeout(tick, speed + Math.random() * 14);
+  }
+
+  setTimeout(tick, 200);
+});
 </script>
 </body>
 </html>
