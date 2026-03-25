@@ -3,593 +3,1188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Past Perfect & Past Perfect Continuous</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
-
+<title>Grammar Timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   1. FONT — system sans-serif, !important everywhere
-═══════════════════════════════════════ */
-* {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-               Helvetica, Arial, sans-serif !important;
-  box-sizing: border-box;
-  margin: 0; padding: 0;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ═══════════════════════════════════════
-   2. REVEAL BASE — kill centering
-═══════════════════════════════════════ */
-:root {
-  --bg:       #f5f4ef;
-  --surface:  #ffffff;
-  --text:     #181818;
-  --muted:    #6b6b6b;
-  --accent:   #1d4ed8;
-  --acbg:     #eff6ff;
-  --border:   #e2e1db;
-  --tagbg:    #eeede8;
-  --green:    #15803d;
-  --greenbg:  #dcfce7;
-  --red:      #b91c1c;
-  --redbg:    #fee2e2;
-  /* layout constants */
-  --px:       68px;   /* horizontal padding */
-  --tag-top:  44px;   /* subtitle pill from top */
-  --body-top: 108px;  /* content starts here */
-}
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --accent: #c8b4ff;
+    --accent2: #7ee8c8;
+    --accent3: #ff8c6b;
+    --gold: #f5d76e;
+    --glow: rgba(200,180,255,0.15);
+  }
 
-body { background: var(--bg); }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
 
-.reveal,
-.reveal .slides {
-  font-size: 16px !important;
-  color: var(--text) !important;
-  background: var(--bg) !important;
-  text-align: left !important;
-}
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(120,80,255,0.12), transparent),
+      radial-gradient(ellipse 60% 30% at 80% 80%, rgba(100,220,180,0.06), transparent);
+    min-height: 100vh;
+  }
 
-/* 3. SECTION layout — padding-top pushes content below subtitle */
-.reveal .slides section {
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100vh !important;
-  padding: var(--body-top) var(--px) 72px var(--px) !important;
-  text-align: left !important;
-  background: var(--bg) !important;
-  display: block !important;
-  overflow: hidden !important;
-}
+  /* ── HEADER ── */
+  header {
+    padding: 2.5rem 3rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .logo-mark {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .logo-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .version-badge {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2rem;
+  }
 
-/* ── Progress bar → TOP ── */
-.reveal .progress {
-  top: 0 !important; bottom: auto !important;
-  height: 3px !important;
-  background: var(--border) !important;
-  z-index: 1000;
-}
-.reveal .progress span {
-  background: var(--accent) !important;
-  transition: width 0.4s ease !important;
-}
+  /* ── MAIN ── */
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 2rem 6rem;
+    min-height: calc(100vh - 80px);
+  }
 
-/* hide default arrow controls */
-.reveal .controls { display: none !important; }
+  .hero-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+  }
 
-/* ═══════════════════════════════════════
-   SUBTITLE PILL — position: absolute fixed
-═══════════════════════════════════════ */
-.s-tag {
-  position: absolute !important;
-  top: var(--tag-top) !important;
-  left: var(--px) !important;
-  font-size: 10.5px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.13em !important;
-  text-transform: uppercase !important;
-  color: var(--accent) !important;
-  background: var(--acbg) !important;
-  padding: 5px 13px !important;
-  border-radius: 100px !important;
-  white-space: nowrap !important;
-  z-index: 20 !important;
-}
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: center;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* ═══════════════════════════════════════
-   CONTENT WRAPPERS
-   — section padding-top already = var(--body-top)
-   — so everything inside just flows top-to-bottom
-═══════════════════════════════════════ */
-.s-col {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  height: 100%;
-  justify-content: center;
-}
+  .subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
 
-/* ── TITLE SLIDE ── */
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  /* override section padding for full height centering */
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  padding: 0 var(--px) !important;
-}
-.hero .eyebrow {
-  font-size: 11px !important; font-weight: 500 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 18px !important;
-}
-.hero h1 {
-  font-size: clamp(44px, 6.5vw, 72px) !important;
-  font-weight: 700 !important; line-height: 1.06 !important;
-  color: var(--text) !important; margin-bottom: 20px !important;
-  max-width: 820px !important;
-}
-.hero .tagline {
-  font-size: 20px !important; font-weight: 300 !important;
-  color: var(--muted) !important; margin-bottom: 48px !important;
-}
-.hero .presenter {
-  position: absolute !important;
-  bottom: 88px !important; left: var(--px) !important;
-  font-size: 12px !important; color: var(--muted) !important;
-}
-.hero .presenter span { color: var(--text) !important; font-weight: 600 !important; }
+  /* ── INPUT AREA ── */
+  .input-container {
+    width: 100%;
+    max-width: 760px;
+    position: relative;
+  }
 
-/* ── INFO CARDS ── */
-.icard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 22px;
-  max-width: 860px;
-}
-.icard .lbl {
-  font-size: 10px !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 7px !important;
-}
-.icard .val {
-  font-size: 17px !important; line-height: 1.65 !important;
-  color: var(--text) !important;
-}
-.icard .val em {
-  font-style: normal !important; font-weight: 700 !important;
-  color: var(--accent) !important;
-}
-.icard .ex {
-  margin-top: 12px; padding: 12px 15px;
-  background: var(--tagbg); border-radius: 9px;
-  border-left: 3px solid var(--accent);
-}
-.icard .ex .en { font-size: 15px !important; font-weight: 500 !important; line-height: 1.6 !important; }
-.icard .ex .ko { font-size: 13px !important; color: var(--muted) !important; margin-top: 3px !important; }
+  .textarea-wrapper {
+    position: relative;
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+  }
 
-/* ── COMPARE GRID ── */
-.cgrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  max-width: 900px;
-}
-.ccard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-.ccard .lbl {
-  font-size: 10px !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 5px !important;
-}
-.ccard .form {
-  font-size: 14px !important; font-weight: 700 !important;
-  color: var(--accent) !important; margin-bottom: 7px !important;
-}
-.ccard .desc {
-  font-size: 13px !important; color: var(--muted) !important;
-  line-height: 1.55 !important; margin-bottom: 10px !important;
-}
-.ccard .ex {
-  background: var(--tagbg); padding: 10px 12px;
-  border-radius: 8px; border-left: 3px solid var(--accent);
-}
-.ccard .ex .en { font-size: 13px !important; font-weight: 500 !important; line-height: 1.6 !important; }
-.ccard .ex .ko { font-size: 12px !important; color: var(--muted) !important; margin-top: 2px !important; }
+  .textarea-wrapper:focus-within {
+    border-color: rgba(200,180,255,0.3);
+    box-shadow: 0 0 0 4px rgba(200,180,255,0.06), 0 20px 60px rgba(0,0,0,0.4);
+  }
 
-/* ── TOC ── */
-.toc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; max-width: 660px; }
-.toc-list li {
-  display: flex; align-items: center; gap: 13px;
-  padding: 13px 16px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 11px;
-  font-size: 15px !important; color: var(--text) !important;
-}
-.toc-list li.grp {
-  background: var(--tagbg);
-  font-size: 12px !important; font-weight: 600 !important; color: var(--muted) !important;
-}
-.toc-num {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: var(--acbg); color: var(--accent) !important;
-  font-size: 11px !important; font-weight: 700 !important;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
+  .textarea-label {
+    position: absolute;
+    top: 1.1rem;
+    left: 1.4rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+    z-index: 1;
+  }
 
-/* ── VERDICT BADGES ── */
-.badge {
-  display: inline-block;
-  font-size: 10px !important; font-weight: 800 !important;
-  letter-spacing: 0.06em !important; text-transform: uppercase !important;
-  padding: 2px 7px; border-radius: 5px; margin-right: 6px;
-}
-.badge.ok { background: var(--greenbg); color: var(--green) !important; }
-.badge.no { background: var(--redbg);   color: var(--red)   !important; }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 2.6rem 1.4rem 1.4rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text);
+    resize: none;
+  }
 
-/* ═══════════════════════════════════════
-   QUIZ
-═══════════════════════════════════════ */
-.quiz-wrap { display: flex; flex-direction: column; gap: 22px; max-width: 860px; }
-.quiz-q {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 18px 22px;
-}
-.quiz-q .q-num {
-  font-size: 10px !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 7px !important;
-}
-.quiz-q .q-text {
-  font-size: 17px !important; font-weight: 500 !important;
-  color: var(--text) !important; line-height: 1.5 !important;
-  margin-bottom: 14px !important;
-}
-.btn-row { display: flex; gap: 9px; flex-wrap: wrap; }
-.qbtn {
-  padding: 8px 18px;
-  border: 1.5px solid var(--border); border-radius: 8px;
-  background: var(--surface);
-  font-size: 14px !important; font-weight: 500 !important;
-  color: var(--text) !important;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
-}
-.qbtn:hover:not(:disabled) { background: var(--tagbg); }
-.qbtn:active { transform: scale(0.97); }
-.qbtn.correct {
-  background: var(--greenbg) !important; border-color: var(--green) !important;
-  color: var(--green) !important; font-weight: 700 !important;
-}
-.qbtn.wrong {
-  background: var(--redbg) !important; border-color: var(--red) !important;
-  color: var(--red) !important;
-}
-.q-fb {
-  margin-top: 9px; font-size: 13px !important; font-weight: 600 !important; min-height: 18px;
-}
-.q-fb.ok { color: var(--green) !important; }
-.q-fb.no { color: var(--red)   !important; }
+  textarea::placeholder { color: rgba(255,255,255,0.15); font-style: italic; }
 
-/* ═══════════════════════════════════════
-   BOTTOM NAV BAR
-═══════════════════════════════════════ */
-#cnav {
-  position: fixed; bottom: 20px; left: 50%;
-  transform: translateX(-50%);
-  display: flex; align-items: center; gap: 10px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 100px; padding: 7px 18px;
-  z-index: 9999;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-}
-#cnav button {
-  width: 32px; height: 32px; border: none; background: transparent;
-  cursor: pointer; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text); transition: background 0.15s;
-}
-#cnav button:hover { background: var(--tagbg); }
-#pgnum {
-  font-size: 12px !important; font-weight: 600 !important;
-  color: var(--muted) !important; min-width: 52px; text-align: center;
-  font-variant-numeric: tabular-nums;
-}
+  .input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .char-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .analyze-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--accent), #9b78ff);
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .analyze-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .analyze-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(150,100,255,0.4); }
+  .analyze-btn:hover::before { opacity: 1; }
+  .analyze-btn:active { transform: translateY(0); }
+
+  .btn-icon { font-size: 0.8rem; transition: transform 0.3s; }
+  .analyze-btn:hover .btn-icon { transform: rotate(15deg); }
+
+  /* ── SAMPLE PILLS ── */
+  .samples {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .sample-pill {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .sample-pill:hover {
+    border-color: rgba(200,180,255,0.3);
+    color: var(--accent);
+    background: rgba(200,180,255,0.05);
+  }
+
+  /* ── RANDOM STORY BUTTON ── */
+  .random-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(126,232,200,0.25);
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(126,232,200,0.06);
+    color: var(--accent2);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .random-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(126,232,200,0.12);
+    border-color: rgba(126,232,200,0.45);
+    box-shadow: 0 6px 24px rgba(126,232,200,0.15);
+  }
+  .random-btn:active { transform: translateY(0); }
+  .random-btn .dice {
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .random-btn:hover .dice { transform: rotate(180deg) scale(1.2); }
+  .random-btn.rolling .dice { animation: diceRoll 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes diceRoll {
+    0%   { transform: rotate(0deg) scale(1); }
+    40%  { transform: rotate(270deg) scale(1.3); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  /* typewriter cursor */
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: var(--accent2);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.8s step-end infinite;
+  }
+
+  /* ── TIMELINE SECTION ── */
+  #timeline-section {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+
+  #timeline-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: rgba(126,232,200,0.08);
+    border: 1px solid rgba(126,232,200,0.15);
+    padding: 0.2rem 0.7rem;
+    border-radius: 2rem;
+  }
+
+  .section-divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ORIGINAL TEXT ── */
+  .original-text-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 2.5rem;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── CANVAS TIMELINE ── */
+  .timeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .timeline-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(200,180,255,0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  canvas {
+    width: 100%;
+    display: block;
+  }
+
+  /* ── EVENT CARDS ── */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .event-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
+    cursor: default;
+  }
+
+  .event-card:hover { border-color: rgba(200,180,255,0.2); }
+
+  .event-card.shown { opacity: 1; transform: translateY(0); }
+
+  .event-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.15em;
+  }
+
+  .event-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.05rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .event-phrase {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .tense-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2rem;
+  }
+
+  .tense-past-perfect { background: rgba(200,180,255,0.1); color: var(--accent); border: 1px solid rgba(200,180,255,0.2); }
+  .tense-past-simple  { background: rgba(126,232,200,0.1); color: var(--accent2); border: 1px solid rgba(126,232,200,0.2); }
+  .tense-past-continuous { background: rgba(255,140,107,0.1); color: var(--accent3); border: 1px solid rgba(255,140,107,0.2); }
+  .tense-present-perfect { background: rgba(245,215,110,0.1); color: var(--gold); border: 1px solid rgba(245,215,110,0.2); }
+  .tense-default { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── TENSE TOOLTIP ── */
+  .tense-explain-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tense-explain-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    font-size: 8px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    margin-left: 5px;
+    opacity: 0.55;
+    cursor: help;
+    vertical-align: middle;
+    transition: opacity 0.15s;
+    line-height: 1;
+    position: relative;
+    top: -1px;
+  }
+  .tense-explain-wrap:hover .tense-explain-icon { opacity: 1; }
+
+  .tense-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1e1e2e;
+    border: 1px solid rgba(200,180,255,0.2);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    width: 220px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    line-height: 1.55;
+    color: rgba(232,232,240,0.9);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16,1,0.3,1);
+    z-index: 100;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    white-space: normal;
+    text-align: left;
+  }
+  .tense-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(200,180,255,0.2);
+  }
+  .tense-tooltip::before {
+    content: '';
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1e1e2e;
+    z-index: 1;
+  }
+  .tense-explain-wrap:hover .tense-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .tense-tooltip strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── LOADING ── */
+  .loading-bar {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    display: none;
+  }
+
+  .loading-bar.active { display: block; }
+
+  .loading-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 1px;
+    animation: loadBar 1.2s cubic-bezier(0.65,0,0.35,1) forwards;
+  }
+
+  @keyframes loadBar {
+    0%   { width: 0%; }
+    40%  { width: 60%; }
+    80%  { width: 85%; }
+    100% { width: 100%; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 </style>
 </head>
 <body>
 
-<div class="reveal">
-  <div class="slides">
+<header>
+  <span class="logo-mark">Tl</span>
+  <span class="logo-text">Grammar Timeline</span>
+  <span class="version-badge">v1.0</span>
+</header>
 
-    <!-- ── SLIDE 1: TITLE ── -->
-    <section>
-      <div class="hero">
-        <div class="eyebrow">English Grammar · Unit 14 &amp; 15</div>
-        <h1>Past Perfect &amp;<br>Past Perfect Continuous</h1>
-        <div class="tagline">Mastering "had done" and "had been doing" (Unit 14 &amp; 15)</div>
-        <div class="presenter">
-          Presenter: <span>Kim Woo-geun</span> &nbsp;/&nbsp; Student ID: <span>202212820</span>
+<main>
+  <p class="hero-label">English Tense Visualizer</p>
+  <h1>See Time. <br>Understand Grammar.</h1>
+  <p class="subtitle">Enter a sentence to map its events across a chronological timeline.</p>
+
+  <div class="input-container">
+    <div class="textarea-wrapper">
+      <span class="textarea-label">English Sentence</span>
+      <textarea id="sentenceInput" placeholder="I arrived at the station, but the train had already left." rows="3"></textarea>
+      <div class="input-footer">
+        <span class="char-count" id="charCount">0 chars</span>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+        <button class="random-btn" id="randomBtn"><span class="dice">⚄</span> Random Story</button>
+        <button class="analyze-btn" id="analyzeBtn">
+          <span class="btn-icon">◈</span>
+          Analyze
+        </button>
         </div>
       </div>
-    </section>
-
-    <!-- ── SLIDE 2: TOC ── -->
-    <section>
-      <span class="s-tag">Table of Contents</span>
-      <div class="s-col">
-        <ul class="toc-list">
-          <li class="grp"><span class="toc-num">14</span>Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)</li>
-          <li><span class="toc-num">①</span>시제 비교: 현재 완료 / 단순 과거</li>
-          <li class="grp"><span class="toc-num">15</span>Unit 15 &nbsp;·&nbsp; 과거 완료 진행 (Past Perfect Continuous)</li>
-          <li><span class="toc-num">②</span>시제 비교 및 진행형 불가 예외 동사</li>
-          <li><span class="toc-num">✎</span>Interactive Mini Quiz</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 3: Unit 14 핵심 ── -->
-    <section>
-      <span class="s-tag">Unit 14. Past Perfect</span>
-      <div class="s-col">
-        <div class="icard">
-          <div class="lbl">형태</div>
-          <div class="val"><em>had + 과거분사 (p.p)</em></div>
-        </div>
-        <div class="icard">
-          <div class="lbl">개념</div>
-          <div class="val">이야기의 기준이 되는 과거 시점보다 <em>더 먼저 일어난 일(대과거)</em>을 표현할 때 사용합니다.</div>
-          <div class="ex">
-            <div class="en">"When Sarah arrived at the party, Nick had already gone home."</div>
-            <div class="ko">사라가 파티에 도착했을 때, 닉은 이미 집에 가고 없었다.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 4: Unit 14 비교(1) ── -->
-    <section>
-      <span class="s-tag">Unit 14. Present Perfect vs Past Perfect</span>
-      <div class="s-col">
-        <div class="cgrid">
-          <div class="ccard">
-            <div class="lbl">현재 완료</div>
-            <div class="form">have p.p</div>
-            <div class="desc">과거의 일이 <strong>현재 시점</strong>에 영향을 줍니다.</div>
-            <div class="ex">
-              <div class="en">"We aren't hungry. We've just had lunch."</div>
-              <div class="ko">우리 지금 안 배고파. 방금 점심 먹었거든.</div>
-            </div>
-          </div>
-          <div class="ccard">
-            <div class="lbl">과거 완료</div>
-            <div class="form">had p.p</div>
-            <div class="desc">과거보다 더 이전의 일이 <strong>과거 시점</strong>에 영향을 줍니다.</div>
-            <div class="ex">
-              <div class="en">"We weren't hungry. We'd just had lunch."</div>
-              <div class="ko">우리 그때 안 배고팠어. 막 점심을 먹었었거든.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 5: Unit 14 비교(2) ── -->
-    <section>
-      <span class="s-tag">Unit 14. Simple Past vs Past Perfect</span>
-      <div class="s-col">
-        <div class="cgrid">
-          <div class="ccard">
-            <div class="lbl">단순 과거</div>
-            <div class="form">Simple Past</div>
-            <div class="desc">사건이 일어난 <strong>시간 순서대로</strong> 말할 때.</div>
-            <div class="ex">
-              <div class="en">"Was Tom there when you arrived? Yes, but he left soon afterwards."</div>
-              <div class="ko">도착했을 때 톰 있었어? 응, 근데 곧 떠났어.</div>
-            </div>
-          </div>
-          <div class="ccard">
-            <div class="lbl">과거 완료</div>
-            <div class="form">Past Perfect</div>
-            <div class="desc">기준 과거 시점에 <strong>이미 완료</strong>된 사건을 말할 때.</div>
-            <div class="ex">
-              <div class="en">"Was Tom there when you arrived? No, he'd already left."</div>
-              <div class="ko">도착했을 때 톰 있었어? 아니, 이미 떠났었어.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 6: Unit 15 핵심 ── -->
-    <section>
-      <span class="s-tag">Unit 15. Past Perfect Continuous</span>
-      <div class="s-col">
-        <div class="icard">
-          <div class="lbl">형태</div>
-          <div class="val"><em>had been + 동사-ing</em></div>
-        </div>
-        <div class="icard">
-          <div class="lbl">개념</div>
-          <div class="val">과거의 어떤 사건이 일어나기 전까지 <em>계속 진행 중이던 행동이나 원인</em>을 강조할 때 사용합니다.</div>
-          <div class="ex">
-            <div class="en">"The sun was shining, but the ground was very wet. It had been raining."</div>
-            <div class="ko">해는 빛나고 있었지만, 땅은 매우 젖어 있었다. 비가 계속 내렸던 것이다.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 7: Unit 15 비교 ── -->
-    <section>
-      <span class="s-tag">Unit 15. Present vs Past Continuous</span>
-      <div class="s-col">
-        <div class="cgrid">
-          <div class="ccard">
-            <div class="lbl">현재 완료 진행</div>
-            <div class="form">have been -ing</div>
-            <div class="desc"><strong>지금(현재)</strong>을 기준으로 그 전까지 진행되던 일.</div>
-            <div class="ex">
-              <div class="en">"I hope the bus comes soon. I've been waiting for 20 minutes."</div>
-              <div class="ko">버스 빨리 오면 좋겠다. 20분째 기다리고 있어.</div>
-            </div>
-          </div>
-          <div class="ccard">
-            <div class="lbl">과거 완료 진행</div>
-            <div class="form">had been -ing</div>
-            <div class="desc"><strong>그때(과거)</strong>를 기준으로 그 전까지 진행되던 일.</div>
-            <div class="ex">
-              <div class="en">"The bus finally came. I'd been waiting for 20 minutes."</div>
-              <div class="ko">마침내 버스가 왔다. 20분 동안 기다리던 참이었다.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 8: Unit 15 예외 ── -->
-    <section>
-      <span class="s-tag">Unit 15. Non-Continuous Verbs</span>
-      <div class="s-col">
-        <div class="icard">
-          <div class="lbl">진행형 불가 동사</div>
-          <div class="val"><em>know</em>(알다), <em>have</em>(소유하다) 같은 상태를 나타내는 동사는 일반적으로 진행형으로 쓰지 않습니다.</div>
-        </div>
-        <div class="icard">
-          <div class="lbl">올바른 표현</div>
-          <div class="val"><span class="badge ok">O</span> <strong>"We had known each other for years."</strong></div>
-          <div class="ex"><div class="ko">우리는 수년 동안 서로 아는 사이였다.</div></div>
-        </div>
-        <div class="icard">
-          <div class="lbl">틀린 표현</div>
-          <div class="val"><span class="badge no">X</span> <span style="color:#b91c1c">"We had been knowing each other for years."</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 9: QUIZ 1 ── -->
-    <section>
-      <span class="s-tag">Quiz 1. Unit 14</span>
-      <div class="s-col">
-        <div class="quiz-wrap">
-          <div class="quiz-q">
-            <div class="q-num">Question 1</div>
-            <div class="q-text">David wasn't at the party when I arrived. He _______ home.</div>
-            <div class="btn-row">
-              <button class="qbtn" onclick="pick(this,'q91',false)">1. went</button>
-              <button class="qbtn" onclick="pick(this,'q91',false)">2. has gone</button>
-              <button class="qbtn" onclick="pick(this,'q91',true)">3. had gone</button>
-            </div>
-            <div class="q-fb" id="q91"></div>
-          </div>
-          <div class="quiz-q">
-            <div class="q-num">Question 2</div>
-            <div class="q-text">We weren't hungry. We _______ just had lunch.</div>
-            <div class="btn-row">
-              <button class="qbtn" onclick="pick(this,'q92',true)">1. had</button>
-              <button class="qbtn" onclick="pick(this,'q92',false)">2. have</button>
-              <button class="qbtn" onclick="pick(this,'q92',false)">3. did</button>
-            </div>
-            <div class="q-fb" id="q92"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SLIDE 10: QUIZ 2 ── -->
-    <section>
-      <span class="s-tag">Quiz 2. Unit 15</span>
-      <div class="s-col">
-        <div class="quiz-wrap">
-          <div class="quiz-q">
-            <div class="q-num">Question 1</div>
-            <div class="q-text">The ground was very wet. It _______ raining.</div>
-            <div class="btn-row">
-              <button class="qbtn" onclick="pick(this,'q101',false)">1. was</button>
-              <button class="qbtn" onclick="pick(this,'q101',false)">2. has been</button>
-              <button class="qbtn" onclick="pick(this,'q101',true)">3. had been</button>
-            </div>
-            <div class="q-fb" id="q101"></div>
-          </div>
-          <div class="quiz-q">
-            <div class="q-num">Question 2</div>
-            <div class="q-text">We were good friends. We _______ each other for years.</div>
-            <div class="btn-row">
-              <button class="qbtn" onclick="pick(this,'q102',true)">1. had known</button>
-              <button class="qbtn" onclick="pick(this,'q102',false)">2. had been knowing</button>
-              <button class="qbtn" onclick="pick(this,'q102',false)">3. knew</button>
-            </div>
-            <div class="q-fb" id="q102"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    </div>
   </div>
-</div>
 
-<!-- Bottom nav -->
-<div id="cnav">
-  <button id="bprev" title="이전">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-  <span id="pgnum">1 / 10</span>
-  <button id="bnext" title="다음">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
+  <div class="samples">
+    <button class="sample-pill" data-text="I arrived at the station, but the train had already left.">Train &amp; Station</button>
+    <button class="sample-pill" data-text="By the time she called, he had already eaten dinner.">Dinner Call</button>
+    <button class="sample-pill" data-text="When I woke up, it had been raining all night.">Rainy Night</button>
+  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+  <div class="loading-bar" id="loadingBar"><div class="loading-bar-inner"></div></div>
+
+  <div id="timeline-section">
+    <div class="section-header">
+      <span class="section-tag">Chronological View</span>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="original-text-box" id="originalText"></div>
+
+    <div class="timeline-card">
+      <canvas id="timelineCanvas"></canvas>
+    </div>
+
+    <div class="events-grid" id="eventsGrid"></div>
+  </div>
+</main>
+
 <script>
-  /* ── Quiz ── */
-  function pick(btn, fbId, correct) {
-    const row = btn.closest('.btn-row');
-    row.querySelectorAll('.qbtn').forEach(b => b.disabled = true);
-    btn.classList.add(correct ? 'correct' : 'wrong');
-    const fb = document.getElementById(fbId);
-    fb.textContent = correct ? '✓ 정답입니다!' : '✗ 틀렸습니다. 다시 생각해 보세요.';
-    fb.className = 'q-fb ' + (correct ? 'ok' : 'no');
+// ── SAMPLE DATA ──
+const SAMPLE_DATA = [
+  {
+    document_id: "req_12345",
+    original_text: "I arrived at the station, but the train had already left.",
+    events: [
+      {
+        event_id: "evt_001",
+        chronological_order: 1,
+        event_name: "The train leaves",
+        extracted_phrase: "the train had already left",
+        tense: "Past Perfect",
+        tense_explanation: "<strong>Had left</strong> = past perfect. The train leaving happened <em>before</em> the reference point (arriving). English signals this earlier past with <em>had + past participle</em>.",
+        text_appearance_order: 2,
+        relative_time_offset: -50,
+        interval_hint: "unspecified_past"
+      },
+      {
+        event_id: "evt_002",
+        chronological_order: 2,
+        event_name: "I arrive at the station",
+        extracted_phrase: "I arrived at the station",
+        tense: "Past Simple",
+        tense_explanation: "<strong>Arrived</strong> = past simple. This is the reference point — the moment the story is anchored to. All other events are measured earlier than this one.",
+        text_appearance_order: 1,
+        relative_time_offset: 0,
+        interval_hint: "reference_point"
+      }
+    ]
   }
+];
 
-  /* ── Reveal.js — center: false is the critical fix ── */
-  Reveal.initialize({
-    hash: false,
-    center: false,          /* ← prevents vertical centering */
-    transition: 'slide',
-    transitionSpeed: 'fast',
-    backgroundTransition: 'none',
-    progress: true,
-    controls: false,
-    slideNumber: false,
-    width: '100%',
-    height: '100%',
-    margin: 0,
-    minScale: 1,
-    maxScale: 1,
+// Additional sample datasets
+const SAMPLE_DATASETS = {
+  "By the time she called, he had already eaten dinner.": [
+    {
+      document_id: "req_dinner",
+      original_text: "By the time she called, he had already eaten dinner.",
+      events: [
+        { event_id: "e1", chronological_order: 1, event_name: "He eats dinner", extracted_phrase: "had already eaten dinner", tense: "Past Perfect", text_appearance_order: 2, relative_time_offset: -60, interval_hint: "unspecified_past" },
+        { event_id: "e2", chronological_order: 2, event_name: "She calls", extracted_phrase: "By the time she called", tense: "Past Simple", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
+      ]
+    }
+  ],
+  "When I woke up, it had been raining all night.": [
+    {
+      document_id: "req_rain",
+      original_text: "When I woke up, it had been raining all night.",
+      events: [
+        { event_id: "r1", chronological_order: 1, event_name: "Rain begins (all night)", extracted_phrase: "had been raining all night", tense: "Past Perfect Continuous", text_appearance_order: 2, relative_time_offset: -80, interval_hint: "extended_past" },
+        { event_id: "r2", chronological_order: 2, event_name: "I wake up", extracted_phrase: "When I woke up", tense: "Past Simple", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
+      ]
+    }
+  ]
+};
+
+// ── STATE ──
+let currentAnimFrame = null;
+let animationProgress = 0;
+
+// ── UI ──
+const textarea = document.getElementById('sentenceInput');
+const charCount = document.getElementById('charCount');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const loadingBar = document.getElementById('loadingBar');
+const timelineSection = document.getElementById('timeline-section');
+const originalTextEl = document.getElementById('originalText');
+const eventsGrid = document.getElementById('eventsGrid');
+const canvas = document.getElementById('timelineCanvas');
+const ctx = canvas.getContext('2d');
+
+textarea.addEventListener('input', () => {
+  charCount.textContent = `${textarea.value.length} chars`;
+});
+
+document.querySelectorAll('.sample-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    textarea.value = pill.dataset.text;
+    charCount.textContent = `${textarea.value.length} chars`;
+    textarea.focus();
   });
+});
 
-  /* ── Page counter ── */
-  function updatePg() {
-    document.getElementById('pgnum').textContent =
-      (Reveal.getIndices().h + 1) + ' / ' + Reveal.getTotalSlides();
+analyzeBtn.addEventListener('click', () => {
+  const text = textarea.value.trim();
+  if (!text) { textarea.focus(); return; }
+  runAnalysis(text);
+});
+
+textarea.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') analyzeBtn.click();
+});
+
+// ── ANALYSIS FLOW ──
+function runAnalysis(text) {
+  analyzeBtn.disabled = true;
+  analyzeBtn.innerHTML = '<span class="btn-icon" style="animation:spin 1s linear infinite">◈</span> Analyzing…';
+
+  // Loading bar
+  loadingBar.innerHTML = '<div class="loading-bar-inner"></div>';
+  loadingBar.classList.add('active');
+
+  setTimeout(() => {
+    const data = resolveData(text);
+    renderTimeline(data);
+    loadingBar.classList.remove('active');
+    analyzeBtn.disabled = false;
+    analyzeBtn.innerHTML = '<span class="btn-icon">◈</span> Analyze';
+  }, 1200);
+}
+
+function resolveData(text) {
+  if (SAMPLE_DATASETS[text]) return SAMPLE_DATASETS[text];
+  // Use default sample with the user's text
+  const d = JSON.parse(JSON.stringify(SAMPLE_DATA));
+  d[0].original_text = text;
+  return d;
+}
+
+// ── RENDER ──
+function renderTimeline(dataArray) {
+  const doc = dataArray[0];
+  const events = [...doc.events].sort((a,b) => a.chronological_order - b.chronological_order);
+
+  originalTextEl.textContent = doc.original_text;
+  eventsGrid.innerHTML = '';
+
+  // Show section
+  timelineSection.classList.add('visible');
+  timelineSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Setup canvas
+  setupCanvas(events);
+
+  // Animate event cards
+  events.forEach((evt, i) => {
+    const card = buildEventCard(evt, i + 1);
+    eventsGrid.appendChild(card);
+    setTimeout(() => card.classList.add('shown'), 600 + i * 180);
+  });
+}
+
+// ── CANVAS SETUP ──
+function setupCanvas(events) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.offsetWidth - 64; // card padding
+  const H = 220;
+
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+
+  if (currentAnimFrame) cancelAnimationFrame(currentAnimFrame);
+  animationProgress = 0;
+
+  const startTime = performance.now();
+  const duration = 1800;
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    animationProgress = easeOutExpo(t);
+    drawTimeline(events, W, H, animationProgress);
+    if (t < 1) currentAnimFrame = requestAnimationFrame(animate);
   }
-  Reveal.on('ready', updatePg);
-  Reveal.on('slidechanged', updatePg);
 
-  document.getElementById('bprev').onclick = () => Reveal.prev();
-  document.getElementById('bnext').onclick = () => Reveal.next();
+  currentAnimFrame = requestAnimationFrame(animate);
+}
+
+function easeOutExpo(x) {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+function easeOutBack(x) {
+  const c1 = 1.70158, c3 = c1 + 1;
+  return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+}
+
+// ── DRAW ──
+function drawTimeline(events, W, H, progress) {
+  ctx.clearRect(0, 0, W, H);
+
+  const PAD_L = 60, PAD_R = 60;
+  const lineY = H * 0.52;
+  const usableW = W - PAD_L - PAD_R;
+
+  // Compute node positions
+  const offsets = events.map(e => e.relative_time_offset);
+  const minOff = Math.min(...offsets);
+  const maxOff = Math.max(...offsets);
+  const range = maxOff - minOff || 100;
+
+  const nodes = events.map(evt => ({
+    ...evt,
+    x: PAD_L + ((evt.relative_time_offset - minOff) / range) * usableW,
+    y: lineY
+  }));
+
+  // ── Axis line
+  const lineEndX = PAD_L + usableW * progress;
+
+  // Glowing line
+  const grad = ctx.createLinearGradient(PAD_L, 0, lineEndX, 0);
+  grad.addColorStop(0, 'rgba(200,180,255,0.12)');
+  grad.addColorStop(0.5, 'rgba(200,180,255,0.5)');
+  grad.addColorStop(1, 'rgba(126,232,200,0.8)');
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(200,180,255,0.4)';
+  ctx.shadowBlur = 10;
+  ctx.beginPath();
+  ctx.moveTo(PAD_L, lineY);
+  ctx.lineTo(lineEndX, lineY);
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.restore();
+
+  // Arrow tip
+  if (progress > 0.9) {
+    const tip = lineEndX;
+    const arrowAlpha = (progress - 0.9) / 0.1;
+    ctx.save();
+    ctx.globalAlpha = arrowAlpha;
+    ctx.fillStyle = 'rgba(126,232,200,0.8)';
+    ctx.beginPath();
+    ctx.moveTo(tip + 8, lineY);
+    ctx.lineTo(tip, lineY - 5);
+    ctx.lineTo(tip, lineY + 5);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // "PAST" label
+    ctx.save();
+    ctx.globalAlpha = arrowAlpha * 0.5;
+    ctx.font = '500 9px DM Mono, monospace';
+    ctx.fillStyle = '#6b6b80';
+    ctx.letterSpacing = '0.15em';
+    ctx.fillText('PAST', PAD_L - 2, lineY - 18);
+    ctx.fillText('NOW', W - PAD_R + 14, lineY - 18);
+    ctx.restore();
+  }
+
+  // ── Nodes
+  nodes.forEach((node, i) => {
+    const nodeProgress = Math.max(0, Math.min(1,
+      (progress - (i / nodes.length) * 0.4) / 0.6
+    ));
+    if (nodeProgress <= 0) return;
+
+    const scale = easeOutBack(Math.min(nodeProgress * 1.5, 1));
+    const nx = node.x;
+    const ny = node.y;
+
+    const color = getTenseColor(node.tense);
+
+    // Connector to label
+    const labelY = i % 2 === 0 ? ny - 80 : ny + 60;
+    const connAlpha = Math.min(nodeProgress * 2, 1) * 0.35;
+    ctx.save();
+    ctx.globalAlpha = connAlpha;
+    ctx.setLineDash([2, 4]);
+    ctx.strokeStyle = color.main;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(nx, ny);
+    ctx.lineTo(nx, labelY + (i % 2 === 0 ? 12 : -12));
+    ctx.stroke();
+    ctx.restore();
+
+    // Glow ring
+    const glowAlpha = 0.12 * scale;
+    ctx.save();
+    ctx.globalAlpha = glowAlpha;
+    const glowGrad = ctx.createRadialGradient(nx, ny, 0, nx, ny, 28 * scale);
+    glowGrad.addColorStop(0, color.main);
+    glowGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = glowGrad;
+    ctx.beginPath();
+    ctx.arc(nx, ny, 28 * scale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Node circle
+    ctx.save();
+    ctx.shadowColor = color.main;
+    ctx.shadowBlur = 14 * scale;
+    ctx.globalAlpha = scale;
+
+    // Outer ring
+    ctx.beginPath();
+    ctx.arc(nx, ny, 12 * scale, 0, Math.PI * 2);
+    ctx.strokeStyle = color.main;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Inner fill
+    const nodeGrad = ctx.createRadialGradient(nx - 3*scale, ny - 3*scale, 0, nx, ny, 9*scale);
+    nodeGrad.addColorStop(0, color.light);
+    nodeGrad.addColorStop(1, color.main);
+    ctx.beginPath();
+    ctx.arc(nx, ny, 8 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = nodeGrad;
+    ctx.fill();
+
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(nx, ny, 2.5 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.restore();
+
+    // Order badge
+    ctx.save();
+    ctx.globalAlpha = Math.min(nodeProgress * 2, 1);
+    ctx.font = `600 10px Syne, sans-serif`;
+    ctx.fillStyle = color.main;
+    ctx.textAlign = 'center';
+    ctx.fillText(`#${node.chronological_order}`, nx, lineY + (i % 2 === 0 ? 28 : -20));
+    ctx.restore();
+
+    // Event label
+    const labelAlpha = Math.min((nodeProgress - 0.4) * 2.5, 1);
+    if (labelAlpha <= 0) return;
+    ctx.save();
+    ctx.globalAlpha = labelAlpha;
+    ctx.textAlign = 'center';
+
+    // Pill background
+    const labelText = node.event_name;
+    ctx.font = `600 11px Syne, sans-serif`;
+    const tw = ctx.measureText(labelText).width;
+    const pw = tw + 20, ph = 22;
+    const px = nx - pw/2;
+    const py = i % 2 === 0 ? ny - 95 : ny + 48;
+
+    ctx.fillStyle = 'rgba(18,18,26,0.9)';
+    ctx.beginPath();
+    ctx.roundRect(px, py, pw, ph, 4);
+    ctx.fill();
+    ctx.strokeStyle = color.main + '44';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = '#e8e8f0';
+    ctx.fillText(labelText, nx, py + 15);
+
+    // Tense label
+    ctx.font = `400 9px DM Mono, monospace`;
+    ctx.fillStyle = color.main;
+    ctx.globalAlpha = labelAlpha * 0.8;
+    ctx.fillText(node.tense, nx, i % 2 === 0 ? py - 6 : py + ph + 12);
+
+    ctx.restore();
+  });
+}
+
+function getTenseColor(tense) {
+  const t = (tense || '').toLowerCase();
+  if (t.includes('past perfect') && t.includes('continuous')) return { main: '#ff8c6b', light: '#ffb59b' };
+  if (t.includes('past perfect')) return { main: '#c8b4ff', light: '#ddd0ff' };
+  if (t.includes('past simple') || t.includes('simple past')) return { main: '#7ee8c8', light: '#aef2df' };
+  if (t.includes('past continuous')) return { main: '#ff8c6b', light: '#ffb59b' };
+  if (t.includes('present perfect')) return { main: '#f5d76e', light: '#f9e89e' };
+  if (t.includes('present')) return { main: '#6ee7f5', light: '#9ef0f9' };
+  return { main: '#a0a0b8', light: '#c0c0d0' };
+}
+
+// ── EVENT CARD ──
+function buildEventCard(evt, idx) {
+  const card = document.createElement('div');
+  card.className = 'event-card';
+
+  const tenseClass = getTenseClass(evt.tense);
+  const explanation = evt.tense_explanation || null;
+
+  const badgeHTML = explanation
+    ? `<span class="tense-explain-wrap">
+        <span class="tense-badge ${tenseClass}">${evt.tense}</span>
+        <span class="tense-explain-icon">?</span>
+        <div class="tense-tooltip">${explanation}</div>
+       </span>`
+    : `<span class="tense-badge ${tenseClass}">${evt.tense}</span>`;
+
+  card.innerHTML = `
+    <div class="event-number">EVENT ${String(idx).padStart(2,'0')} · CHRONOLOGICAL #${evt.chronological_order}</div>
+    <div class="event-name">${evt.event_name}</div>
+    <div class="event-phrase">"${evt.extracted_phrase}"</div>
+    ${badgeHTML}
+  `;
+
+  return card;
+}
+
+function getTenseClass(tense) {
+  const t = (tense || '').toLowerCase();
+  if (t.includes('past perfect') && t.includes('continuous')) return 'tense-past-continuous';
+  if (t.includes('past perfect')) return 'tense-past-perfect';
+  if (t.includes('past simple') || t.includes('simple past')) return 'tense-past-simple';
+  if (t.includes('past continuous')) return 'tense-past-continuous';
+  if (t.includes('present perfect')) return 'tense-present-perfect';
+  return 'tense-default';
+}
+
+// ── RANDOM STORIES ──
+const RANDOM_STORIES = [
+  {
+    text: "She had been working on the novel for three years before she finally submitted it to the publisher, who had already read two of her earlier drafts.",
+    data: [{
+      document_id: "rnd_01", original_text: "She had been working on the novel for three years before she finally submitted it to the publisher, who had already read two of her earlier drafts.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Publisher reads drafts", extracted_phrase:"had already read two of her earlier drafts", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"She works on the novel", extracted_phrase:"had been working on the novel for three years", tense:"Past Perfect Continuous", text_appearance_order:1, relative_time_offset:-30, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"She submits the manuscript", extracted_phrase:"she finally submitted it", tense:"Past Simple", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "By the time the rescue team reached the village, the storm had destroyed most of the buildings that the locals had constructed over generations.",
+    data: [{
+      document_id: "rnd_02", original_text: "By the time the rescue team reached the village, the storm had destroyed most of the buildings that the locals had constructed over generations.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Locals build the buildings", extracted_phrase:"the locals had constructed over generations", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Storm destroys buildings", extracted_phrase:"the storm had destroyed most of the buildings", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-20, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Rescue team arrives", extracted_phrase:"the rescue team reached the village", tense:"Past Simple", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "Marcus realized he had forgotten his passport only after he had already checked in his luggage, and the gate was closing.",
+    data: [{
+      document_id: "rnd_03", original_text: "Marcus realized he had forgotten his passport only after he had already checked in his luggage, and the gate was closing.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Marcus forgets his passport", extracted_phrase:"he had forgotten his passport", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-80, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"He checks in luggage", extracted_phrase:"he had already checked in his luggage", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-30, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Gate is closing", extracted_phrase:"the gate was closing", tense:"Past Continuous", text_appearance_order:4, relative_time_offset:-5, interval_hint:"simultaneous" },
+        { event_id:"r4", chronological_order:4, event_name:"Marcus realizes the problem", extracted_phrase:"Marcus realized", tense:"Past Simple", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
+    data: [{
+      document_id: "rnd_04", original_text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Ancient healers use the compound", extracted_phrase:"ancient healers had been using for centuries", tense:"Past Perfect Continuous", text_appearance_order:2, relative_time_offset:-120, interval_hint:"extended_past" },
+        { event_id:"r2", chronological_order:2, event_name:"No one understands its mechanism", extracted_phrase:"no one had ever understood why it worked", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-40, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Scientist discovers the compound", extracted_phrase:"The scientist has discovered", tense:"Present Perfect", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
+    data: [{
+      document_id: "rnd_05", original_text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"She sings the melody", extracted_phrase:"the melody she had sung", tense:"Past Perfect", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Concert ends", extracted_phrase:"the concert had ended", tense:"Past Perfect", text_appearance_order:1, relative_time_offset:-30, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Crowd disperses", extracted_phrase:"the crowd had dispersed", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-15, interval_hint:"unspecified_past" },
+        { event_id:"r4", chronological_order:4, event_name:"She sits humming alone", extracted_phrase:"she sat alone, still humming", tense:"Past Simple", text_appearance_order:3, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
+    data: [{
+      document_id: "rnd_06", original_text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Grandfather grows up in the city", extracted_phrase:"his grandfather had grown up", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-110, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Family tells stories", extracted_phrase:"his family had been telling him stories his whole life", tense:"Past Perfect Continuous", text_appearance_order:3, relative_time_offset:-40, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"He still hasn't visited", extracted_phrase:"He has never visited the city", tense:"Present Perfect", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
+    data: [{
+      document_id: "rnd_07", original_text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Intruder enters the building", extracted_phrase:"someone had entered the building", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Alarm is triggered", extracted_phrase:"the alarm had been triggered", tense:"Past Perfect", text_appearance_order:4, relative_time_offset:-50, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Investigators review footage", extracted_phrase:"investigators were reviewing the footage", tense:"Past Continuous", text_appearance_order:1, relative_time_offset:-10, interval_hint:"simultaneous" },
+        { event_id:"r4", chronological_order:4, event_name:"Investigators make the discovery", extracted_phrase:"they found", tense:"Past Simple", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  },
+  {
+    text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
+    data: [{
+      document_id: "rnd_08", original_text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
+      events: [
+        { event_id:"r1", chronological_order:1, event_name:"Plants die in the frost", extracted_phrase:"the plants that had died in the frost", tense:"Past Perfect", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Elena tends the garden", extracted_phrase:"Elena had spent every weekend tending it", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-50, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Elena replaces the dead plants", extracted_phrase:"had replaced all the plants", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-20, interval_hint:"unspecified_past" },
+        { event_id:"r4", chronological_order:4, event_name:"Garden looks beautiful now", extracted_phrase:"The garden looks beautiful now", tense:"Present Simple", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+      ]
+    }]
+  }
+];
+
+let lastRandomIndex = -1;
+
+function getRandomStory() {
+  let idx;
+  do { idx = Math.floor(Math.random() * RANDOM_STORIES.length); }
+  while (idx === lastRandomIndex && RANDOM_STORIES.length > 1);
+  lastRandomIndex = idx;
+  return RANDOM_STORIES[idx];
+}
+
+// Typewriter effect
+function typewriterEffect(targetEl, text, onDone) {
+  targetEl.value = '';
+  charCount.textContent = '0 chars';
+  let i = 0;
+  const speed = Math.max(18, Math.min(38, Math.floor(1800 / text.length)));
+
+  // Show cursor
+  targetEl.style.caretColor = 'var(--accent2)';
+
+  function tick() {
+    if (i <= text.length) {
+      targetEl.value = text.slice(0, i);
+      charCount.textContent = `${targetEl.value.length} chars`;
+      i++;
+      setTimeout(tick, speed + Math.random() * 18);
+    } else {
+      if (onDone) onDone();
+    }
+  }
+  tick();
+}
+
+// Wire up random button
+const randomBtn = document.getElementById('randomBtn');
+let _lastRandomData = null;
+
+randomBtn.addEventListener('click', () => {
+  const story = getRandomStory();
+  _lastRandomData = story.data;
+
+  // Dice roll animation
+  randomBtn.classList.add('rolling');
+  setTimeout(() => randomBtn.classList.remove('rolling'), 500);
+
+  randomBtn.disabled = true;
+  analyzeBtn.disabled = true;
+
+  typewriterEffect(textarea, story.text, () => {
+    randomBtn.disabled = false;
+    analyzeBtn.disabled = false;
+    // Register this data so analyze uses it
+    SAMPLE_DATASETS[story.text] = story.data;
+  });
+});
+// ── END RANDOM STORIES ──
+
+const style = document.createElement('style');
+style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
+document.head.appendChild(style);
+
+// ── RESIZE ──
+window.addEventListener('resize', () => {
+  if (timelineSection.classList.contains('visible') && eventsGrid.children.length > 0) {
+    // Re-draw canvas with last events
+    // (simple: just re-run draw at full progress)
+    const events = [...SAMPLE_DATA[0].events].sort((a,b) => a.chronological_order - b.chronological_order);
+    const W = canvas.parentElement.offsetWidth - 64;
+    const H = 220;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+    drawTimeline(events, W, H, 1);
+  }
+});
+
+// Default textarea value
+textarea.value = "I arrived at the station, but the train had already left.";
+charCount.textContent = `${textarea.value.length} chars`;
 </script>
 </body>
 </html>
