@@ -14,31 +14,12 @@ export default async function handler(req, res) {
     try { body = JSON.parse(Buffer.concat(chunks).toString()); } catch (e) {}
   }
 
-  const { sentence } = body;
+  const { sentence, mode } = body;
 
-  try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'authorization': `Bearer ${process.env.GROQ_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        temperature: 0.1,
-        response_format: { type: 'json_object' },
-        messages: [{ role: 'user', content: sentence }]
-      })
-    });
-
-    const data = await response.json();
-    console.log('Groq raw response:', JSON.stringify(data));
-
-    const parsed = JSON.parse(data.choices[0].message.content);
-    res.status(200).json(parsed);
-
-  } catch (err) {
-    console.error('Handler error:', err);
-    res.status(500).json({ error: 'Analysis failed', detail: err.message });
-  }
-}
+  // Two different system prompts depending on mode
+  const systemPrompt = mode === 'generate'
+    ? `You are a grammar engine. Return ONLY a valid JSON object with this shape:
+       {"sentence": "...", "explanation": "..."}
+       sentence: a natural English sentence using Past Perfect for the first event and Simple Past for the second.
+       explanation: one sentence explaining the tense choice.`
+    : `You are a grammar analysis engine. Analyze the English sentence and return ONLY a valid JSON object.
