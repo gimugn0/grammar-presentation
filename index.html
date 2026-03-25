@@ -882,14 +882,24 @@
     transition: background 0.2s;
   }
   .verb-highlight.past-perfect {
-    color: var(--accent);
+    color: #c8b4ff;
     background: rgba(200,180,255,0.12);
     border-bottom: 1.5px solid rgba(200,180,255,0.4);
   }
   .verb-highlight.past-simple {
-    color: var(--accent2);
+    color: #7ee8c8;
     background: rgba(126,232,200,0.12);
     border-bottom: 1.5px solid rgba(126,232,200,0.4);
+  }
+  .verb-highlight.past-continuous {
+    color: #ff8c6b;
+    background: rgba(255,140,107,0.12);
+    border-bottom: 1.5px solid rgba(255,140,107,0.4);
+  }
+  .verb-highlight.present-perfect {
+    color: #f5d76e;
+    background: rgba(245,215,110,0.12);
+    border-bottom: 1.5px solid rgba(245,215,110,0.4);
   }
   .verb-highlight:hover {
     background: rgba(255,255,255,0.08);
@@ -903,7 +913,7 @@
     border: 1px solid rgba(200,180,255,0.2);
     border-radius: 10px;
     padding: 0.55rem 0.8rem;
-    width: 200px;
+    width: 210px;
     font-family: 'DM Mono', monospace;
     font-size: 0.67rem;
     line-height: 1.5;
@@ -915,6 +925,26 @@
     z-index: 200;
     box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16,1,0.3,1);
+  }
+  .verb-tooltip .tooltip-tense {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2rem;
+    margin-bottom: 0.45rem;
+  }
+  .verb-tooltip .tooltip-tense.past-perfect   { background: rgba(200,180,255,0.15); color: #c8b4ff; border: 1px solid rgba(200,180,255,0.25); }
+  .verb-tooltip .tooltip-tense.past-simple    { background: rgba(126,232,200,0.15); color: #7ee8c8; border: 1px solid rgba(126,232,200,0.25); }
+  .verb-tooltip .tooltip-tense.past-continuous { background: rgba(255,140,107,0.15); color: #ff8c6b; border: 1px solid rgba(255,140,107,0.25); }
+  .verb-tooltip .tooltip-tense.present-perfect { background: rgba(245,215,110,0.15); color: #f5d76e; border: 1px solid rgba(245,215,110,0.25); }
+  .verb-tooltip .tooltip-body {
+    color: rgba(232,232,240,0.8);
+    font-size: 0.67rem;
+    line-height: 1.55;
+    display: block;
   }
   .verb-tooltip::after {
     content: '';
@@ -2072,6 +2102,17 @@ function renderVerbSentence(container, sentence, verbs) {
     return;
   }
 
+  // Map tense string → CSS class + display label (matches Mode 1 colors)
+  function getTenseClass(tense) {
+    const t = (tense || '').toLowerCase();
+    if (t.includes('past-perfect-continuous') || (t.includes('past perfect') && t.includes('continuous'))) return { cls: 'past-continuous',  label: 'Past Perfect Cont.' };
+    if (t.includes('past-perfect')  || t.includes('past perfect'))  return { cls: 'past-perfect',   label: 'Past Perfect' };
+    if (t.includes('past-simple')   || t.includes('past simple') || t.includes('simple past'))  return { cls: 'past-simple',    label: 'Past Simple' };
+    if (t.includes('past-continuous')|| t.includes('past continuous')) return { cls: 'past-continuous', label: 'Past Continuous' };
+    if (t.includes('present-perfect')|| t.includes('present perfect')) return { cls: 'present-perfect', label: 'Present Perfect' };
+    return { cls: 'past-simple', label: tense || 'Verb' };
+  }
+
   // Find positions of each verb in the sentence
   const positions = [];
   verbs.forEach(v => {
@@ -2084,26 +2125,37 @@ function renderVerbSentence(container, sentence, verbs) {
   const frag = document.createDocumentFragment();
 
   positions.forEach(({ idx, len, v }) => {
-    if (idx < cursor) return; // skip overlaps
-    // Plain text before verb
+    if (idx < cursor) return;
     if (idx > cursor) frag.appendChild(document.createTextNode(sentence.slice(cursor, idx)));
+
+    const { cls, label } = getTenseClass(v.tense);
 
     // Highlighted verb span
     const span = document.createElement('span');
-    const isPerfect = v.tense.toLowerCase().includes('perfect') && !v.tense.toLowerCase().includes('simple');
-    span.className = `verb-highlight ${isPerfect ? 'past-perfect' : 'past-simple'}`;
+    span.className = `verb-highlight ${cls}`;
     span.appendChild(document.createTextNode(sentence.slice(idx, idx + len)));
 
+    // Tooltip with tense badge + explanation
     const tip = document.createElement('div');
     tip.className = 'verb-tooltip';
-    tip.textContent = v.explanation;
+
+    const badge = document.createElement('span');
+    badge.className = `tooltip-tense ${cls}`;
+    badge.textContent = label;
+
+    const body = document.createElement('span');
+    body.className = 'tooltip-body';
+    body.textContent = v.explanation;
+
+    tip.appendChild(badge);
+    tip.appendChild(document.createElement('br'));
+    tip.appendChild(body);
     span.appendChild(tip);
 
     frag.appendChild(span);
     cursor = idx + len;
   });
 
-  // Remaining text
   if (cursor < sentence.length) frag.appendChild(document.createTextNode(sentence.slice(cursor)));
   container.appendChild(frag);
 }
