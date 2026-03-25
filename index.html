@@ -872,6 +872,74 @@
     line-height: 1.6;
   }
 
+  /* ── VERB HIGHLIGHTS ── */
+  .verb-highlight {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    border-radius: 4px;
+    padding: 0 3px;
+    transition: background 0.2s;
+  }
+  .verb-highlight.past-perfect {
+    color: var(--accent);
+    background: rgba(200,180,255,0.12);
+    border-bottom: 1.5px solid rgba(200,180,255,0.4);
+  }
+  .verb-highlight.past-simple {
+    color: var(--accent2);
+    background: rgba(126,232,200,0.12);
+    border-bottom: 1.5px solid rgba(126,232,200,0.4);
+  }
+  .verb-highlight:hover {
+    background: rgba(255,255,255,0.08);
+  }
+  .verb-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1e1e2e;
+    border: 1px solid rgba(200,180,255,0.2);
+    border-radius: 10px;
+    padding: 0.55rem 0.8rem;
+    width: 200px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.67rem;
+    line-height: 1.5;
+    color: rgba(232,232,240,0.9);
+    pointer-events: none;
+    opacity: 0;
+    white-space: normal;
+    text-align: left;
+    z-index: 200;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16,1,0.3,1);
+  }
+  .verb-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(200,180,255,0.2);
+  }
+  .verb-tooltip::before {
+    content: '';
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1e1e2e;
+    z-index: 1;
+  }
+  .verb-highlight:hover .verb-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   .m2-typing-cursor {
     display: inline-block;
     width: 2px;
@@ -1001,10 +1069,6 @@
     <!-- Result -->
     <div class="m2-result-section" id="m2ResultSection">
       <div class="m2-result-card">
-        <div class="m2-result-header">
-          <span class="m2-result-tag">AI Generated</span>
-          <span class="m2-result-phase">Groq · Llama 3.3</span>
-        </div>
         <div class="m2-result-text" id="m2ResultText"></div>
       </div>
     </div>
@@ -1960,43 +2024,89 @@ m2GenerateBtn.addEventListener('click', async () => {
 
     const data = await res.json();
 
-    // Extract sentence + explanation from response
-    let sentence = '';
-    let explanation = '';
+    let sentence = '', explanation = '', verbs = [];
 
     if (data.sentence) {
-      sentence = data.sentence;
+      sentence    = data.sentence;
       explanation = data.explanation || '';
+      verbs       = data.verbs || [];
     } else if (data.events) {
-      // Fallback: API returned timeline JSON instead — build sentence from it
       sentence = data.original_text || `${firstWord} → ${secondWord}`;
     } else {
       throw new Error('Unexpected response format');
     }
 
-    // Typewriter output
     m2ResultText.innerHTML = '';
-    const parts = [
-      { text: sentence, cls: '' },
-      { text: explanation ? '✦ Why these tenses?\n' + explanation : '', cls: 'phase-note' }
-    ].filter(p => p.text);
+    renderVerbSentence(m2ResultText, sentence, verbs);
 
-    typewriterParts(m2ResultText, parts, 22);
+    if (explanation) {
+      const note = document.createElement('span');
+      note.className = 'phase-note';
+      note.textContent = '✦ Why these tenses?\n' + explanation;
+      m2ResultText.appendChild(note);
+    }
 
   } catch (err) {
     console.error(err);
-    // Fallback mock output
     m2ResultText.innerHTML = '';
-    const parts = [
-      { text: `By the time ${secondWord.toLowerCase()} happened, ${firstWord.toLowerCase()} had already occurred.`, cls: '' },
-      { text: '✦ Why these tenses?\nThe earlier event uses Past Perfect (had + past participle) to signal it was completed before the second event. The later event uses Simple Past as the reference point.', cls: 'phase-note' }
+    const fallbackSentence = `By the time ${secondWord.toLowerCase()} happened, ${firstWord.toLowerCase()} had already occurred.`;
+    const fallbackVerbs = [
+      { verb: 'had already occurred', tense: 'past-perfect', explanation: 'Past Perfect — completed before the reference point.' },
+      { verb: 'happened',             tense: 'past-simple',  explanation: 'Simple Past — the anchor/reference point event.' }
     ];
-    typewriterParts(m2ResultText, parts, 22);
+    renderVerbSentence(m2ResultText, fallbackSentence, fallbackVerbs);
+    const note = document.createElement('span');
+    note.className = 'phase-note';
+    note.textContent = '✦ Why these tenses?\nThe earlier event uses Past Perfect (had + past participle). The later event uses Simple Past as the anchor.';
+    m2ResultText.appendChild(note);
   } finally {
     m2GenerateBtn.disabled = false;
     m2GenerateBtn.innerHTML = '<span style="font-size:1rem">✦</span> Generate Sentence';
   }
 });
+
+// ── Render sentence with clickable verb highlights
+function renderVerbSentence(container, sentence, verbs) {
+  if (!verbs || verbs.length === 0) {
+    container.appendChild(document.createTextNode(sentence));
+    return;
+  }
+
+  // Find positions of each verb in the sentence
+  const positions = [];
+  verbs.forEach(v => {
+    const idx = sentence.toLowerCase().indexOf(v.verb.toLowerCase());
+    if (idx !== -1) positions.push({ idx, len: v.verb.length, v });
+  });
+  positions.sort((a, b) => a.idx - b.idx);
+
+  let cursor = 0;
+  const frag = document.createDocumentFragment();
+
+  positions.forEach(({ idx, len, v }) => {
+    if (idx < cursor) return; // skip overlaps
+    // Plain text before verb
+    if (idx > cursor) frag.appendChild(document.createTextNode(sentence.slice(cursor, idx)));
+
+    // Highlighted verb span
+    const span = document.createElement('span');
+    const isPerfect = v.tense.toLowerCase().includes('perfect') && !v.tense.toLowerCase().includes('simple');
+    span.className = `verb-highlight ${isPerfect ? 'past-perfect' : 'past-simple'}`;
+    span.appendChild(document.createTextNode(sentence.slice(idx, idx + len)));
+
+    const tip = document.createElement('div');
+    tip.className = 'verb-tooltip';
+    tip.textContent = v.explanation;
+    span.appendChild(tip);
+
+    frag.appendChild(span);
+    cursor = idx + len;
+  });
+
+  // Remaining text
+  if (cursor < sentence.length) frag.appendChild(document.createTextNode(sentence.slice(cursor)));
+  container.appendChild(frag);
+}
 
 function typewriterParts(container, parts, speed) {
   let partIdx = 0;
