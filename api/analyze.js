@@ -51,13 +51,25 @@ Sentence to analyze: "${sentence}"`;
     );
 
     const data = await response.json();
+
+    // Log the full response so we can debug
+    console.log('Gemini raw response:', JSON.stringify(data));
+
+    if (!data.candidates || !data.candidates[0]) {
+      console.error('No candidates in response:', JSON.stringify(data));
+      return res.status(500).json({ 
+        error: 'No candidates returned', 
+        gemini_response: data 
+      });
+    }
+
     const raw = data.candidates[0].content.parts[0].text;
     const clean = raw.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
 
     res.status(200).json(parsed);
   } catch (err) {
-    console.error(err);
+    console.error('Handler error:', err);
     res.status(500).json({ error: 'Analysis failed', detail: err.message });
   }
 }
