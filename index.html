@@ -807,7 +807,7 @@
     border-radius: 16px;
     padding: 1.8rem 2rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
   }
   .m2-result-card::before {
     content: '';
@@ -896,9 +896,9 @@
   }
   .verb-tooltip {
     position: absolute;
-    bottom: calc(100% + 8px);
+    top: calc(100% + 8px);
     left: 50%;
-    transform: translateX(-50%) translateY(4px);
+    transform: translateX(-50%) translateY(-4px);
     background: #1e1e2e;
     border: 1px solid rgba(200,180,255,0.2);
     border-radius: 10px;
@@ -919,20 +919,20 @@
   .verb-tooltip::after {
     content: '';
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: rgba(200,180,255,0.2);
+    border-bottom-color: rgba(200,180,255,0.2);
   }
   .verb-tooltip::before {
     content: '';
     position: absolute;
-    top: calc(100% - 1px);
+    bottom: calc(100% - 1px);
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: #1e1e2e;
+    border-bottom-color: #1e1e2e;
     z-index: 1;
   }
   .verb-highlight:hover .verb-tooltip {
