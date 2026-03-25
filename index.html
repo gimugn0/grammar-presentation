@@ -1949,7 +1949,8 @@ m2GenerateBtn.addEventListener('click', async () => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        sentence: `Generate one natural English sentence where "${firstWord}" happened first (use Past Perfect) and "${secondWord}" happened second (use Simple Past). Return ONLY a JSON object like this: {"sentence": "...", "explanation": "..."} where explanation is one sentence describing why each tense was used.`
+        mode: 'generate',
+        sentence: `Generate one natural English sentence where "${firstWord}" happened first (use Past Perfect) and "${secondWord}" happened second (use Simple Past). Return valid JSON.`
       })
     });
 
