@@ -1928,77 +1928,99 @@ m2ResetBtn.addEventListener('click', () => {
   m2DrawBase();
 });
 
-// ── Generate mock sentence
-m2GenerateBtn.addEventListener('click', () => {
+// ── Generate sentence via API
+m2GenerateBtn.addEventListener('click', async () => {
   if (m2Nodes.length < 2) return;
 
-  // Sort nodes left → right (chronological order)
+  // Sort nodes left → right (chronological = earlier → later)
   const sorted = [...m2Nodes].sort((a, b) => a.x - b.x);
   const firstWord  = sorted[0].inputEl.value.trim() || 'Event A';
   const secondWord = sorted[1].inputEl.value.trim() || 'Event B';
 
-  // Capitalise first letter
-  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-
-  const mockParts = [
-    { text: `${cap(firstWord)} happened first `, cls: 'highlight-past-perfect' },
-    { text: '(Past Perfect). ', cls: '' },
-    { text: `${cap(secondWord)} happened second `, cls: 'highlight-past-simple' },
-    { text: '(Simple Past). ', cls: '' },
-    { text: '✦ AI generated sentence will appear here in Phase 4!', cls: 'phase-note' }
-  ];
-
-  // Build full plain text for typewriter
-  const fullText = mockParts.map(p => p.text).join('');
-
+  // Show result section with loading state
   m2ResultSection.classList.add('visible');
-  m2ResultText.innerHTML = '';
+  m2ResultText.innerHTML = '<span class="m2-typing-cursor"></span>';
+  m2GenerateBtn.disabled = true;
+  m2GenerateBtn.innerHTML = '<span style="animation:spin 1s linear infinite;display:inline-block">✦</span> Generating…';
 
-  // Typewriter with rich formatting
-  let charIdx = 0;
+  try {
+    const res = await fetch('https://grammar-presentation.vercel.app/api/analyze', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        sentence: `Generate one natural English sentence where "${firstWord}" happened first (use Past Perfect) and "${secondWord}" happened second (use Simple Past). Return ONLY a JSON object like this: {"sentence": "...", "explanation": "..."} where explanation is one sentence describing why each tense was used.`
+      })
+    });
+
+    const data = await res.json();
+
+    // Extract sentence + explanation from response
+    let sentence = '';
+    let explanation = '';
+
+    if (data.sentence) {
+      sentence = data.sentence;
+      explanation = data.explanation || '';
+    } else if (data.events) {
+      // Fallback: API returned timeline JSON instead — build sentence from it
+      sentence = data.original_text || `${firstWord} → ${secondWord}`;
+    } else {
+      throw new Error('Unexpected response format');
+    }
+
+    // Typewriter output
+    m2ResultText.innerHTML = '';
+    const parts = [
+      { text: sentence, cls: '' },
+      { text: explanation ? '\n\n' + explanation : '', cls: 'phase-note' }
+    ].filter(p => p.text);
+
+    typewriterParts(m2ResultText, parts, 22);
+
+  } catch (err) {
+    console.error(err);
+    // Fallback mock output
+    m2ResultText.innerHTML = '';
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+    const parts = [
+      { text: `By the time ${secondWord.toLowerCase()} happened, ${firstWord.toLowerCase()} had already occurred.`, cls: '' },
+      { text: '\n\n⚠ Could not reach API — showing fallback output.', cls: 'phase-note' }
+    ];
+    typewriterParts(m2ResultText, parts, 22);
+  } finally {
+    m2GenerateBtn.disabled = false;
+    m2GenerateBtn.innerHTML = '<span style="font-size:1rem">✦</span> Generate Sentence';
+  }
+});
+
+function typewriterParts(container, parts, speed) {
   let partIdx = 0;
-  let partCharIdx = 0;
+  let charIdx = 0;
   let currentSpan = null;
 
-  const speed = 28;
-
   function tick() {
-    if (partIdx >= mockParts.length) {
-      // Remove cursor
-      const cur = m2ResultText.querySelector('.m2-typing-cursor');
+    if (partIdx >= parts.length) {
+      const cur = container.querySelector('.m2-typing-cursor');
       if (cur) cur.remove();
       return;
     }
-
-    const part = mockParts[partIdx];
-    if (partCharIdx === 0) {
-      // Create new span for this part
-      currentSpan = document.createElement(part.cls === 'phase-note' ? 'span' : 'span');
+    const part = parts[partIdx];
+    if (charIdx === 0) {
+      currentSpan = document.createElement('span');
       if (part.cls) currentSpan.className = part.cls;
-      m2ResultText.appendChild(currentSpan);
+      container.appendChild(currentSpan);
     }
+    currentSpan.textContent += part.text[charIdx];
+    charIdx++;
+    if (charIdx >= part.text.length) { partIdx++; charIdx = 0; }
 
-    currentSpan.textContent += part.text[partCharIdx];
-    partCharIdx++;
-
-    if (partCharIdx >= part.text.length) {
-      partIdx++;
-      partCharIdx = 0;
-    }
-
-    // Move/update cursor
-    let cursor = m2ResultText.querySelector('.m2-typing-cursor');
-    if (!cursor) {
-      cursor = document.createElement('span');
-      cursor.className = 'm2-typing-cursor';
-    }
-    m2ResultText.appendChild(cursor);
-
-    setTimeout(tick, speed + Math.random() * 14);
+    let cursor = container.querySelector('.m2-typing-cursor');
+    if (!cursor) { cursor = document.createElement('span'); cursor.className = 'm2-typing-cursor'; }
+    container.appendChild(cursor);
+    setTimeout(tick, speed + Math.random() * 12);
   }
-
-  setTimeout(tick, 200);
-});
+  tick();
+}
 </script>
 </body>
 </html>
