@@ -639,8 +639,8 @@ const SAMPLE_DATASETS = {
       document_id: "req_dinner",
       original_text: "By the time she called, he had already eaten dinner.",
       events: [
-        { event_id: "e1", chronological_order: 1, event_name: "He eats dinner", extracted_phrase: "had already eaten dinner", tense: "Past Perfect", text_appearance_order: 2, relative_time_offset: -60, interval_hint: "unspecified_past" },
-        { event_id: "e2", chronological_order: 2, event_name: "She calls", extracted_phrase: "By the time she called", tense: "Past Simple", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
+        { event_id: "e1", chronological_order: 1, event_name: "He eats dinner", extracted_phrase: "had already eaten dinner", tense: "Past Perfect", tense_explanation: "<strong>Had eaten</strong> = past perfect. Dinner was finished <em>before</em> the phone call. 'Already' emphasises the completed gap in time.", text_appearance_order: 2, relative_time_offset: -60, interval_hint: "unspecified_past" },
+        { event_id: "e2", chronological_order: 2, event_name: "She calls", extracted_phrase: "By the time she called", tense: "Past Simple", tense_explanation: "<strong>Called</strong> = past simple. This is the reference point. 'By the time' sets it up as the later of the two events.", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
       ]
     }
   ],
@@ -649,8 +649,8 @@ const SAMPLE_DATASETS = {
       document_id: "req_rain",
       original_text: "When I woke up, it had been raining all night.",
       events: [
-        { event_id: "r1", chronological_order: 1, event_name: "Rain begins (all night)", extracted_phrase: "had been raining all night", tense: "Past Perfect Continuous", text_appearance_order: 2, relative_time_offset: -80, interval_hint: "extended_past" },
-        { event_id: "r2", chronological_order: 2, event_name: "I wake up", extracted_phrase: "When I woke up", tense: "Past Simple", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
+        { event_id: "r1", chronological_order: 1, event_name: "Rain begins (all night)", extracted_phrase: "had been raining all night", tense: "Past Perfect Continuous", tense_explanation: "<strong>Had been raining</strong> = past perfect continuous. The rain was an <em>ongoing activity</em> that started before waking and continued right up to that moment. The continuous form stresses duration.", text_appearance_order: 2, relative_time_offset: -80, interval_hint: "extended_past" },
+        { event_id: "r2", chronological_order: 2, event_name: "I wake up", extracted_phrase: "When I woke up", tense: "Past Simple", tense_explanation: "<strong>Woke</strong> = past simple. A single completed action in the past that acts as the reference point.", text_appearance_order: 1, relative_time_offset: 0, interval_hint: "reference_point" }
       ]
     }
   ]
@@ -1014,9 +1014,9 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_01", original_text: "She had been working on the novel for three years before she finally submitted it to the publisher, who had already read two of her earlier drafts.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Publisher reads drafts", extracted_phrase:"had already read two of her earlier drafts", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-90, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"She works on the novel", extracted_phrase:"had been working on the novel for three years", tense:"Past Perfect Continuous", text_appearance_order:1, relative_time_offset:-30, interval_hint:"extended_past" },
-        { event_id:"r3", chronological_order:3, event_name:"She submits the manuscript", extracted_phrase:"she finally submitted it", tense:"Past Simple", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Publisher reads drafts", extracted_phrase:"had already read two of her earlier drafts", tense:"Past Perfect", tense_explanation:"<strong>Had read</strong> = past perfect. The publisher's reading happened <em>before</em> the submission — the earliest event in the chain. 'Already' confirms it was fully done.", text_appearance_order:3, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"She works on the novel", extracted_phrase:"had been working on the novel for three years", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been working</strong> = past perfect continuous. An activity that stretched over a long period (<em>three years</em>) and was still ongoing right up until it stopped. The continuous form stresses duration.", text_appearance_order:1, relative_time_offset:-30, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"She submits the manuscript", extracted_phrase:"she finally submitted it", tense:"Past Simple", tense_explanation:"<strong>Submitted</strong> = past simple. The reference point — a single completed act in the past that everything else is measured against.", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1025,9 +1025,9 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_02", original_text: "By the time the rescue team reached the village, the storm had destroyed most of the buildings that the locals had constructed over generations.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Locals build the buildings", extracted_phrase:"the locals had constructed over generations", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Storm destroys buildings", extracted_phrase:"the storm had destroyed most of the buildings", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-20, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Rescue team arrives", extracted_phrase:"the rescue team reached the village", tense:"Past Simple", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Locals build the buildings", extracted_phrase:"the locals had constructed over generations", tense:"Past Perfect", tense_explanation:"<strong>Had constructed</strong> = past perfect. The oldest event: buildings built across many generations, long before the storm. The past perfect places this deepest in the past.", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Storm destroys buildings", extracted_phrase:"the storm had destroyed most of the buildings", tense:"Past Perfect", tense_explanation:"<strong>Had destroyed</strong> = past perfect. The destruction was already complete by the time the team arrived — another event earlier than the reference point.", text_appearance_order:2, relative_time_offset:-20, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Rescue team arrives", extracted_phrase:"the rescue team reached the village", tense:"Past Simple", tense_explanation:"<strong>Reached</strong> = past simple. The reference point. 'By the time' makes this the latest event — everything else had already happened before this moment.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1036,10 +1036,10 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_03", original_text: "Marcus realized he had forgotten his passport only after he had already checked in his luggage, and the gate was closing.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Marcus forgets his passport", extracted_phrase:"he had forgotten his passport", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-80, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"He checks in luggage", extracted_phrase:"he had already checked in his luggage", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-30, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Gate is closing", extracted_phrase:"the gate was closing", tense:"Past Continuous", text_appearance_order:4, relative_time_offset:-5, interval_hint:"simultaneous" },
-        { event_id:"r4", chronological_order:4, event_name:"Marcus realizes the problem", extracted_phrase:"Marcus realized", tense:"Past Simple", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Marcus forgets his passport", extracted_phrase:"he had forgotten his passport", tense:"Past Perfect", tense_explanation:"<strong>Had forgotten</strong> = past perfect. The forgetting happened at an unspecified point <em>before</em> everything else — it was already a fait accompli when the story begins.", text_appearance_order:2, relative_time_offset:-80, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"He checks in luggage", extracted_phrase:"he had already checked in his luggage", tense:"Past Perfect", tense_explanation:"<strong>Had checked in</strong> = past perfect. This happened before Marcus realized. 'Already' emphasises it was done and couldn't be undone.", text_appearance_order:3, relative_time_offset:-30, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Gate is closing", extracted_phrase:"the gate was closing", tense:"Past Continuous", tense_explanation:"<strong>Was closing</strong> = past continuous. An <em>ongoing background action</em> happening at the same moment as the realization. It describes the scene rather than a completed event.", text_appearance_order:4, relative_time_offset:-5, interval_hint:"simultaneous" },
+        { event_id:"r4", chronological_order:4, event_name:"Marcus realizes the problem", extracted_phrase:"Marcus realized", tense:"Past Simple", tense_explanation:"<strong>Realized</strong> = past simple. The reference point — the moment of sudden awareness that anchors the whole story.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1048,9 +1048,9 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_04", original_text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Ancient healers use the compound", extracted_phrase:"ancient healers had been using for centuries", tense:"Past Perfect Continuous", text_appearance_order:2, relative_time_offset:-120, interval_hint:"extended_past" },
-        { event_id:"r2", chronological_order:2, event_name:"No one understands its mechanism", extracted_phrase:"no one had ever understood why it worked", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-40, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Scientist discovers the compound", extracted_phrase:"The scientist has discovered", tense:"Present Perfect", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Ancient healers use the compound", extracted_phrase:"ancient healers had been using for centuries", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been using</strong> = past perfect continuous. A repeated, habitual practice sustained over a very long time (<em>centuries</em>). The continuous form highlights the unbroken duration.", text_appearance_order:2, relative_time_offset:-120, interval_hint:"extended_past" },
+        { event_id:"r2", chronological_order:2, event_name:"No one understands its mechanism", extracted_phrase:"no one had ever understood why it worked", tense:"Past Perfect", tense_explanation:"<strong>Had understood</strong> (negative) = past perfect. 'Ever' + past perfect signals a gap that persisted all the way from the distant past up to the discovery.", text_appearance_order:3, relative_time_offset:-40, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Scientist discovers the compound", extracted_phrase:"The scientist has discovered", tense:"Present Perfect", tense_explanation:"<strong>Has discovered</strong> = present perfect. The discovery happened recently and is relevant <em>right now</em>. Present perfect connects a past action to the present moment.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1059,10 +1059,10 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_05", original_text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"She sings the melody", extracted_phrase:"the melody she had sung", tense:"Past Perfect", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Concert ends", extracted_phrase:"the concert had ended", tense:"Past Perfect", text_appearance_order:1, relative_time_offset:-30, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Crowd disperses", extracted_phrase:"the crowd had dispersed", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-15, interval_hint:"unspecified_past" },
-        { event_id:"r4", chronological_order:4, event_name:"She sits humming alone", extracted_phrase:"she sat alone, still humming", tense:"Past Simple", text_appearance_order:3, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"She sings the melody", extracted_phrase:"the melody she had sung", tense:"Past Perfect", tense_explanation:"<strong>Had sung</strong> = past perfect. The performance happened during the concert — earlier than every other event. Past perfect anchors it as the oldest action.", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Concert ends", extracted_phrase:"the concert had ended", tense:"Past Perfect", tense_explanation:"<strong>Had ended</strong> = past perfect. Completed <em>before</em> she sat down. 'After' introduces past perfect because the ending is a prerequisite for what follows.", text_appearance_order:1, relative_time_offset:-30, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Crowd disperses", extracted_phrase:"the crowd had dispersed", tense:"Past Perfect", tense_explanation:"<strong>Had dispersed</strong> = past perfect. Also completed before the main scene. Two past perfect clauses here signal two things that were both already done.", text_appearance_order:2, relative_time_offset:-15, interval_hint:"unspecified_past" },
+        { event_id:"r4", chronological_order:4, event_name:"She sits humming alone", extracted_phrase:"she sat alone, still humming", tense:"Past Simple", tense_explanation:"<strong>Sat</strong> is the main action — past simple sets the scene. <strong>Humming</strong> happens at the <em>exact same time</em> as sitting; it's a simultaneous background action, not a separate event.", text_appearance_order:3, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1071,9 +1071,9 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_06", original_text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Grandfather grows up in the city", extracted_phrase:"his grandfather had grown up", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-110, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Family tells stories", extracted_phrase:"his family had been telling him stories his whole life", tense:"Past Perfect Continuous", text_appearance_order:3, relative_time_offset:-40, interval_hint:"extended_past" },
-        { event_id:"r3", chronological_order:3, event_name:"He still hasn't visited", extracted_phrase:"He has never visited the city", tense:"Present Perfect", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Grandfather grows up in the city", extracted_phrase:"his grandfather had grown up", tense:"Past Perfect", tense_explanation:"<strong>Had grown up</strong> = past perfect. The grandfather's childhood is the oldest event — placed furthest in the past relative to the speaker's lifetime.", text_appearance_order:2, relative_time_offset:-110, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Family tells stories", extracted_phrase:"his family had been telling him stories his whole life", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been telling</strong> = past perfect continuous. A repeated action that continued throughout his whole life up to the present — continuous form stresses the unbroken habit.", text_appearance_order:3, relative_time_offset:-40, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"He still hasn't visited", extracted_phrase:"He has never visited the city", tense:"Present Perfect", tense_explanation:"<strong>Has never visited</strong> = present perfect negative. 'Never' + present perfect describes something that <em>hasn't happened</em> in a period from the past up to now — and may still happen.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1082,10 +1082,10 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_07", original_text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Intruder enters the building", extracted_phrase:"someone had entered the building", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Alarm is triggered", extracted_phrase:"the alarm had been triggered", tense:"Past Perfect", text_appearance_order:4, relative_time_offset:-50, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Investigators review footage", extracted_phrase:"investigators were reviewing the footage", tense:"Past Continuous", text_appearance_order:1, relative_time_offset:-10, interval_hint:"simultaneous" },
-        { event_id:"r4", chronological_order:4, event_name:"Investigators make the discovery", extracted_phrase:"they found", tense:"Past Simple", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Intruder enters the building", extracted_phrase:"someone had entered the building", tense:"Past Perfect", tense_explanation:"<strong>Had entered</strong> = past perfect. 'Long before' makes this the earliest event — the entry predates even the alarm.", text_appearance_order:3, relative_time_offset:-100, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Alarm is triggered", extracted_phrase:"the alarm had been triggered", tense:"Past Perfect", tense_explanation:"<strong>Had been triggered</strong> = past perfect passive. The alarm going off was also before the discovery, so past perfect is used — even though it came after the entry.", text_appearance_order:4, relative_time_offset:-50, interval_hint:"unspecified_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Investigators review footage", extracted_phrase:"investigators were reviewing the footage", tense:"Past Continuous", tense_explanation:"<strong>Were reviewing</strong> = past continuous. An <em>ongoing activity</em> in progress when the discovery was made. 'While' signals this is the background action, not the main event.", text_appearance_order:1, relative_time_offset:-10, interval_hint:"simultaneous" },
+        { event_id:"r4", chronological_order:4, event_name:"Investigators make the discovery", extracted_phrase:"they found", tense:"Past Simple", tense_explanation:"<strong>Found</strong> = past simple. The main event — a completed act of discovery that interrupts the ongoing review. Past simple cuts through the continuous background.", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   },
@@ -1094,10 +1094,10 @@ const RANDOM_STORIES = [
     data: [{
       document_id: "rnd_08", original_text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
       events: [
-        { event_id:"r1", chronological_order:1, event_name:"Plants die in the frost", extracted_phrase:"the plants that had died in the frost", tense:"Past Perfect", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Elena tends the garden", extracted_phrase:"Elena had spent every weekend tending it", tense:"Past Perfect", text_appearance_order:2, relative_time_offset:-50, interval_hint:"extended_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Elena replaces the dead plants", extracted_phrase:"had replaced all the plants", tense:"Past Perfect", text_appearance_order:3, relative_time_offset:-20, interval_hint:"unspecified_past" },
-        { event_id:"r4", chronological_order:4, event_name:"Garden looks beautiful now", extracted_phrase:"The garden looks beautiful now", tense:"Present Simple", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
+        { event_id:"r1", chronological_order:1, event_name:"Plants die in the frost", extracted_phrase:"the plants that had died in the frost", tense:"Past Perfect", tense_explanation:"<strong>Had died</strong> = past perfect. The frost damage happened before Elena's work began — past perfect within a past perfect context, pushing it furthest back.", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
+        { event_id:"r2", chronological_order:2, event_name:"Elena tends the garden", extracted_phrase:"Elena had spent every weekend tending it", tense:"Past Perfect", tense_explanation:"<strong>Had spent</strong> = past perfect. A repeated past action (every weekend) that was completed before the present result. The effort explains <em>why</em> it looks beautiful now.", text_appearance_order:2, relative_time_offset:-50, interval_hint:"extended_past" },
+        { event_id:"r3", chronological_order:3, event_name:"Elena replaces the dead plants", extracted_phrase:"had replaced all the plants", tense:"Past Perfect", tense_explanation:"<strong>Had replaced</strong> = past perfect. Also done before now — another completed preparation that feeds into the present beautiful state.", text_appearance_order:3, relative_time_offset:-20, interval_hint:"unspecified_past" },
+        { event_id:"r4", chronological_order:4, event_name:"Garden looks beautiful now", extracted_phrase:"The garden looks beautiful now", tense:"Present Simple", tense_explanation:"<strong>Looks</strong> = present simple. The current state — the result of everything that happened before. Present simple describes an ongoing truth right now.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   }
