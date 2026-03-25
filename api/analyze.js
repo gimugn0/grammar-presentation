@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // Parse body manually if needed
   let body = req.body;
   if (typeof body === 'string') {
     try { body = JSON.parse(body); } catch (e) {}
@@ -46,33 +45,28 @@ Rules:
 Sentence to analyze: "${sentence}"`;
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.1,
-            responseMimeType: 'application/json'
-          }
-        })
-      }
-    );
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        temperature: 0.1,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'user', content: prompt }
+        ]
+      })
+    });
 
     const data = await response.json();
-    console.log('Gemini raw response:', JSON.stringify(data));
+    console.log('Groq raw response:', JSON.stringify(data));
 
-    if (!data.candidates || !data.candidates[0]) {
-      return res.status(500).json({ error: 'No candidates returned', gemini_response: data });
-    }
-
-    const raw = data.candidates[0].content.parts[0].text;
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
-
+    const parsed = JSON.parse(data.choices[0].message.content);
     res.status(200).json(parsed);
+
   } catch (err) {
     console.error('Handler error:', err);
     res.status(500).json({ error: 'Analysis failed', detail: err.message });
