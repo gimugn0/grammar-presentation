@@ -1104,21 +1104,35 @@ textarea.addEventListener('keydown', e => {
 });
 
 // ── ANALYSIS FLOW ──
-function runAnalysis(text) {
+async function runAnalysis(text) {
   analyzeBtn.disabled = true;
   analyzeBtn.innerHTML = '<span class="btn-icon" style="animation:spin 1s linear infinite">◈</span> Analyzing…';
 
-  // Loading bar
   loadingBar.innerHTML = '<div class="loading-bar-inner"></div>';
   loadingBar.classList.add('active');
 
-  setTimeout(() => {
+  try {
+    const res = await fetch('https://grammar-presentation.vercel.app/api/analyze', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ sentence: text })
+    });
+
+    if (!res.ok) throw new Error('API error ' + res.status);
+
+    const data = await res.json();
+    renderTimeline([data]);
+
+  } catch (err) {
+    console.error(err);
+    // Fallback to mock data on error
     const data = resolveData(text);
     renderTimeline(data);
+  } finally {
     loadingBar.classList.remove('active');
     analyzeBtn.disabled = false;
     analyzeBtn.innerHTML = '<span class="btn-icon">◈</span> Analyze';
-  }, 1200);
+  }
 }
 
 function resolveData(text) {
