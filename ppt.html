@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Past Perfect & Past Perfect Continuous</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+
+<style>
+/* ═══════════════════════════════════════
+   FONT — system sans, !important everywhere
+═══════════════════════════════════════ */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               Helvetica, Arial, sans-serif !important;
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:       #f5f4ef;
+  --surface:  #ffffff;
+  --text:     #181818;
+  --muted:    #6b6b6b;
+  --accent:   #007AFF;
+  --acbg:     #e8f2ff;
+  --border:   #e2e1db;
+  --tagbg:    #eeede8;
+  --green:    #15803d;
+  --greenbg:  #dcfce7;
+  --red:      #b91c1c;
+  --redbg:    #fee2e2;
+  --px:       68px;
+  --tag-top:  44px;
+  --body-top: 108px;
+}
+
+body { background: var(--bg); }
+
+/* ═══════════════════════════════════════
+   HIGHLIGHT SPAN
+═══════════════════════════════════════ */
+.highlight {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+}
+
+/* ═══════════════════════════════════════
+   REVEAL BASE
+═══════════════════════════════════════ */
+.reveal,
+.reveal .slides {
+  font-size: 16px !important;
+  color: var(--text) !important;
+  background: var(--bg) !important;
+  text-align: left !important;
+}
+
+.reveal .slides section {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  padding: var(--body-top) var(--px) 72px var(--px) !important;
+  text-align: left !important;
+  background: var(--bg) !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+/* ═══════════════════════════════════════
+   SQUIGGLY PROGRESS BAR — top: 0
+═══════════════════════════════════════ */
+.reveal .progress {
+  top: 0 !important;
+  bottom: auto !important;
+  height: 12px !important;
+  background: transparent !important;
+  z-index: 1000;
+  overflow: visible !important;
+}
+
+.reveal .progress span {
+  background: var(--accent) !important;
+  height: 3px !important;
+  margin-top: 4px !important;
+  display: block !important;
+  position: relative !important;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow: visible !important;
+  border-radius: 0 2px 2px 0 !important;
+}
+
+/* Squiggly tail pinned to right edge of the bar */
+.reveal .progress span::after {
+  content: '' !important;
+  position: absolute !important;
+  right: -20px !important;
+  top: -6px !important;
+  width: 24px !important;
+  height: 15px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 7.5 C2.5 2,5 2,7.5 7.5 C10 13,12.5 13,15 7.5 C17.5 2,20 2,22 6 C23 8,24 8,24 8' stroke='%23007AFF' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 24px 15px !important;
+  animation: squiggle-bob 0.8s ease-in-out infinite alternate !important;
+}
+
+@keyframes squiggle-bob {
+  0%   { transform: translateY(0)      scaleX(1);    opacity: 1;    }
+  50%  { transform: translateY(-1.5px) scaleX(1.06); opacity: 0.9;  }
+  100% { transform: translateY(1.2px)  scaleX(0.95); opacity: 1;    }
+}
+
+/* Hide controls */
+.reveal .controls { display: none !important; }
+
+/* ═══════════════════════════════════════
+   SUBTITLE PILL — fixed top-left
+═══════════════════════════════════════ */
+.s-tag {
+  position: absolute !important;
+  top: var(--tag-top) !important;
+  left: var(--px) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.13em !important;
+  text-transform: uppercase !important;
+  color: var(--accent) !important;
+  background: var(--acbg) !important;
+  padding: 5px 13px !important;
+  border-radius: 100px !important;
+  white-space: nowrap !important;
+  z-index: 20 !important;
+}
+
+/* ═══════════════════════════════════════
+   CONTENT COLUMN
+═══════════════════════════════════════ */
+.s-col {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  height: 100%;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════
+   TITLE SLIDE
+═══════════════════════════════════════ */
+.hero {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--px) !important;
+}
+.hero .eyebrow {
+  font-size: 11px !important; font-weight: 500 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 18px !important;
+}
+.hero h1 {
+  font-size: clamp(44px, 6.5vw, 72px) !important;
+  font-weight: 700 !important; line-height: 1.06 !important;
+  color: var(--text) !important; margin-bottom: 20px !important;
+  max-width: 820px !important;
+}
+.hero .tagline {
+  font-size: 20px !important; font-weight: 300 !important;
+  color: var(--muted) !important; margin-bottom: 48px !important;
+}
+.hero .presenter {
+  position: absolute !important;
+  bottom: 88px !important; left: var(--px) !important;
+  font-size: 12px !important; color: var(--muted) !important;
+}
+.hero .presenter span { color: var(--text) !important; font-weight: 600 !important; }
+
+/* ═══════════════════════════════════════
+   INFO CARDS
+═══════════════════════════════════════ */
+.icard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  max-width: 860px;
+}
+.icard .lbl {
+  font-size: 10px !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 7px !important;
+}
+.icard .val {
+  font-size: 17px !important; line-height: 1.65 !important;
+  color: var(--text) !important;
+}
+.icard .val em {
+  font-style: normal !important; font-weight: 700 !important;
+  color: var(--accent) !important;
+}
+.icard .ex {
+  margin-top: 12px; padding: 12px 15px;
+  background: var(--tagbg); border-radius: 9px;
+  border-left: 3px solid var(--accent);
+}
+.icard .ex .en { font-size: 15px !important; font-weight: 500 !important; line-height: 1.6 !important; }
+.icard .ex .ko { font-size: 13px !important; color: var(--muted) !important; margin-top: 3px !important; }
+
+/* ═══════════════════════════════════════
+   COMPARE GRID
+═══════════════════════════════════════ */
+.cgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 900px;
+}
+.ccard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.ccard .lbl {
+  font-size: 10px !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 5px !important;
+}
+.ccard .form {
+  font-size: 14px !important; font-weight: 700 !important;
+  color: var(--accent) !important; margin-bottom: 7px !important;
+}
+.ccard .desc {
+  font-size: 13px !important; color: var(--muted) !important;
+  line-height: 1.55 !important; margin-bottom: 10px !important;
+}
+.ccard .ex {
+  background: var(--tagbg); padding: 10px 12px;
+  border-radius: 8px; border-left: 3px solid var(--accent);
+}
+.ccard .ex .en { font-size: 13px !important; font-weight: 500 !important; line-height: 1.6 !important; }
+.ccard .ex .ko { font-size: 12px !important; color: var(--muted) !important; margin-top: 2px !important; }
+
+/* ═══════════════════════════════════════
+   TOC
+═══════════════════════════════════════ */
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; max-width: 660px; }
+.toc-list li {
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 11px;
+  font-size: 15px !important; color: var(--text) !important;
+}
+.toc-list li.grp {
+  background: var(--tagbg);
+  font-size: 12px !important; font-weight: 600 !important; color: var(--muted) !important;
+}
+.toc-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--acbg); color: var(--accent) !important;
+  font-size: 11px !important; font-weight: 700 !important;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   VERDICT BADGES
+═══════════════════════════════════════ */
+.badge {
+  display: inline-block;
+  font-size: 10px !important; font-weight: 800 !important;
+  letter-spacing: 0.06em !important; text-transform: uppercase !important;
+  padding: 2px 7px; border-radius: 5px; margin-right: 6px;
+}
+.badge.ok { background: var(--greenbg); color: var(--green) !important; }
+.badge.no { background: var(--redbg);   color: var(--red)   !important; }
+
+/* ═══════════════════════════════════════
+   QUIZ
+═══════════════════════════════════════ */
+.quiz-wrap { display: flex; flex-direction: column; gap: 22px; max-width: 860px; }
+.quiz-q {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 22px;
+}
+.quiz-q .q-num {
+  font-size: 10px !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 7px !important;
+}
+.quiz-q .q-text {
+  font-size: 17px !important; font-weight: 500 !important;
+  color: var(--text) !important; line-height: 1.5 !important;
+  margin-bottom: 14px !important;
+}
+.btn-row { display: flex; gap: 9px; flex-wrap: wrap; }
+.qbtn {
+  padding: 8px 18px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  background: var(--surface);
+  font-size: 14px !important; font-weight: 500 !important;
+  color: var(--text) !important;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.1s;
+}
+.qbtn:hover:not(:disabled) { background: var(--tagbg); }
+.qbtn:active { transform: scale(0.97); }
+.qbtn.correct {
+  background: var(--greenbg) !important; border-color: var(--green) !important;
+  color: var(--green) !important; font-weight: 700 !important;
+}
+.qbtn.wrong {
+  background: var(--redbg) !important; border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+.q-fb {
+  margin-top: 9px; font-size: 13px !important; font-weight: 600 !important; min-height: 18px;
+}
+.q-fb.ok { color: var(--green) !important; }
+.q-fb.no { color: var(--red)   !important; }
+
+/* ═══════════════════════════════════════
+   BOTTOM NAV BAR
+═══════════════════════════════════════ */
+#cnav {
+  position: fixed; bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 100px; padding: 7px 18px;
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+#cnav button {
+  width: 32px; height: 32px; border: none; background: transparent;
+  cursor: pointer; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text); transition: background 0.15s;
+}
+#cnav button:hover { background: var(--tagbg); }
+#pgnum {
+  font-size: 12px !important; font-weight: 600 !important;
+  color: var(--muted) !important; min-width: 52px; text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ── SLIDE 1: TITLE ── -->
+    <section>
+      <div class="hero">
+        <div class="eyebrow">English Grammar · Unit 14 &amp; 15</div>
+        <h1>Past Perfect &amp;<br>Past Perfect Continuous</h1>
+        <div class="tagline">Mastering "had done" and "had been doing" (Unit 14 &amp; 15)</div>
+        <div class="presenter">
+          Presenter: <span>Kim Woo-geun</span> &nbsp;/&nbsp; Student ID: <span>202212820</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 2: TOC ── -->
+    <section>
+      <span class="s-tag">Table of Contents</span>
+      <div class="s-col">
+        <ul class="toc-list">
+          <li class="grp"><span class="toc-num">14</span>Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)</li>
+          <li><span class="toc-num">①</span>시제 비교: 현재 완료 / 단순 과거</li>
+          <li class="grp"><span class="toc-num">15</span>Unit 15 &nbsp;·&nbsp; 과거 완료 진행 (Past Perfect Continuous)</li>
+          <li><span class="toc-num">②</span>시제 비교 및 진행형 불가 예외 동사</li>
+          <li><span class="toc-num">✎</span>Interactive Mini Quiz</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 3: Unit 14 핵심 ── -->
+    <section>
+      <span class="s-tag">Unit 14. Past Perfect</span>
+      <div class="s-col">
+        <div class="icard">
+          <div class="lbl">형태</div>
+          <div class="val"><em>had + 과거분사 (p.p)</em></div>
+        </div>
+        <div class="icard">
+          <div class="lbl">개념</div>
+          <div class="val">이야기의 기준이 되는 과거 시점보다 <em>더 먼저 일어난 일(대과거)</em>을 표현할 때 사용합니다.</div>
+        </div>
+        <div class="icard">
+          <div class="lbl">부사의 위치</div>
+          <div class="val">already, just, never 등의 부사는 보통 <em>had</em>와 <em>p.p 사이</em>에 들어갑니다.</div>
+          <div class="ex">
+            <div class="en">"When Sarah arrived at the party, Nick <span class="highlight">had already gone</span> home."</div>
+            <div class="ko">사라가 파티에 도착했을 때, 닉은 이미 집에 가고 없었다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 4: Unit 14 비교(1) ── -->
+    <section>
+      <span class="s-tag">Unit 14. Present Perfect vs Past Perfect</span>
+      <div class="s-col">
+        <div class="cgrid">
+          <div class="ccard">
+            <div class="lbl">현재 완료</div>
+            <div class="form">have p.p</div>
+            <div class="desc">과거의 일이 <strong>현재 시점</strong>에 영향을 줍니다.</div>
+            <div class="ex">
+              <div class="en">"We aren't hungry. We<span class="highlight">'ve just had</span> lunch."</div>
+              <div class="ko">우리 지금 안 배고파. 방금 점심 먹었거든.</div>
+            </div>
+          </div>
+          <div class="ccard">
+            <div class="lbl">과거 완료</div>
+            <div class="form">had p.p</div>
+            <div class="desc">과거보다 더 이전의 일이 <strong>과거 시점</strong>에 영향을 줍니다.</div>
+            <div class="ex">
+              <div class="en">"We weren't hungry. We<span class="highlight">'d just had</span> lunch."</div>
+              <div class="ko">우리 그때 안 배고팠어. 막 점심을 먹었었거든.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 5: Unit 14 비교(2) ── -->
+    <section>
+      <span class="s-tag">Unit 14. Simple Past vs Past Perfect</span>
+      <div class="s-col">
+        <div class="cgrid">
+          <div class="ccard">
+            <div class="lbl">단순 과거</div>
+            <div class="form">Simple Past</div>
+            <div class="desc">사건이 일어난 <strong>시간 순서대로</strong> 말할 때.</div>
+            <div class="ex">
+              <div class="en">"Was Tom there when you arrived? Yes, but he <span class="highlight">left</span> soon afterwards."</div>
+              <div class="ko">도착했을 때 톰 있었어? 응, 근데 곧 떠났어.</div>
+            </div>
+          </div>
+          <div class="ccard">
+            <div class="lbl">과거 완료</div>
+            <div class="form">Past Perfect</div>
+            <div class="desc">기준 과거 시점에 <strong>이미 완료</strong>된 사건을 말할 때.</div>
+            <div class="ex">
+              <div class="en">"Was Tom there when you arrived? No, he<span class="highlight">'d already left</span>."</div>
+              <div class="ko">도착했을 때 톰 있었어? 아니, 이미 떠났었어.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 6: Unit 15 핵심 ── -->
+    <section>
+      <span class="s-tag">Unit 15. Past Perfect Continuous</span>
+      <div class="s-col">
+        <div class="icard">
+          <div class="lbl">형태</div>
+          <div class="val"><em>had been + 동사-ing</em></div>
+        </div>
+        <div class="icard">
+          <div class="lbl">개념</div>
+          <div class="val">과거의 어떤 사건이 일어나기 전까지 <em>계속 진행 중이던 행동이나 원인</em>을 강조할 때 사용합니다.</div>
+          <div class="ex">
+            <div class="en">"The sun was shining, but the ground was very wet. It <span class="highlight">had been raining</span>."</div>
+            <div class="ko">해는 빛나고 있었지만, 땅은 매우 젖어 있었다. 비가 계속 내렸던 것이다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 7: Unit 15 비교 ── -->
+    <section>
+      <span class="s-tag">Unit 15. Present vs Past Continuous</span>
+      <div class="s-col">
+        <div class="cgrid">
+          <div class="ccard">
+            <div class="lbl">현재 완료 진행</div>
+            <div class="form">have been -ing</div>
+            <div class="desc"><strong>지금(현재)</strong>을 기준으로 그 전까지 진행되던 일.</div>
+            <div class="ex">
+              <div class="en">"I hope the bus comes soon. I<span class="highlight">'ve been waiting</span> for 20 minutes."</div>
+              <div class="ko">버스 빨리 오면 좋겠다. 20분째 기다리고 있어.</div>
+            </div>
+          </div>
+          <div class="ccard">
+            <div class="lbl">과거 완료 진행</div>
+            <div class="form">had been -ing</div>
+            <div class="desc"><strong>그때(과거)</strong>를 기준으로 그 전까지 진행되던 일.</div>
+            <div class="ex">
+              <div class="en">"The bus finally came. I<span class="highlight">'d been waiting</span> for 20 minutes."</div>
+              <div class="ko">마침내 버스가 왔다. 20분 동안 기다리던 참이었다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 8: Unit 15 예외 ── -->
+    <section>
+      <span class="s-tag">Unit 15. Non-Continuous Verbs</span>
+      <div class="s-col">
+        <div class="icard">
+          <div class="lbl">진행형 불가 동사</div>
+          <div class="val"><em>know</em>(알다), <em>have</em>(소유하다) 같은 상태를 나타내는 동사는 일반적으로 진행형으로 쓰지 않습니다.</div>
+        </div>
+        <div class="icard">
+          <div class="lbl">올바른 표현</div>
+          <div class="val"><span class="badge ok">O</span> <strong>"We <span class="highlight">had known</span> each other for years."</strong></div>
+          <div class="ex"><div class="ko">우리는 수년 동안 서로 아는 사이였다.</div></div>
+        </div>
+        <div class="icard">
+          <div class="lbl">틀린 표현</div>
+          <div class="val"><span class="badge no">X</span> <span style="color:#b91c1c">"We <span class="highlight" style="color:#b91c1c !important">had been knowing</span> each other for years."</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 9: QUIZ 1 ── -->
+    <section>
+      <span class="s-tag">Quiz 1. Unit 14</span>
+      <div class="s-col">
+        <div class="quiz-wrap">
+          <div class="quiz-q">
+            <div class="q-num">Question 1</div>
+            <div class="q-text">David wasn't at the party when I arrived. He _______ home.</div>
+            <div class="btn-row">
+              <button class="qbtn" onclick="pick(this,'q91',false)">1. went</button>
+              <button class="qbtn" onclick="pick(this,'q91',false)">2. has gone</button>
+              <button class="qbtn" onclick="pick(this,'q91',true)">3. had gone</button>
+            </div>
+            <div class="q-fb" id="q91"></div>
+          </div>
+          <div class="quiz-q">
+            <div class="q-num">Question 2</div>
+            <div class="q-text">We weren't hungry. We _______ just had lunch.</div>
+            <div class="btn-row">
+              <button class="qbtn" onclick="pick(this,'q92',true)">1. had</button>
+              <button class="qbtn" onclick="pick(this,'q92',false)">2. have</button>
+              <button class="qbtn" onclick="pick(this,'q92',false)">3. did</button>
+            </div>
+            <div class="q-fb" id="q92"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 10: QUIZ 2 ── -->
+    <section>
+      <span class="s-tag">Quiz 2. Unit 15</span>
+      <div class="s-col">
+        <div class="quiz-wrap">
+          <div class="quiz-q">
+            <div class="q-num">Question 1</div>
+            <div class="q-text">The ground was very wet. It _______ raining.</div>
+            <div class="btn-row">
+              <button class="qbtn" onclick="pick(this,'q101',false)">1. was</button>
+              <button class="qbtn" onclick="pick(this,'q101',false)">2. has been</button>
+              <button class="qbtn" onclick="pick(this,'q101',true)">3. had been</button>
+            </div>
+            <div class="q-fb" id="q101"></div>
+          </div>
+          <div class="quiz-q">
+            <div class="q-num">Question 2</div>
+            <div class="q-text">We were good friends. We _______ each other for years.</div>
+            <div class="btn-row">
+              <button class="qbtn" onclick="pick(this,'q102',true)">1. had known</button>
+              <button class="qbtn" onclick="pick(this,'q102',false)">2. had been knowing</button>
+              <button class="qbtn" onclick="pick(this,'q102',false)">3. knew</button>
+            </div>
+            <div class="q-fb" id="q102"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<div id="cnav">
+  <button id="bprev" title="이전">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <span id="pgnum">1 / 10</span>
+  <button id="bnext" title="다음">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+  function pick(btn, fbId, correct) {
+    btn.closest('.btn-row').querySelectorAll('.qbtn').forEach(b => b.disabled = true);
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    const fb = document.getElementById(fbId);
+    fb.textContent = correct ? '✓ 정답입니다!' : '✗ 틀렸습니다. 다시 생각해 보세요.';
+    fb.className = 'q-fb ' + (correct ? 'ok' : 'no');
+  }
+
+  Reveal.initialize({
+    hash: false,
+    center: false,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    progress: true,
+    controls: false,
+    slideNumber: false,
+    width: '100%',
+    height: '100%',
+    margin: 0,
+    minScale: 1,
+    maxScale: 1,
+  });
+
+  function updatePg() {
+    document.getElementById('pgnum').textContent =
+      (Reveal.getIndices().h + 1) + ' / ' + Reveal.getTotalSlides();
+  }
+  Reveal.on('ready', updatePg);
+  Reveal.on('slidechanged', updatePg);
+
+  document.getElementById('bprev').onclick = () => Reveal.prev();
+  document.getElementById('bnext').onclick = () => Reveal.next();
+</script>
+</body>
+</html>
