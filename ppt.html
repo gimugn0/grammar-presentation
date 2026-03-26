@@ -28,14 +28,12 @@
   --red:     #b91c1c;
   --redbg:   #fee2e2;
 
-  /* All layout in vw/vh so it scales with the window */
   --pad:      4vw;
   --tag-top:  2.5vh;
   --body-top: 11vh;
   --nav-h:    8vh;
-  --gap: 10px;
+  --gap: 15px;
 
-  /* Typography */
   --t-label:  0.8vw;
   --t-form:   1.1vw;
   --t-body:   1.2vw;
@@ -48,257 +46,111 @@
 
 body { background: var(--bg); }
 
-.highlight {
-  color: var(--accent) !important;
-  font-weight: 700 !important;
-}
+.highlight { color: var(--accent) !important; font-weight: 700 !important; }
+.sub-highlight { color: var(--green) !important; font-weight: 600 !important; }
 
-.reveal,
-.reveal .slides {
+.reveal, .reveal .slides {
   color: var(--text) !important;
   background: var(--bg) !important;
   text-align: left !important;
 }
 
 .reveal .slides section {
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+  top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important;
   padding: var(--body-top) var(--pad) var(--nav-h) var(--pad) !important;
-  text-align: left !important;
-  background: var(--bg) !important;
-  display: block !important;
-  overflow: hidden !important;
+  text-align: left !important; background: var(--bg) !important;
+  display: block !important; overflow: hidden !important;
 }
 
-/* ── Progress bar ── */
+/* Progress bar */
 .reveal .progress {
-  top: 0 !important; bottom: auto !important;
-  height: 12px !important; background: transparent !important;
-  z-index: 1000; overflow: visible !important;
+  top: 0 !important; bottom: auto !important; height: 12px !important; background: transparent !important; z-index: 1000; overflow: visible !important;
 }
 .reveal .progress span {
-  background: var(--accent) !important;
-  height: 3px !important; margin-top: 4px !important;
-  display: block !important; position: relative !important;
-  transition: width 0.5s cubic-bezier(0.4,0,0.2,1) !important;
-  overflow: visible !important; border-radius: 0 2px 2px 0 !important;
-}
-.reveal .progress span::after {
-  content: '' !important; position: absolute !important;
-  right: -20px !important; top: -6px !important;
-  width: 24px !important; height: 15px !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 7.5 C2.5 2,5 2,7.5 7.5 C10 13,12.5 13,15 7.5 C17.5 2,20 2,22 6 C23 8,24 8,24 8' stroke='%23007AFF' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important; background-size: 24px 15px !important;
-  animation: squiggle-bob 0.8s ease-in-out infinite alternate !important;
-}
-@keyframes squiggle-bob {
-  0%   { transform: translateY(0)      scaleX(1);    }
-  50%  { transform: translateY(-1.5px) scaleX(1.06); }
-  100% { transform: translateY(1.2px)  scaleX(0.95); }
+  background: var(--accent) !important; height: 3px !important; margin-top: 4px !important; display: block !important; position: relative !important; transition: width 0.5s cubic-bezier(0.4,0,0.2,1) !important; overflow: visible !important; border-radius: 0 2px 2px 0 !important;
 }
 .reveal .controls { display: none !important; }
 
-/* ── Subtitle pill ── */
+/* Subtitle pill */
 .s-tag {
-  position: absolute !important;
-  top: var(--tag-top) !important; left: var(--pad) !important;
-  font-size: var(--t-label) !important; font-weight: 600 !important;
-  letter-spacing: 0.13em !important; text-transform: uppercase !important;
-  color: var(--accent) !important; background: var(--acbg) !important;
-  padding: 0.5vh 1vw !important; border-radius: 100px !important;
-  white-space: nowrap !important; z-index: 20 !important;
+  position: absolute !important; top: var(--tag-top) !important; left: var(--pad) !important;
+  font-size: var(--t-label) !important; font-weight: 600 !important; letter-spacing: 0.13em !important; text-transform: uppercase !important;
+  color: var(--accent) !important; background: var(--acbg) !important; padding: 0.8vh 1.2vw !important; border-radius: 100px !important; white-space: nowrap !important; z-index: 20 !important; box-shadow: 0 2px 10px rgba(0,122,255,0.1);
 }
 
-/* ── Content column ── */
-.s-col {
-  display: flex; flex-direction: column;
-  gap: var(--gap); height: 100%; justify-content: center;
-  align-items: center;
-}
+.s-col { display: flex; flex-direction: column; gap: var(--gap); height: 100%; justify-content: center; align-items: center; }
 
-/* ── Title slide ── */
-.hero {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 0 var(--pad) !important;
-}
-.hero .eyebrow {
-  font-size: var(--t-label) !important; font-weight: 500 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 1.8vh !important;
-}
-.hero h1 {
-  font-size: 3.2vw !important; font-weight: 700 !important;
-  line-height: 1.06 !important; color: var(--text) !important;
-  margin-bottom: 1.8vh !important;
-}
-.hero .tagline {
-  font-size: 1.2vw !important; font-weight: 300 !important;
-  color: var(--muted) !important;
-}
-.hero .presenter {
-  position: absolute !important;
-  bottom: calc(var(--nav-h) + 1vh) !important; left: var(--pad) !important;
-  font-size: var(--t-label) !important; color: var(--muted) !important;
-}
+/* Hero */
+.hero { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--pad) 0 30% !important; }
+.hero .eyebrow { font-size: var(--t-label) !important; font-weight: 500 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: var(--muted) !important; margin-bottom: 1.8vh !important; }
+.hero h1 { font-size: 3.2vw !important; font-weight: 700 !important; line-height: 1.1 !important; color: var(--text) !important; margin-bottom: 1.8vh !important; }
+.hero .tagline { font-size: 1.2vw !important; font-weight: 300 !important; color: var(--muted) !important; line-height: 1.4 !important; }
+.hero .presenter { position: absolute !important; bottom: calc(var(--nav-h) + 1vh) !important; left: var(--pad) !important; font-size: var(--t-label) !important; color: var(--muted) !important; background: rgba(255,255,255,0.6) !important; padding: 1vh 1vw !important; border-radius: 8px !important; }
 .hero .presenter span { color: var(--text) !important; font-weight: 600 !important; }
 
-/* ── Shared card base ── */
+/* Cards */
 .icard, .ccard, .quiz-q {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 10px; padding: 20px 28px; width: 100%; max-width: 860px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 30px; width: 100%; max-width: 900px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
 }
 
-.lbl, .q-num {
-  font-size: var(--t-label) !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 0.7vh !important;
-}
-
-.val, .desc, .q-text {
-  font-size: var(--t-body) !important; line-height: 1.5 !important;
-  color: var(--text) !important;
-}
-
-.form {
-  font-size: var(--t-form) !important; font-weight: 700 !important;
-  color: var(--accent) !important; margin-bottom: 0.7vh !important;
-}
-
+.lbl, .q-num { font-size: var(--t-label) !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: var(--muted) !important; margin-bottom: 1vh !important; }
+.val, .desc, .q-text { font-size: var(--t-body) !important; line-height: 1.6 !important; color: var(--text) !important; }
+.form { font-size: var(--t-form) !important; font-weight: 700 !important; color: var(--accent) !important; margin-bottom: 0.7vh !important; }
 .val em { font-style: normal !important; font-weight: 700 !important; color: var(--accent) !important; }
-.ccard .desc { color: var(--muted) !important; margin-bottom: 0.8vh !important; }
+.ccard .desc { color: var(--muted) !important; margin-bottom: 1vh !important; font-size: 1.05vw !important; }
 
-.ex {
-  margin-top: 10px; padding: 10px 14px;
-  background: var(--tagbg); border-radius: 8px;
-  border-left: 3px solid var(--accent);
-}
-.ex .en { font-size: var(--t-en) !important; font-weight: 500 !important; line-height: 1.6 !important; color: var(--text) !important; }
-.ex .ko { font-size: var(--t-ko) !important; color: var(--muted) !important; margin-top: 0.3vh !important; line-height: 1.5 !important; }
+.ex { margin-top: 10px; padding: 12px 16px; background: var(--tagbg); border-radius: 8px; border-left: 4px solid var(--accent); }
+.ex .en { font-size: var(--t-en) !important; font-weight: 500 !important; line-height: 1.5 !important; color: var(--text) !important; }
+.ex .ko { font-size: var(--t-ko) !important; color: var(--muted) !important; margin-top: 0.4vh !important; line-height: 1.4 !important; }
 
-/* ── TOC ── */
-.toc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 860px; }
+/* TOC */
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 860px; }
+.toc-list li { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; font-size: var(--t-body) !important; font-weight: 500 !important; color: var(--text) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.01); }
+.toc-num { width: 2.4vw; height: 2.4vw; min-width: 28px; min-height: 28px; border-radius: 50%; background: var(--acbg); color: var(--accent) !important; font-size: var(--t-label) !important; font-weight: 700 !important; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-.toc-list li {
-  display: flex; align-items: center; gap: 14px;
-  padding: 13px 18px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 10px;
-  font-size: var(--t-body) !important; font-weight: 400 !important; color: var(--text) !important;
-}
-.toc-num {
-  width: 2.2vw; height: 2.2vw; min-width: 24px; min-height: 24px;
-  border-radius: 50%; background: var(--acbg);
-  color: var(--accent) !important; font-size: var(--t-label) !important;
-  font-weight: 700 !important; display: flex; align-items: center;
-  justify-content: center; flex-shrink: 0;
-}
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 900px; }
 
-/* ── Compare grid ── */
-.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 860px; }
-
-
-/* ── Verdict badges ── */
-.badge {
-  display: inline-block; font-size: var(--t-label) !important;
-  font-weight: 800 !important; letter-spacing: 0.06em !important;
-  text-transform: uppercase !important; padding: 0.2vh 0.5vw;
-  border-radius: 5px; margin-right: 0.5vw;
-}
+.badge { display: inline-block; font-size: var(--t-label) !important; font-weight: 800 !important; letter-spacing: 0.06em !important; text-transform: uppercase !important; padding: 0.3vh 0.6vw; border-radius: 6px; margin-right: 0.5vw; vertical-align: middle; }
 .badge.ok { background: var(--greenbg); color: var(--green) !important; }
 .badge.no { background: var(--redbg);   color: var(--red)   !important; }
 
-/* ── Quiz slides (9, 10) — larger text, centered ── */
-#slide-q1 .q-num, #slide-q2 .q-num { font-size: 1.1vw !important; }
-#slide-q1 .q-text, #slide-q2 .q-text { font-size: 1.6vw !important; }
-#slide-q1 .qbtn, #slide-q2 .qbtn { font-size: 1.4vw !important; padding: 10px 20px; }
-#slide-q1 .q-fb, #slide-q2 .q-fb { font-size: 1.3vw !important; }
-#slide-q1 .s-col, #slide-q2 .s-col { align-items: center; }
-
-/* ── Journey slides (11,12) — larger text, centered ── */
-#slide-j1 .jtitle, #slide-j2 .jtitle { font-size: 1.6vw !important; }
-#slide-j1 .jlabel, #slide-j2 .jlabel { font-size: 1.1vw !important; }
-#slide-j1 .jtag,   #slide-j2 .jtag   { font-size: 1.0vw !important; }
-.quiz-wrap { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 860px; }
-.q-text { margin-bottom: 1.2vh !important; }
+/* Quiz */
+.quiz-wrap { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 860px; }
+.q-text { margin-bottom: 1.5vh !important; font-weight: 500 !important; }
 .btn-row { display: flex; gap: 0.8vw; flex-wrap: wrap; }
-.qbtn {
-  padding: 0.8vh 1.5vw; border: 1.5px solid var(--border); border-radius: 0.6vw;
-  background: var(--surface); font-size: var(--t-btn) !important;
-  font-weight: 500 !important; color: var(--text) !important; cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
-}
-.qbtn:hover:not(:disabled) { background: var(--tagbg); }
-.qbtn:active { transform: scale(0.97); }
-.qbtn.correct { background: var(--greenbg) !important; border-color: var(--green) !important; color: var(--green) !important; font-weight: 700 !important; }
+.qbtn { padding: 1vh 1.8vw; border: 2px solid var(--border); border-radius: 0.6vw; background: var(--surface); font-size: var(--t-btn) !important; font-weight: 600 !important; color: var(--text) !important; cursor: pointer; transition: all 0.2s ease; }
+.qbtn:hover:not(:disabled) { background: var(--tagbg); transform: translateY(-2px); }
+.qbtn.correct { background: var(--greenbg) !important; border-color: var(--green) !important; color: var(--green) !important; box-shadow: 0 0 15px rgba(21, 128, 61, 0.2); }
 .qbtn.wrong   { background: var(--redbg)   !important; border-color: var(--red)   !important; color: var(--red)   !important; }
-.q-fb { margin-top: 0.8vh; font-size: var(--t-fb) !important; font-weight: 600 !important; min-height: 1.5vh; }
+.q-fb { margin-top: 1vh; font-size: var(--t-fb) !important; font-weight: 600 !important; min-height: 1.5vh; opacity: 0; transition: opacity 0.3s ease; }
+.q-fb.show { opacity: 1; }
 .q-fb.ok { color: var(--green) !important; }
 .q-fb.no { color: var(--red)   !important; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.shake { animation: shake 0.3s ease-in-out; }
 
-/* ── Journey slides ── */
-.reveal .slides section#slide-j1,
-.reveal .slides section#slide-j2 { overflow: hidden !important; }
-
-.jwindow {
-  position: absolute !important;
-  top: 40% !important; transform: translateY(-40%) !important;
-  left: var(--pad) !important; right: var(--pad) !important;
-  bottom: var(--nav-h) !important; overflow: hidden !important;
-}
-
+/* Journey */
+.jwindow { position: absolute !important; top: 40% !important; transform: translateY(-40%) !important; left: 20% !important; right: 5% !important; bottom: var(--nav-h) !important; overflow: hidden !important; }
 .journey { width: 100%; padding-top: 0.4vh; will-change: transform; }
-.jphase { display: flex; gap: 1vw; }
-.jleft  { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 2.5vw; min-width: 28px; }
-.jdot   {
-  width: 2.5vw; height: 2.5vw; min-width: 28px; min-height: 28px;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: var(--t-label) !important; font-weight: 700 !important;
-  flex-shrink: 0; border: 1px solid; position: relative; z-index: 1;
-}
-.jline  { width: 1px; flex: 1; min-height: 1vh; background: #e5e5e5; margin: 3px 0; }
-.jright { padding-bottom: 1.8vh; flex: 1; }
-.jlabel { font-size: var(--t-label) !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; margin-bottom: 0.3vh !important; }
-.jtitle { font-size: var(--t-body) !important; font-weight: 500 !important; color: var(--text) !important; line-height: 1.5 !important; }
-.jtags  { display: flex; flex-wrap: wrap; gap: 0.4vw; margin-top: 0.5vh; }
-.jtag   { font-size: var(--t-label) !important; padding: 0.2vh 0.7vw; border-radius: 99px; border: 1px solid var(--border); color: var(--muted) !important; background: var(--tagbg); }
+.jphase { display: flex; gap: 1.2vw; }
+.jleft  { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 56px; }
+.jdot   { width: 56px; height: 56px; min-width: 56px; min-height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--t-label) !important; font-weight: 800 !important; flex-shrink: 0; border: 2px solid; position: relative; z-index: 1; background-color: var(--surface); }
+.jline  { width: 2px; flex: 1; min-height: 1.5vh; background: #d1d1d1; margin: 4px 0; border-radius: 2px; }
+.jright { padding-bottom: 2.2vh; flex: 1; }
+.jlabel { font-size: var(--t-label) !important; font-weight: 800 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; margin-bottom: 0.4vh !important; }
+.jtitle { font-size: var(--t-body) !important; font-weight: 600 !important; color: var(--text) !important; line-height: 1.5 !important; }
+.jtags  { display: flex; flex-wrap: wrap; gap: 0.5vw; margin-top: 0.8vh; }
+.jtag   { font-size: var(--t-label) !important; font-weight: 500!important; padding: 0.3vh 0.8vw; border-radius: 99px; border: 1px solid var(--border); color: var(--text) !important; background: var(--tagbg); }
+.jdot.purple { border-color:#AFA9EC; color:#534AB7 !important; } .jdot.teal { border-color:#5DCAA5; color:#0F6E56 !important; } .jdot.blue { border-color:#85B7EB; color:#185FA5 !important; } .jdot.gray { border-color:#B4B2A9; color:#5F5E5A !important; } .jdot.amber { border-color:#EF9F27; color:#854F0B !important; } .jdot.coral { border-color:#F0997B; color:#993C1D !important; } .jdot.green { border-color:#97C459; color:#3B6D11 !important; }
+.jlbl-purple { color:#534AB7 !important; } .jlbl-teal { color:#0F6E56 !important; } .jlbl-blue { color:#185FA5 !important; } .jlbl-gray { color:#5F5E5A !important; } .jlbl-amber { color:#854F0B !important; } .jlbl-coral { color:#993C1D !important; } .jlbl-green { color:#3B6D11 !important; }
 
-.jdot.purple { background:#EEEDFE; border-color:#AFA9EC; color:#3C3489 !important; }
-.jdot.teal   { background:#E1F5EE; border-color:#5DCAA5; color:#085041 !important; }
-.jdot.blue   { background:#E6F1FB; border-color:#85B7EB; color:#0C447C !important; }
-.jdot.gray   { background:#F1EFE8; border-color:#B4B2A9; color:#444441 !important; }
-.jdot.amber  { background:#FAEEDA; border-color:#EF9F27; color:#633806 !important; }
-.jdot.coral  { background:#FAECE7; border-color:#F0997B; color:#712B13 !important; }
-.jdot.green  { background:#EAF3DE; border-color:#97C459; color:#27500A !important; }
-.jlbl-purple { color:#534AB7 !important; }
-.jlbl-teal   { color:#0F6E56 !important; }
-.jlbl-blue   { color:#185FA5 !important; }
-.jlbl-gray   { color:#5F5E5A !important; }
-.jlbl-amber  { color:#854F0B !important; }
-.jlbl-coral  { color:#993C1D !important; }
-.jlbl-green  { color:#3B6D11 !important; }
-
-/* ── Bottom nav ── */
-#cnav {
-  position: fixed; bottom: 1.5vh; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 0.8vw;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 100px; padding: 0.6vh 1.5vw;
-  z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-}
-#cnav button {
-  width: 2.5vw; height: 2.5vw; min-width: 28px; min-height: 28px;
-  border: none; background: transparent; cursor: pointer; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text); transition: background 0.15s;
-}
-#cnav button:hover { background: var(--tagbg); }
-#pgnum {
-  font-size: var(--t-nav) !important; font-weight: 600 !important;
-  color: var(--muted) !important; min-width: 4vw; text-align: center;
-  font-variant-numeric: tabular-nums;
-}
+/* Nav */
+#cnav { position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 1vw; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(226, 225, 219, 0.8); border-radius: 100px; padding: 0.8vh 1.8vw; z-index: 9999; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+#cnav:hover { background: rgba(255, 255, 255, 0.95); }
+#cnav button { width: 2.8vw; height: 2.8vw; min-width: 32px; min-height: 32px; border: none; background: transparent; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text); transition: background 0.2s, transform 0.1s; }
+#cnav button:hover { background: var(--acbg); color: var(--accent); }
+#cnav button:active { transform: scale(0.9); }
+#pgnum { font-size: var(--t-nav) !important; font-weight: 700 !important; color: var(--muted) !important; min-width: 4.5vw; text-align: center; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -306,178 +158,165 @@ body { background: var(--bg); }
 <div class="reveal">
   <div class="slides">
 
-    <!-- SLIDE 1: TITLE -->
     <section>
       <div class="hero">
+        <div style="position:absolute;top:-100px;right:-80px;width:500px;height:500px;border-radius:50%;background:var(--acbg);opacity:0.7;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:60px;right:80px;width:180px;height:180px;border-radius:50%;background:var(--acbg);opacity:0.8;pointer-events:none;"></div>
         <div class="eyebrow">English Grammar · Unit 14 &amp; 15</div>
         <h1>Past Perfect &amp;<br>Past Perfect Continuous</h1>
         <div class="tagline">Mastering "had done" and "had been doing" (Unit 14 &amp; 15)</div>
-        <div class="presenter">
-          Presenter: <span>Kim Woo-geun</span> &nbsp;/&nbsp; Student ID: <span>202212820</span>
-        </div>
+        <div class="presenter">Presenter: <span>Kim Woo-geun</span> &nbsp;/&nbsp; Student ID: <span>202212820</span></div>
       </div>
     </section>
 
-    <!-- SLIDE 2: TOC -->
     <section>
       <span class="s-tag">Table of Contents</span>
       <div class="s-col">
         <ul class="toc-list">
-          <li><span class="toc-num">1</span>Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)</li>
-          <li><span class="toc-num">2</span>시제 비교: 현재 완료 / 단순 과거</li>
+          <li><span class="toc-num">1</span>Unit 14 &nbsp;·&nbsp; 과거 완료의 개념과 존재 이유 (Why use Past Perfect?)</li>
+          <li><span class="toc-num">2</span>시제 비교: 현재 완료 vs. 과거 완료 vs. 단순 과거</li>
           <li><span class="toc-num">3</span>Unit 15 &nbsp;·&nbsp; 과거 완료 진행 (Past Perfect Continuous)</li>
-          <li><span class="toc-num">4</span>시제 비교 및 진행형 불가 예외 동사</li>
+          <li><span class="toc-num">4</span>진행형의 초점과 예외 동사 (Focus on Duration & Exceptions)</li>
           <li><span class="toc-num">5</span>인터랙티브 미니 퀴즈 (Interactive Mini Quiz)</li>
           <li><span class="toc-num">6</span>AI 통합 프로젝트 제작기 (Making of A.I. Integrated Project)</li>
         </ul>
       </div>
     </section>
 
-    <!-- SLIDE 3: Unit 14 핵심 -->
     <section>
       <span class="s-tag">Unit 14. Past Perfect</span>
       <div class="s-col">
         <div class="icard">
-          <div class="lbl">형태</div>
-          <div class="val"><em>had + 과거분사 (p.p)</em></div>
+          <div class="lbl">핵심 원리 (Core Concept)</div>
+          <div class="val">형태: <em>had + p.p</em> <br>과거 완료는 단독으로 쓰이기보다, <strong>두 개의 과거 사건 중 무엇이 먼저 일어났는지(대과거)</strong> 순서를 명확히 할 때 사용하는 '도구'입니다.</div>
         </div>
         <div class="icard">
-          <div class="lbl">개념</div>
-          <div class="val">이야기의 기준이 되는 과거 시점보다 <em>더 먼저 일어난 일(대과거)</em>을 표현할 때 사용합니다.</div>
-        </div>
-        <div class="icard">
-          <div class="lbl">부사의 위치</div>
-          <div class="val">already, just, never 등의 부사는 보통 <em>had</em>와 <em>p.p 사이</em>에 들어갑니다.</div>
+          <div class="lbl">왜 사용할까요? (Why use it?)</div>
+          <div class="val">단순 과거 시제만 사용하면 사건이 일어난 순서대로 말해야 합니다. 하지만 과거 완료를 쓰면 <strong>이야기의 흐름을 깨지 않고 더 예전의 일을 끌어와서 설명</strong>할 수 있습니다.</div>
           <div class="ex">
-            <div class="en">"When Sarah arrived at the party, Nick <span class="highlight">had already gone</span> home."</div>
-            <div class="ko">사라가 파티에 도착했을 때, 닉은 이미 집에 가고 없었다.</div>
+            <div class="en">"When Sarah <span class="sub-highlight">arrived</span> at the party, Paul <span class="highlight">had already gone</span> home."</div>
+            <div class="ko">사라가 파티에 도착했을 때 (과거 사건 2), 폴은 이미 집에 가고 없었다. (과거 사건 1 : 더 먼저 일어난 일)</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 4: Unit 14 비교(1) -->
     <section>
       <span class="s-tag">Unit 14. Present Perfect vs Past Perfect</span>
       <div class="s-col">
         <div class="cgrid">
           <div class="ccard">
-            <div class="lbl">현재 완료</div>
-            <div class="form">have p.p</div>
-            <div class="desc">과거의 일이 <strong>현재 시점</strong>에 영향을 줍니다.</div>
+            <div class="lbl">현재 완료 (Present Perfect)</div>
+            <div class="form">have / has + p.p</div>
+            <div class="desc">과거의 사건이 <strong>'현재(Now)'</strong> 상황에 영향을 줄 때. 기준점이 지금입니다.</div>
             <div class="ex">
-              <div class="en">"We aren't hungry. We<span class="highlight">'ve just had</span> lunch."</div>
-              <div class="ko">우리 지금 안 배고파. 방금 점심 먹었거든.</div>
+              <div class="en">"I'm not hungry. I<span class="highlight">'ve just had</span> lunch."</div>
+              <div class="ko">나 지금 안 배고파. 방금 점심을 먹었거든. (그래서 지금 배가 부름)</div>
             </div>
           </div>
           <div class="ccard">
-            <div class="lbl">과거 완료</div>
-            <div class="form">had p.p</div>
-            <div class="desc">과거보다 더 이전의 일이 <strong>과거 시점</strong>에 영향을 줍니다.</div>
+            <div class="lbl">과거 완료 (Past Perfect)</div>
+            <div class="form">had + p.p</div>
+            <div class="desc">더 먼 과거의 사건이 <strong>'특정 과거(Then)'</strong> 상황에 영향을 줄 때. 기준점이 과거입니다.</div>
             <div class="ex">
-              <div class="en">"We weren't hungry. We<span class="highlight">'d just had</span> lunch."</div>
-              <div class="ko">우리 그때 안 배고팠어. 막 점심을 먹었었거든.</div>
+              <div class="en">"I wasn't hungry. I<span class="highlight">'d just had</span> lunch."</div>
+              <div class="ko">나 그때 안 배고팠어. 막 점심을 먹었었거든. (그때 기준의 완료 상태)</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 5: Unit 14 비교(2) -->
     <section>
       <span class="s-tag">Unit 14. Simple Past vs Past Perfect</span>
       <div class="s-col">
         <div class="cgrid">
           <div class="ccard">
-            <div class="lbl">단순 과거</div>
-            <div class="form">Simple Past</div>
-            <div class="desc">사건이 일어난 <strong>시간 순서대로</strong> 말할 때.</div>
+            <div class="lbl">단순 과거 (Simple Past)</div>
+            <div class="form">Verb + ed</div>
+            <div class="desc">사건이 일어난 <strong>시간 순서대로(Chronological order)</strong> 나열할 때 자연스럽게 사용합니다.</div>
             <div class="ex">
-              <div class="en">"Was Tom there when you arrived? Yes, but he <span class="highlight">left</span> soon afterwards."</div>
-              <div class="ko">도착했을 때 톰 있었어? 응, 근데 곧 떠났어.</div>
+              <div class="en">"I <span class="highlight">read</span> the email, and then I <span class="highlight">replied</span> to it."</div>
+              <div class="ko">나는 이메일을 읽었고, 그 다음에 답장을 보냈다. (읽음 → 답장)</div>
             </div>
           </div>
           <div class="ccard">
-            <div class="lbl">과거 완료</div>
-            <div class="form">Past Perfect</div>
-            <div class="desc">기준 과거 시점에 <strong>이미 완료</strong>된 사건을 말할 때.</div>
+            <div class="lbl">과거 완료 (Past Perfect)</div>
+            <div class="form">had + p.p</div>
+            <div class="desc">순서를 뒤집어서 말할 때, <strong>시간의 혼동을 막기 위해</strong> 이미 완료된 먼저 일어난 사건에 사용합니다.</div>
             <div class="ex">
-              <div class="en">"Was Tom there when you arrived? No, he<span class="highlight">'d already left</span>."</div>
-              <div class="ko">도착했을 때 톰 있었어? 아니, 이미 떠났었어.</div>
+              <div class="en">"I <span class="sub-highlight">replied</span> to the email, but I <span class="highlight">hadn't read</span> it properly."</div>
+              <div class="ko">나는 이메일에 답장을 보냈는데, 사실 제대로 읽지 않았던 상태였다. (답장 ← 그 이전 안 읽음)</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 6: Unit 15 핵심 -->
     <section>
       <span class="s-tag">Unit 15. Past Perfect Continuous</span>
       <div class="s-col">
         <div class="icard">
-          <div class="lbl">형태</div>
-          <div class="val"><em>had been + 동사-ing</em></div>
+          <div class="lbl">핵심 원리 (Core Concept)</div>
+          <div class="val">형태: <em>had been + -ing</em> <br>과거의 특정 시점 이전에 시작된 행동이, <strong>그 과거 시점까지 '계속 진행 중'이었거나 '얼마나 오래(duration)' 지속되었는지</strong> 강조할 때 씁니다.</div>
         </div>
         <div class="icard">
-          <div class="lbl">개념</div>
-          <div class="val">과거의 어떤 사건이 일어나기 전까지 <em>계속 진행 중이던 행동이나 원인</em>을 강조할 때 사용합니다.</div>
+          <div class="lbl">원인과 결과의 시각화 (Visible Results in the Past)</div>
+          <div class="val">주로 과거의 어떤 상황이나 상태에 대한 <strong>'이유(원인)'</strong>를 설명할 때 아주 유용합니다.</div>
           <div class="ex">
-            <div class="en">"The sun was shining, but the ground was very wet. It <span class="highlight">had been raining</span>."</div>
-            <div class="ko">해는 빛나고 있었지만, 땅은 매우 젖어 있었다. 비가 계속 내렸던 것이다.</div>
+            <div class="en">"When the boys came into the house, their clothes were dirty. They <span class="highlight">had been playing</span> football."</div>
+            <div class="ko">소년들이 집에 들어왔을 때, 그들의 옷은 더러웠다. 그들은 축구를 하던 참이었다. (들어오기 전까지 지속된 행동의 결과)</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 7: Unit 15 비교 -->
     <section>
       <span class="s-tag">Unit 15. Present vs Past Continuous</span>
       <div class="s-col">
         <div class="cgrid">
           <div class="ccard">
-            <div class="lbl">현재 완료 진행</div>
+            <div class="lbl">현재 완료 진행 (Present Perfect Cont.)</div>
             <div class="form">have been -ing</div>
-            <div class="desc"><strong>지금(현재)</strong>을 기준으로 그 전까지 진행되던 일.</div>
+            <div class="desc">과거부터 <strong>지금(현재)</strong>까지 계속 해오고 있는 일. 행동의 결과가 지금 눈에 보입니다.</div>
             <div class="ex">
-              <div class="en">"I hope the bus comes soon. I<span class="highlight">'ve been waiting</span> for 20 minutes."</div>
-              <div class="ko">버스 빨리 오면 좋겠다. 20분째 기다리고 있어.</div>
+              <div class="en">"I'm exhausted. I<span class="highlight">'ve been working</span> hard all day."</div>
+              <div class="ko">나 지금 완전 지쳐있어. 하루 종일 열심히 일하고 있거든. (지금 지쳐 있음)</div>
             </div>
           </div>
           <div class="ccard">
-            <div class="lbl">과거 완료 진행</div>
+            <div class="lbl">과거 완료 진행 (Past Perfect Cont.)</div>
             <div class="form">had been -ing</div>
-            <div class="desc"><strong>그때(과거)</strong>를 기준으로 그 전까지 진행되던 일.</div>
+            <div class="desc">대과거부터 <strong>특정 과거 시점</strong>까지 계속 해오던 일. 행동의 결과가 그때 눈에 보였습니다.</div>
             <div class="ex">
-              <div class="en">"The bus finally came. I<span class="highlight">'d been waiting</span> for 20 minutes."</div>
-              <div class="ko">마침내 버스가 왔다. 20분 동안 기다리던 참이었다.</div>
+              <div class="en">"I was exhausted. I<span class="highlight">'d been working</span> hard all day."</div>
+              <div class="ko">나 그때 완전 지쳐있었어. 하루 종일 열심히 일했었거든. (그때 지쳐 있었음)</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 8: Unit 15 예외 -->
     <section>
-      <span class="s-tag">Unit 15. Non-Continuous Verbs</span>
+      <span class="s-tag">Unit 15. Exceptions (Non-Continuous Verbs)</span>
       <div class="s-col">
         <div class="icard">
-          <div class="lbl">진행형 불가 동사</div>
-          <div class="val"><em>know</em>(알다), <em>have</em>(소유하다) 같은 상태를 나타내는 동사는 일반적으로 진행형으로 쓰지 않습니다.</div>
+          <div class="lbl">상태 동사의 예외 (State Verbs)</div>
+          <div class="val">진행형(-ing)은 '동작'을 나타냅니다. 따라서 <strong>know(알다), like(좋아하다), belong(속하다), own(소유하다)</strong> 같은 '상태'를 나타내는 동사는 <em>had been -ing</em> 로 쓰지 않고 <em>had p.p</em> 로 씁니다.</div>
         </div>
         <div class="icard">
-          <div class="lbl">올바른 표현</div>
-          <div class="val"><span class="badge ok">O</span> "We <span class="highlight">had known</span> each other for years."</div>
-          <div class="ex"><div class="ko">우리는 수년 동안 서로 아는 사이였다.</div></div>
+          <div class="lbl">올바른 표현 (Correct)</div>
+          <div class="val"><span class="badge ok">✓ Correct</span> "We <span class="highlight">had known</span> each other for years before we became close friends."</div>
+          <div class="ex"><div class="ko">우리는 친한 친구가 되기 전부터 수년 동안 서로 알고 지냈다.</div></div>
         </div>
         <div class="icard">
-          <div class="lbl">틀린 표현</div>
-          <div class="val"><span class="badge no">X</span> <span style="color:#b91c1c">"We had been knowing each other for years."</span></div>
+          <div class="lbl">틀린 표현 (Incorrect)</div>
+          <div class="val"><span class="badge no">✗ Incorrect</span> <span style="color:#b91c1c; text-decoration: line-through;">"We had been knowing each other for years..."</span></div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 9: QUIZ 1 -->
-    <section id="slide-q1">
+    <section>
       <span class="s-tag">Quiz 1. Unit 14</span>
       <div class="s-col">
         <div class="quiz-wrap">
@@ -505,8 +344,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- SLIDE 10: QUIZ 2 -->
-    <section id="slide-q2">
+    <section>
       <span class="s-tag">Quiz 2. Unit 15</span>
       <div class="s-col">
         <div class="quiz-wrap">
@@ -534,7 +372,26 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- SLIDE 11: Journey steps 1–4 -->
+    <section>
+      <span class="s-tag">Grammar Summary</span>
+      <div class="s-col">
+        <div class="icard" style="text-align: center; padding: 40px;">
+          <h2 style="font-size: 2.2vw; font-weight: 800; color: var(--accent); margin-bottom: 20px;">Great Job! 🎉</h2>
+          <p style="font-size: var(--t-body); line-height: 1.8; color: var(--muted); margin-bottom: 30px;">
+            Here is a quick wrap-up of what we learned today:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 15px; text-align: left; max-width: 700px; margin: 0 auto;">
+            <div style="background: var(--tagbg); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent);">
+              <strong>과거 완료 (had p.p):</strong> 사건의 순서를 정리하는 도구. 기준이 되는 과거보다 <em>더 먼저</em> 발생한 일.
+            </div>
+            <div style="background: var(--tagbg); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent);">
+              <strong>과거 완료 진행 (had been -ing):</strong> 지속성의 강조. 과거의 특정 시점까지 <em>계속 진행 중</em>이던 행동이나 그 원인. (단, 상태동사는 제외)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="slide-j1">
       <span class="s-tag">개발 여정. AI 통합 문법 타임라인</span>
       <div class="jwindow">
@@ -575,7 +432,6 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- SLIDE 12: Journey scroll illusion -->
     <section id="slide-j2">
       <span class="s-tag">개발 여정. AI 통합 문법 타임라인</span>
       <div class="jwindow" id="jwindow2"></div>
@@ -586,14 +442,14 @@ body { background: var(--bg); }
 
 <div id="cnav">
   <button id="bprev" title="이전">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
+      <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-  <span id="pgnum">1 / 12</span>
+  <span id="pgnum">1 / 13</span>
   <button id="bnext" title="다음">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
+      <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
 </div>
@@ -601,38 +457,35 @@ body { background: var(--bg); }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script>
   function pick(btn, fbId, correct) {
-    btn.closest('.btn-row').querySelectorAll('.qbtn').forEach(b => b.disabled = true);
-    btn.classList.add(correct ? 'correct' : 'wrong');
+    const row = btn.closest('.btn-row');
     const fb = document.getElementById(fbId);
-    fb.textContent = correct ? '✓ 정답입니다!' : '✗ 틀렸습니다. 다시 생각해 보세요.';
-    fb.className = 'q-fb ' + (correct ? 'ok' : 'no');
+    row.querySelectorAll('.qbtn').forEach(b => b.disabled = true);
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    if (correct) {
+      fb.textContent = '🎉 정답입니다! 완벽해요.';
+      fb.className = 'q-fb ok show';
+    } else {
+      fb.textContent = '💡 틀렸습니다. 다시 한번 생각해 볼까요?';
+      fb.className = 'q-fb no show';
+      btn.classList.add('shake');
+      setTimeout(() => btn.classList.remove('shake'), 300);
+    }
   }
 
   Reveal.initialize({
-    hash: false,
-    center: false,
-    transition: 'slide',
-    transitionSpeed: 'fast',
-    backgroundTransition: 'none',
-    progress: true,
-    controls: false,
-    slideNumber: false,
-    width: '100%',
-    height: '100%',
-    margin: 0,
-    minScale: 1,
-    maxScale: 1,
+    hash: true, center: false, transition: 'fade', transitionSpeed: 'fast',
+    backgroundTransition: 'none', progress: true, controls: false,
+    slideNumber: false, width: '100%', height: '100%', margin: 0, minScale: 1, maxScale: 1,
   });
 
   function updatePg() {
-    document.getElementById('pgnum').textContent =
-      (Reveal.getIndices().h + 1) + ' / ' + Reveal.getTotalSlides();
+    document.getElementById('pgnum').textContent = (Reveal.getIndices().h + 1) + ' / ' + Reveal.getTotalSlides();
   }
   Reveal.on('ready', updatePg);
   Reveal.on('slidechanged', updatePg);
 
   (function () {
-    const SLIDE_J1 = 10, SLIDE_J2 = 11;
+    const SLIDE_J1 = 11, SLIDE_J2 = 12;
     const FULL_STEPS = [
       { num:'01', color:'purple', label:'기획',             title:'Gemini로 아이디어 구체화 &amp; 워크플로우 설계',              tags:['Gemini','JSON 스키마'] },
       { num:'02', color:'teal',   label:'코드 생성',        title:'Claude로 초기 UI 코드 작성',                                 tags:['Claude','HTML/CSS/JS','Canvas 타임라인'] },
@@ -653,11 +506,7 @@ body { background: var(--bg); }
         const lineHTML = s.last ? '' : '<div class="jline"></div>';
         phase.innerHTML = `
           <div class="jleft"><div class="jdot ${s.color}">${s.num}</div>${lineHTML}</div>
-          <div class="jright">
-            <div class="jlabel jlbl-${s.color}">${s.label}</div>
-            <div class="jtitle">${s.title}</div>
-            <div class="jtags">${tagsHTML}</div>
-          </div>`;
+          <div class="jright"><div class="jlabel jlbl-${s.color}">${s.label}</div><div class="jtitle">${s.title}</div><div class="jtags">${tagsHTML}</div></div>`;
         wrap.appendChild(phase);
       });
       return wrap;
@@ -679,7 +528,6 @@ body { background: var(--bg); }
     }
 
     let animated = false;
-
     function onSlideChange() {
       const idx = Reveal.getIndices().h;
       if (idx === SLIDE_J1) {
@@ -695,7 +543,7 @@ body { background: var(--bg); }
         l2.style.transform = 'translateY(0px)';
         l2.getBoundingClientRect();
         const amt = getScrollAmount();
-        l2.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+        l2.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
         l2.style.transform = `translateY(-${amt}px)`;
         animated = true;
       }
