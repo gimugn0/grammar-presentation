@@ -623,12 +623,51 @@
     font-family: 'DM Mono', monospace;
     font-size: 0.68rem;
     color: var(--muted);
-    margin-bottom: 1.4rem;
+    margin-bottom: 0.6rem;
     letter-spacing: 0.05em;
   }
   .m2-hint span {
     color: var(--accent2);
     opacity: 0.8;
+  }
+
+  /* Toolbar */
+  .m2-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .m2-tool {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  .m2-tool:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .m2-tool.active[data-tool="point"] {
+    border-color: rgba(126,232,200,0.4);
+    color: var(--accent2);
+    background: rgba(126,232,200,0.1);
+    box-shadow: 0 0 12px rgba(126,232,200,0.1);
+  }
+  .m2-tool.active[data-tool="continuous"] {
+    border-color: rgba(255,140,107,0.4);
+    color: var(--accent3);
+    background: rgba(255,140,107,0.1);
+    box-shadow: 0 0 12px rgba(255,140,107,0.1);
   }
 
   /* Interactive canvas card */
@@ -686,9 +725,8 @@
     transition: border-color 0.2s, box-shadow 0.2s;
     backdrop-filter: blur(8px);
   }
-  .node-input::placeholder { color: rgba(126,232,200,0.3); font-style: italic; }
+  .node-input::placeholder { font-style: italic; opacity: 0.5; }
   .node-input:focus {
-    border-color: rgba(126,232,200,0.7);
     box-shadow: 0 0 0 3px rgba(126,232,200,0.08);
   }
   .node-order-badge {
@@ -997,10 +1035,9 @@
 <header>
   <span class="logo-mark">Tl</span>
   <span class="logo-text">Grammar Timeline</span>
-  <span class="version-badge">v2.0 · Phase 2</span>
+  <span class="version-badge">v2.1 · Continuous Modes</span>
 </header>
 
-<!-- TAB NAVIGATION -->
 <nav class="tab-nav">
   <button class="tab-btn mode1 active" data-tab="mode1">
     <span class="tab-num">01</span> Text → Timeline
@@ -1012,9 +1049,6 @@
 
 <main>
 
-  <!-- ══════════════════════════════════════════
-       MODE 1 PANEL  (existing functionality)
-  ══════════════════════════════════════════ -->
   <div class="tab-panel active" id="panel-mode1">
 
     <p class="hero-label">English Tense Visualizer</p>
@@ -1058,54 +1092,46 @@
       <div class="events-grid" id="eventsGrid"></div>
     </div>
 
-  </div><!-- /panel-mode1 -->
-
-
-  <!-- ══════════════════════════════════════════
-       MODE 2 PANEL  (reverse: timeline → text)
-  ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="panel-mode2">
+  </div><div class="tab-panel" id="panel-mode2">
 
     <p class="hero-label m2-hero-label">Reverse Timeline Generator</p>
     <h1 class="m2-h1">Draw Time.<br>Generate Grammar.</h1>
-    <p class="subtitle">Click the timeline to place events, then generate a grammatically correct sentence.</p>
+    <p class="subtitle">Select your tool, place your events, and generate a grammatically correct sentence.</p>
 
     <div class="m2-workspace">
-      <p class="m2-hint">Click anywhere on the line to place an event node — <span>max 2 nodes</span></p>
+      
+      <p class="m2-hint">Select a node type and click to place — <span>max 2 nodes</span></p>
 
-      <!-- Interactive canvas -->
-      <div class="m2-canvas-card" id="m2CanvasCard">
-        <canvas id="m2Canvas"></canvas>
-        <!-- Node label inputs injected here by JS -->
+      <div class="m2-toolbar">
+        <button class="m2-tool active" data-tool="point">● Point Event</button>
+        <button class="m2-tool" data-tool="continuous">▰ Continuous Event</button>
       </div>
 
-      <!-- Node count pips -->
+      <div class="m2-canvas-card" id="m2CanvasCard">
+        <canvas id="m2Canvas"></canvas>
+        </div>
+
       <div class="node-counter">
         <div class="node-pip" id="pip1"></div>
         <span class="node-counter-label" id="nodeCounterLabel">0 / 2 nodes placed</span>
         <div class="node-pip" id="pip2"></div>
       </div>
 
-      <!-- Reset -->
       <button class="m2-reset-btn" id="m2ResetBtn">↺ Reset Timeline</button>
     </div>
 
-    <!-- Generate button -->
     <button class="m2-generate-btn" id="m2GenerateBtn" disabled>
       <span style="font-size:1rem">✦</span>
       Generate Sentence
     </button>
 
-    <!-- Result -->
     <div class="m2-result-section" id="m2ResultSection">
       <div class="m2-result-card">
         <div class="m2-result-text" id="m2ResultText"></div>
       </div>
     </div>
 
-  </div><!-- /panel-mode2 -->
-
-</main>
+  </div></main>
 
 <script>
 // ── SAMPLE DATA ──
@@ -1587,40 +1613,6 @@ const RANDOM_STORIES = [
     }]
   },
   {
-    text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
-    data: [{
-      document_id: "rnd_04", original_text: "The scientist has discovered a compound that ancient healers had been using for centuries, though no one had ever understood why it worked.",
-      events: [
-        { event_id:"r1", chronological_order:1, event_name:"Ancient healers use the compound", extracted_phrase:"ancient healers had been using for centuries", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been using</strong> = past perfect continuous. A repeated, habitual practice sustained over a very long time (<em>centuries</em>). The continuous form highlights the unbroken duration.", text_appearance_order:2, relative_time_offset:-120, interval_hint:"extended_past" },
-        { event_id:"r2", chronological_order:2, event_name:"No one understands its mechanism", extracted_phrase:"no one had ever understood why it worked", tense:"Past Perfect", tense_explanation:"<strong>Had understood</strong> (negative) = past perfect. 'Ever' + past perfect signals a gap that persisted all the way from the distant past up to the discovery.", text_appearance_order:3, relative_time_offset:-40, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Scientist discovers the compound", extracted_phrase:"The scientist has discovered", tense:"Present Perfect", tense_explanation:"<strong>Has discovered</strong> = present perfect. The discovery happened recently and is relevant <em>right now</em>. Present perfect connects a past action to the present moment.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
-      ]
-    }]
-  },
-  {
-    text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
-    data: [{
-      document_id: "rnd_05", original_text: "After the concert had ended and the crowd had dispersed, she sat alone on the empty stage, still humming the melody she had sung.",
-      events: [
-        { event_id:"r1", chronological_order:1, event_name:"She sings the melody", extracted_phrase:"the melody she had sung", tense:"Past Perfect", tense_explanation:"<strong>Had sung</strong> = past perfect. The performance happened during the concert — earlier than every other event. Past perfect anchors it as the oldest action.", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Concert ends", extracted_phrase:"the concert had ended", tense:"Past Perfect", tense_explanation:"<strong>Had ended</strong> = past perfect. Completed <em>before</em> she sat down. 'After' introduces past perfect because the ending is a prerequisite for what follows.", text_appearance_order:1, relative_time_offset:-30, interval_hint:"unspecified_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Crowd disperses", extracted_phrase:"the crowd had dispersed", tense:"Past Perfect", tense_explanation:"<strong>Had dispersed</strong> = past perfect. Also completed before the main scene. Two past perfect clauses here signal two things that were both already done.", text_appearance_order:2, relative_time_offset:-15, interval_hint:"unspecified_past" },
-        { event_id:"r4", chronological_order:4, event_name:"She sits humming alone", extracted_phrase:"she sat alone, still humming", tense:"Past Simple", tense_explanation:"<strong>Sat</strong> is the main action — past simple sets the scene. <strong>Humming</strong> happens at the <em>exact same time</em> as sitting; it's a simultaneous background action, not a separate event.", text_appearance_order:3, relative_time_offset:0, interval_hint:"reference_point" }
-      ]
-    }]
-  },
-  {
-    text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
-    data: [{
-      document_id: "rnd_06", original_text: "He has never visited the city where his grandfather had grown up, even though his family had been telling him stories about it his whole life.",
-      events: [
-        { event_id:"r1", chronological_order:1, event_name:"Grandfather grows up in the city", extracted_phrase:"his grandfather had grown up", tense:"Past Perfect", tense_explanation:"<strong>Had grown up</strong> = past perfect. The grandfather's childhood is the oldest event — placed furthest in the past relative to the speaker's lifetime.", text_appearance_order:2, relative_time_offset:-110, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Family tells stories", extracted_phrase:"his family had been telling him stories his whole life", tense:"Past Perfect Continuous", tense_explanation:"<strong>Had been telling</strong> = past perfect continuous. A repeated action that continued throughout his whole life up to the present — continuous form stresses the unbroken habit.", text_appearance_order:3, relative_time_offset:-40, interval_hint:"extended_past" },
-        { event_id:"r3", chronological_order:3, event_name:"He still hasn't visited", extracted_phrase:"He has never visited the city", tense:"Present Perfect", tense_explanation:"<strong>Has never visited</strong> = present perfect negative. 'Never' + present perfect describes something that <em>hasn't happened</em> in a period from the past up to now — and may still happen.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
-      ]
-    }]
-  },
-  {
     text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
     data: [{
       document_id: "rnd_07", original_text: "While investigators were reviewing the footage, they found that someone had entered the building long before the alarm had been triggered.",
@@ -1629,18 +1621,6 @@ const RANDOM_STORIES = [
         { event_id:"r2", chronological_order:2, event_name:"Alarm is triggered", extracted_phrase:"the alarm had been triggered", tense:"Past Perfect", tense_explanation:"<strong>Had been triggered</strong> = past perfect passive. The alarm going off was also before the discovery, so past perfect is used — even though it came after the entry.", text_appearance_order:4, relative_time_offset:-50, interval_hint:"unspecified_past" },
         { event_id:"r3", chronological_order:3, event_name:"Investigators review footage", extracted_phrase:"investigators were reviewing the footage", tense:"Past Continuous", tense_explanation:"<strong>Were reviewing</strong> = past continuous. An <em>ongoing activity</em> in progress when the discovery was made. 'While' signals this is the background action, not the main event.", text_appearance_order:1, relative_time_offset:-10, interval_hint:"simultaneous" },
         { event_id:"r4", chronological_order:4, event_name:"Investigators make the discovery", extracted_phrase:"they found", tense:"Past Simple", tense_explanation:"<strong>Found</strong> = past simple. The main event — a completed act of discovery that interrupts the ongoing review. Past simple cuts through the continuous background.", text_appearance_order:2, relative_time_offset:0, interval_hint:"reference_point" }
-      ]
-    }]
-  },
-  {
-    text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
-    data: [{
-      document_id: "rnd_08", original_text: "The garden looks beautiful now, but only because Elena had spent every weekend tending it and had replaced all the plants that had died in the frost.",
-      events: [
-        { event_id:"r1", chronological_order:1, event_name:"Plants die in the frost", extracted_phrase:"the plants that had died in the frost", tense:"Past Perfect", tense_explanation:"<strong>Had died</strong> = past perfect. The frost damage happened before Elena's work began — past perfect within a past perfect context, pushing it furthest back.", text_appearance_order:4, relative_time_offset:-90, interval_hint:"unspecified_past" },
-        { event_id:"r2", chronological_order:2, event_name:"Elena tends the garden", extracted_phrase:"Elena had spent every weekend tending it", tense:"Past Perfect", tense_explanation:"<strong>Had spent</strong> = past perfect. A repeated past action (every weekend) that was completed before the present result. The effort explains <em>why</em> it looks beautiful now.", text_appearance_order:2, relative_time_offset:-50, interval_hint:"extended_past" },
-        { event_id:"r3", chronological_order:3, event_name:"Elena replaces the dead plants", extracted_phrase:"had replaced all the plants", tense:"Past Perfect", tense_explanation:"<strong>Had replaced</strong> = past perfect. Also done before now — another completed preparation that feeds into the present beautiful state.", text_appearance_order:3, relative_time_offset:-20, interval_hint:"unspecified_past" },
-        { event_id:"r4", chronological_order:4, event_name:"Garden looks beautiful now", extracted_phrase:"The garden looks beautiful now", tense:"Present Simple", tense_explanation:"<strong>Looks</strong> = present simple. The current state — the result of everything that happened before. Present simple describes an ongoing truth right now.", text_appearance_order:1, relative_time_offset:0, interval_hint:"reference_point" }
       ]
     }]
   }
@@ -1663,7 +1643,6 @@ function typewriterEffect(targetEl, text, onDone) {
   let i = 0;
   const speed = Math.max(18, Math.min(38, Math.floor(1800 / text.length)));
 
-  // Show cursor
   targetEl.style.caretColor = 'var(--accent2)';
 
   function tick() {
@@ -1679,7 +1658,6 @@ function typewriterEffect(targetEl, text, onDone) {
   tick();
 }
 
-// Wire up random button
 const randomBtn = document.getElementById('randomBtn');
 let _lastRandomData = null;
 
@@ -1687,7 +1665,6 @@ randomBtn.addEventListener('click', () => {
   const story = getRandomStory();
   _lastRandomData = story.data;
 
-  // Dice roll animation
   randomBtn.classList.add('rolling');
   setTimeout(() => randomBtn.classList.remove('rolling'), 500);
 
@@ -1697,21 +1674,16 @@ randomBtn.addEventListener('click', () => {
   typewriterEffect(textarea, story.text, () => {
     randomBtn.disabled = false;
     analyzeBtn.disabled = false;
-    // Register this data so analyze uses it
     SAMPLE_DATASETS[story.text] = story.data;
   });
 });
-// ── END RANDOM STORIES ──
 
 const style = document.createElement('style');
 style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
 document.head.appendChild(style);
 
-// ── RESIZE ──
 window.addEventListener('resize', () => {
   if (timelineSection.classList.contains('visible') && eventsGrid.children.length > 0) {
-    // Re-draw canvas with last events
-    // (simple: just re-run draw at full progress)
     const events = [...SAMPLE_DATA[0].events].sort((a,b) => a.chronological_order - b.chronological_order);
     const W = canvas.parentElement.offsetWidth - 64;
     const H = 220;
@@ -1725,7 +1697,6 @@ window.addEventListener('resize', () => {
   }
 });
 
-// Default textarea value
 textarea.value = "I arrived at the station, but the train had already left.";
 charCount.textContent = `${textarea.value.length} chars`;
 
@@ -1740,7 +1711,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('panel-' + target).classList.add('active');
 
-    // Init Mode 2 canvas on first switch
     if (target === 'mode2') initM2Canvas();
   });
 });
@@ -1760,11 +1730,21 @@ const m2ResultSection = document.getElementById('m2ResultSection');
 const m2ResultText = document.getElementById('m2ResultText');
 
 // ── State
-let m2Nodes = [];           // [{x, xRatio, inputEl, wrapEl}]
+let m2Nodes = [];           // [{x, xRatio, type, inputEl, wrapEl}]
 let m2Initialized = false;
 let m2W = 0, m2H = 180;
 const M2_PAD = 50;
 const M2_LINE_Y_RATIO = 0.52;
+let currentM2Tool = 'point';
+
+// Tool Selector logic
+document.querySelectorAll('.m2-tool').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.m2-tool').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentM2Tool = btn.dataset.tool;
+  });
+});
 
 function initM2Canvas() {
   if (m2Initialized) { m2DrawBase(); return; }
@@ -1792,13 +1772,11 @@ function m2DrawBase() {
   const lineY = H * M2_LINE_Y_RATIO;
   m2Ctx.clearRect(0, 0, W, H);
 
-  // Opaque background — prevents card CSS gradient bleeding through
   m2Ctx.save();
   m2Ctx.fillStyle = '#12121a';
   m2Ctx.fillRect(0, 0, W, H);
   m2Ctx.restore();
 
-  // Dashed background guide line
   m2Ctx.save();
   m2Ctx.setLineDash([4, 8]);
   m2Ctx.strokeStyle = 'rgba(255,255,255,0.05)';
@@ -1809,7 +1787,6 @@ function m2DrawBase() {
   m2Ctx.stroke();
   m2Ctx.restore();
 
-  // Solid glowing line
   const grad = m2Ctx.createLinearGradient(M2_PAD, 0, W - M2_PAD, 0);
   grad.addColorStop(0,   'rgba(126,232,200,0.05)');
   grad.addColorStop(0.5, 'rgba(126,232,200,0.45)');
@@ -1826,7 +1803,6 @@ function m2DrawBase() {
   m2Ctx.stroke();
   m2Ctx.restore();
 
-  // Arrow
   m2Ctx.save();
   m2Ctx.fillStyle = 'rgba(245,215,110,0.6)';
   m2Ctx.beginPath();
@@ -1837,7 +1813,6 @@ function m2DrawBase() {
   m2Ctx.fill();
   m2Ctx.restore();
 
-  // Labels
   m2Ctx.save();
   m2Ctx.font = '500 9px DM Mono, monospace';
   m2Ctx.fillStyle = 'rgba(107,107,128,0.6)';
@@ -1847,7 +1822,6 @@ function m2DrawBase() {
   m2Ctx.fillText('PRESENT', W - M2_PAD, lineY - 18);
   m2Ctx.restore();
 
-  // Click hint when empty
   if (m2Nodes.length === 0) {
     m2Ctx.save();
     m2Ctx.font = '400 11px DM Mono, monospace';
@@ -1858,16 +1832,19 @@ function m2DrawBase() {
   }
 }
 
-// ── Draw all placed nodes onto canvas
 function m2RedrawNodes() {
   m2DrawBase();
-  m2Nodes.forEach((node, i) => m2DrawNode(node.x, i, 1));
+  m2Nodes.forEach((node, i) => m2DrawNode(node, i, 1));
 }
 
-function m2DrawNode(x, idx, scale) {
+function m2DrawNode(node, idx, scale) {
   const lineY = m2H * M2_LINE_Y_RATIO;
-  const color = idx === 0 ? '#c8b4ff' : '#7ee8c8';
-  const colorLight = idx === 0 ? '#ddd0ff' : '#aef2df';
+  const x = node.x;
+  const isCont = node.type === 'continuous';
+  
+  // Base colors mapped to node type
+  const color = isCont ? '#ff8c6b' : (idx === 0 ? '#c8b4ff' : '#7ee8c8');
+  const colorLight = isCont ? '#ffb59b' : (idx === 0 ? '#ddd0ff' : '#aef2df');
 
   // Stem line
   m2Ctx.save();
@@ -1875,49 +1852,88 @@ function m2DrawNode(x, idx, scale) {
   m2Ctx.strokeStyle = color + '55';
   m2Ctx.lineWidth = 1;
   m2Ctx.beginPath();
-  m2Ctx.moveTo(x, lineY - 10 * scale);
+  m2Ctx.moveTo(x, lineY - (isCont ? 12 : 10) * scale);
   m2Ctx.lineTo(x, lineY - 55);
   m2Ctx.stroke();
   m2Ctx.restore();
 
   // Glow
   if (scale > 0.01) {
-  m2Ctx.save();
-  const gG = m2Ctx.createRadialGradient(x, lineY, 0, x, lineY, Math.max(0.1, 24 * scale));
-  gG.addColorStop(0, color + '22');
-  gG.addColorStop(1, 'transparent');
-  m2Ctx.fillStyle = gG;
-  m2Ctx.beginPath();
-  m2Ctx.arc(x, lineY, Math.max(0.1, 24 * scale), 0, Math.PI * 2);
-  m2Ctx.fill();
-  m2Ctx.restore();
+    m2Ctx.save();
+    if (isCont) {
+      const gw = 120 * scale;
+      const gh = 30 * scale;
+      m2Ctx.shadowColor = color;
+      m2Ctx.shadowBlur = 20 * scale;
+      m2Ctx.fillStyle = color + '22';
+      m2Ctx.beginPath();
+      if(m2Ctx.roundRect) m2Ctx.roundRect(x - gw/2, lineY - gh/2, gw, gh, gh/2);
+      else m2Ctx.rect(x - gw/2, lineY - gh/2, gw, gh);
+      m2Ctx.fill();
+    } else {
+      const gG = m2Ctx.createRadialGradient(x, lineY, 0, x, lineY, Math.max(0.1, 24 * scale));
+      gG.addColorStop(0, color + '22');
+      gG.addColorStop(1, 'transparent');
+      m2Ctx.fillStyle = gG;
+      m2Ctx.beginPath();
+      m2Ctx.arc(x, lineY, Math.max(0.1, 24 * scale), 0, Math.PI * 2);
+      m2Ctx.fill();
+    }
+    m2Ctx.restore();
   }
 
-  // Outer ring
+  // Outer outline & Inner Fill
   m2Ctx.save();
   m2Ctx.shadowColor = color;
   m2Ctx.shadowBlur = 12 * scale;
-  m2Ctx.beginPath();
-  m2Ctx.arc(x, lineY, Math.max(0.1, 11 * scale), 0, Math.PI * 2);
   m2Ctx.strokeStyle = color;
   m2Ctx.lineWidth = 1.5;
-  m2Ctx.stroke();
 
-  // Fill
-  const safeR = Math.max(0.1, 8 * scale);
-  const ng = m2Ctx.createRadialGradient(x - 2*scale, lineY - 2*scale, 0, x, lineY, safeR);
-  ng.addColorStop(0, colorLight);
-  ng.addColorStop(1, color);
-  m2Ctx.beginPath();
-  m2Ctx.arc(x, lineY, Math.max(0.1, 7 * scale), 0, Math.PI * 2);
-  m2Ctx.fillStyle = ng;
-  m2Ctx.fill();
+  if (isCont) {
+    // Pill shape for Continuous Event
+    const pw = 80 * scale;
+    const ph = 16 * scale;
+    m2Ctx.beginPath();
+    if(m2Ctx.roundRect) m2Ctx.roundRect(x - pw/2, lineY - ph/2, pw, ph, ph/2);
+    else m2Ctx.rect(x - pw/2, lineY - ph/2, pw, ph);
+    m2Ctx.stroke();
 
-  // Center dot
-  m2Ctx.beginPath();
-  m2Ctx.arc(x, lineY, Math.max(0.1, 2 * scale), 0, Math.PI * 2);
-  m2Ctx.fillStyle = '#fff';
-  m2Ctx.fill();
+    const ng = m2Ctx.createLinearGradient(x - pw/2, lineY - ph/2, x + pw/2, lineY + ph/2);
+    ng.addColorStop(0, colorLight);
+    ng.addColorStop(1, color);
+    m2Ctx.fillStyle = ng;
+    m2Ctx.fill();
+
+    // Duration markers inside pill
+    m2Ctx.fillStyle = '#fff';
+    m2Ctx.globalAlpha = 0.5;
+    m2Ctx.beginPath();
+    m2Ctx.arc(x - 16*scale, lineY, 1.5*scale, 0, Math.PI*2);
+    m2Ctx.arc(x, lineY, 1.5*scale, 0, Math.PI*2);
+    m2Ctx.arc(x + 16*scale, lineY, 1.5*scale, 0, Math.PI*2);
+    m2Ctx.fill();
+    m2Ctx.globalAlpha = 1.0;
+
+  } else {
+    // Circle for Point Event
+    m2Ctx.beginPath();
+    m2Ctx.arc(x, lineY, Math.max(0.1, 11 * scale), 0, Math.PI * 2);
+    m2Ctx.stroke();
+
+    const safeR = Math.max(0.1, 8 * scale);
+    const ng = m2Ctx.createRadialGradient(x - 2*scale, lineY - 2*scale, 0, x, lineY, safeR);
+    ng.addColorStop(0, colorLight);
+    ng.addColorStop(1, color);
+    m2Ctx.beginPath();
+    m2Ctx.arc(x, lineY, Math.max(0.1, 7 * scale), 0, Math.PI * 2);
+    m2Ctx.fillStyle = ng;
+    m2Ctx.fill();
+
+    m2Ctx.beginPath();
+    m2Ctx.arc(x, lineY, Math.max(0.1, 2 * scale), 0, Math.PI * 2);
+    m2Ctx.fillStyle = '#fff';
+    m2Ctx.fill();
+  }
   m2Ctx.restore();
 
   // Chronological badge
@@ -1929,7 +1945,6 @@ function m2DrawNode(x, idx, scale) {
   m2Ctx.restore();
 }
 
-// ── Handle click on canvas
 function onM2Click(e) {
   if (m2Nodes.length >= 2) return;
   if (m2Card.classList.contains('full') && m2Nodes.length >= 2) return;
@@ -1938,33 +1953,34 @@ function onM2Click(e) {
   const clickX = e.clientX - rect.left;
   const lineY = m2H * M2_LINE_Y_RATIO;
 
-  // Only register clicks near the line (±40px)
   const clickY = e.clientY - rect.top;
   if (Math.abs(clickY - lineY) > 60) return;
 
-  // Clamp x within valid range
   const x = Math.max(M2_PAD + 20, Math.min(m2W - M2_PAD - 20, clickX));
   const xRatio = (x - M2_PAD) / (m2W - 2 * M2_PAD);
 
   const idx = m2Nodes.length;
+  const type = currentM2Tool;
 
-  // Pop animation via quick redraw loop
   let popT = 0;
   const popDur = 300;
   const popStart = performance.now();
+  
+  // Temporary node for animation frame
+  const animNode = { x, type };
+  
   function popAnimate(now) {
     popT = Math.min((now - popStart) / popDur, 1);
     const s = easeOutBack(Math.min(popT * 1.6, 1));
     m2RedrawNodes();
-    m2DrawNode(x, idx, s);
+    m2DrawNode(animNode, idx, s);
     if (popT < 1) requestAnimationFrame(popAnimate);
-    else { m2RedrawNodes(); } // finalize
+    else { m2RedrawNodes(); }
   }
   requestAnimationFrame(popAnimate);
 
-  // Create input label
-  const wrap = createNodeInput(x, idx);
-  m2Nodes.push({ x, xRatio, wrapEl: wrap, inputEl: wrap.querySelector('input') });
+  const wrap = createNodeInput(x, idx, type);
+  m2Nodes.push({ x, xRatio, type, wrapEl: wrap, inputEl: wrap.querySelector('input') });
 
   updateNodeCounter();
 
@@ -1974,24 +1990,25 @@ function onM2Click(e) {
   }
 }
 
-function createNodeInput(x, idx) {
+function createNodeInput(x, idx, type) {
   const cardRect = m2Card.getBoundingClientRect();
   const canvasRect = m2Canvas.getBoundingClientRect();
   const lineY_px = m2H * M2_LINE_Y_RATIO;
-  // Position relative to card
   const topOffset = (canvasRect.top - cardRect.top) + lineY_px - 75;
 
   const wrap = document.createElement('div');
   wrap.className = 'node-label-wrap';
   wrap.style.cssText = `left:${x + 32}px; top:${topOffset}px; animation: inputSlide 0.3s cubic-bezier(0.16,1,0.3,1) both;`;
 
-  const colors = ['#c8b4ff', '#7ee8c8'];
-  const placeholders = ['e.g. arrive', 'e.g. leave'];
+  const isCont = type === 'continuous';
+  const color = isCont ? '#ff8c6b' : (idx === 0 ? '#c8b4ff' : '#7ee8c8');
+  const placeholder = isCont ? 'e.g. rain' : (idx === 0 ? 'e.g. arrive' : 'e.g. leave');
+  const typeLabel = isCont ? 'CONT.' : 'POINT';
 
   wrap.innerHTML = `
-    <span class="node-order-badge" style="color:${colors[idx]}">EVENT ${idx + 1}</span>
-    <input class="node-input" type="text" placeholder="${placeholders[idx]}" 
-           style="border-color:${colors[idx]}44; color:${colors[idx]};"
+    <span class="node-order-badge" style="color:${color}">EVENT ${idx + 1} (${typeLabel})</span>
+    <input class="node-input" type="text" placeholder="${placeholder}" 
+           style="border-color:${color}44; color:${color};"
            maxlength="20" spellcheck="false" autocomplete="off" />
   `;
   m2Card.appendChild(wrap);
@@ -2015,7 +2032,6 @@ function updateNodeCounter() {
   }
 }
 
-// ── Reset
 m2ResetBtn.addEventListener('click', () => {
   m2Nodes.forEach(n => n.wrapEl.remove());
   m2Nodes = [];
@@ -2031,12 +2047,24 @@ m2ResetBtn.addEventListener('click', () => {
 m2GenerateBtn.addEventListener('click', async () => {
   if (m2Nodes.length < 2) return;
 
-  // Sort nodes left → right (chronological = earlier → later)
   const sorted = [...m2Nodes].sort((a, b) => a.x - b.x);
-  const firstWord  = sorted[0].inputEl.value.trim() || 'Event A';
-  const secondWord = sorted[1].inputEl.value.trim() || 'Event B';
+  const node1 = sorted[0];
+  const node2 = sorted[1];
+  const word1 = node1.inputEl.value.trim() || 'Event A';
+  const word2 = node2.inputEl.value.trim() || 'Event B';
 
-  // Show result section with loading state
+  // Construct context-aware prompt based on Node Types
+  let promptInstruction = '';
+  if (node1.type === 'point' && node2.type === 'point') {
+      promptInstruction = `"${word1}" happened first (use Past Perfect) and "${word2}" happened second (use Simple Past).`;
+  } else if (node1.type === 'continuous' && node2.type === 'point') {
+      promptInstruction = `"${word1}" is an ongoing background action (Past Continuous) and "${word2}" interrupts it or happens during it (Simple Past).`;
+  } else if (node1.type === 'point' && node2.type === 'continuous') {
+      promptInstruction = `"${word1}" happened first (Simple Past or Past Perfect) and then "${word2}" started as an ongoing action (Past Continuous).`;
+  } else {
+      promptInstruction = `"${word1}" and "${word2}" were both happening simultaneously (use Past Continuous for both).`;
+  }
+
   m2ResultSection.classList.add('visible');
   m2ResultText.innerHTML = '<span class="m2-typing-cursor"></span>';
   m2GenerateBtn.disabled = true;
@@ -2048,7 +2076,7 @@ m2GenerateBtn.addEventListener('click', async () => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         mode: 'generate',
-        sentence: `Generate one natural English sentence where "${firstWord}" happened first (use Past Perfect) and "${secondWord}" happened second (use Simple Past). Return valid JSON.`
+        sentence: `Generate one natural English sentence where ${promptInstruction} Return valid JSON.`
       })
     });
 
@@ -2061,7 +2089,7 @@ m2GenerateBtn.addEventListener('click', async () => {
       explanation = data.explanation || '';
       verbs       = data.verbs || [];
     } else if (data.events) {
-      sentence = data.original_text || `${firstWord} → ${secondWord}`;
+      sentence = data.original_text || `${word1} → ${word2}`;
     } else {
       throw new Error('Unexpected response format');
     }
@@ -2079,15 +2107,29 @@ m2GenerateBtn.addEventListener('click', async () => {
   } catch (err) {
     console.error(err);
     m2ResultText.innerHTML = '';
-    const fallbackSentence = `By the time ${secondWord.toLowerCase()} happened, ${firstWord.toLowerCase()} had already occurred.`;
-    const fallbackVerbs = [
-      { verb: 'had already occurred', tense: 'past-perfect', explanation: 'Past Perfect — completed before the reference point.' },
-      { verb: 'happened',             tense: 'past-simple',  explanation: 'Simple Past — the anchor/reference point event.' }
-    ];
+    
+    // Context-aware fallback responses
+    let fallbackSentence, fallbackVerbs, fallbackNote;
+    if (node1.type === 'continuous' && node2.type === 'point') {
+        fallbackSentence = `While it was ${word1.toLowerCase()}ing, ${word2.toLowerCase()} happened.`;
+        fallbackVerbs = [
+            { verb: `was ${word1.toLowerCase()}ing`, tense: 'past-continuous', explanation: 'Past Continuous — an ongoing background action.' },
+            { verb: 'happened', tense: 'past-simple', explanation: 'Simple Past — an event that occurred during the background action.' }
+        ];
+        fallbackNote = 'The background action uses Past Continuous (was/were + -ing). The specific event that happens during it uses Simple Past.';
+    } else {
+        fallbackSentence = `By the time ${word2.toLowerCase()} happened, ${word1.toLowerCase()} had already occurred.`;
+        fallbackVerbs = [
+          { verb: 'had already occurred', tense: 'past-perfect', explanation: 'Past Perfect — completed before the reference point.' },
+          { verb: 'happened',             tense: 'past-simple',  explanation: 'Simple Past — the anchor/reference point event.' }
+        ];
+        fallbackNote = 'The earlier event uses Past Perfect (had + past participle). The later event uses Simple Past as the anchor.';
+    }
+
     renderVerbSentence(m2ResultText, fallbackSentence, fallbackVerbs);
     const note = document.createElement('span');
     note.className = 'phase-note';
-    note.textContent = '✦ Why these tenses?\nThe earlier event uses Past Perfect (had + past participle). The later event uses Simple Past as the anchor.';
+    note.textContent = '✦ Why these tenses?\n' + fallbackNote;
     m2ResultText.appendChild(note);
   } finally {
     m2GenerateBtn.disabled = false;
@@ -2095,14 +2137,12 @@ m2GenerateBtn.addEventListener('click', async () => {
   }
 });
 
-// ── Render sentence with clickable verb highlights
 function renderVerbSentence(container, sentence, verbs) {
   if (!verbs || verbs.length === 0) {
     container.appendChild(document.createTextNode(sentence));
     return;
   }
 
-  // Map tense string → CSS class + display label (matches Mode 1 colors)
   function getTenseClass(tense) {
     const t = (tense || '').toLowerCase();
     if (t.includes('past-perfect-continuous') || (t.includes('past perfect') && t.includes('continuous'))) return { cls: 'past-continuous',  label: 'Past Perfect Cont.' };
@@ -2113,7 +2153,6 @@ function renderVerbSentence(container, sentence, verbs) {
     return { cls: 'past-simple', label: tense || 'Verb' };
   }
 
-  // Find positions of each verb in the sentence
   const positions = [];
   verbs.forEach(v => {
     const idx = sentence.toLowerCase().indexOf(v.verb.toLowerCase());
@@ -2130,12 +2169,10 @@ function renderVerbSentence(container, sentence, verbs) {
 
     const { cls, label } = getTenseClass(v.tense);
 
-    // Highlighted verb span
     const span = document.createElement('span');
     span.className = `verb-highlight ${cls}`;
     span.appendChild(document.createTextNode(sentence.slice(idx, idx + len)));
 
-    // Tooltip with tense badge + explanation
     const tip = document.createElement('div');
     tip.className = 'verb-tooltip';
 
@@ -2158,35 +2195,6 @@ function renderVerbSentence(container, sentence, verbs) {
 
   if (cursor < sentence.length) frag.appendChild(document.createTextNode(sentence.slice(cursor)));
   container.appendChild(frag);
-}
-
-function typewriterParts(container, parts, speed) {
-  let partIdx = 0;
-  let charIdx = 0;
-  let currentSpan = null;
-
-  function tick() {
-    if (partIdx >= parts.length) {
-      const cur = container.querySelector('.m2-typing-cursor');
-      if (cur) cur.remove();
-      return;
-    }
-    const part = parts[partIdx];
-    if (charIdx === 0) {
-      currentSpan = document.createElement('span');
-      if (part.cls) currentSpan.className = part.cls;
-      container.appendChild(currentSpan);
-    }
-    currentSpan.textContent += part.text[charIdx];
-    charIdx++;
-    if (charIdx >= part.text.length) { partIdx++; charIdx = 0; }
-
-    let cursor = container.querySelector('.m2-typing-cursor');
-    if (!cursor) { cursor = document.createElement('span'); cursor.className = 'm2-typing-cursor'; }
-    container.appendChild(cursor);
-    setTimeout(tick, speed + Math.random() * 12);
-  }
-  tick();
 }
 </script>
 </body>
