@@ -29,11 +29,11 @@
   --redbg:   #fee2e2;
 
   /* All layout in vw/vh so it scales with the window */
-  --pad:      6vw;
+  --pad:      4vw;
   --tag-top:  2.5vh;
   --body-top: 11vh;
   --nav-h:    8vh;
-  --gap:      1.4vh;
+  --gap: 10px;
 
   /* Typography */
   --t-label:  0.8vw;
@@ -115,6 +115,7 @@ body { background: var(--bg); }
 .s-col {
   display: flex; flex-direction: column;
   gap: var(--gap); height: 100%; justify-content: center;
+  align-items: center;
 }
 
 /* ── Title slide ── */
@@ -147,7 +148,7 @@ body { background: var(--bg); }
 /* ── Shared card base ── */
 .icard, .ccard, .quiz-q {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 1.2vw; padding: 1.8vh 1.8vw; width: 100%; max-width: 860px;
+  border-radius: 10px; padding: 20px 28px; width: 100%; max-width: 860px;
 }
 
 .lbl, .q-num {
@@ -170,20 +171,20 @@ body { background: var(--bg); }
 .ccard .desc { color: var(--muted) !important; margin-bottom: 0.8vh !important; }
 
 .ex {
-  margin-top: 1vh; padding: 1vh 1.2vw;
-  background: var(--tagbg); border-radius: 0.8vw;
+  margin-top: 10px; padding: 10px 14px;
+  background: var(--tagbg); border-radius: 8px;
   border-left: 3px solid var(--accent);
 }
 .ex .en { font-size: var(--t-en) !important; font-weight: 500 !important; line-height: 1.6 !important; color: var(--text) !important; }
 .ex .ko { font-size: var(--t-ko) !important; color: var(--muted) !important; margin-top: 0.3vh !important; line-height: 1.5 !important; }
 
 /* ── TOC ── */
-.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.8vh; width: 100%; max-width: 860px; }
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 860px; }
 
 .toc-list li {
-  display: flex; align-items: center; gap: 1.2vw;
-  padding: 1.2vh 1.5vw; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 1vw;
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 18px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px;
   font-size: var(--t-body) !important; font-weight: 400 !important; color: var(--text) !important;
 }
 .toc-num {
@@ -195,7 +196,8 @@ body { background: var(--bg); }
 }
 
 /* ── Compare grid ── */
-.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; width: 100%; max-width: 860px; }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 860px; }
+
 
 /* ── Verdict badges ── */
 .badge {
@@ -208,7 +210,7 @@ body { background: var(--bg); }
 .badge.no { background: var(--redbg);   color: var(--red)   !important; }
 
 /* ── Quiz ── */
-.quiz-wrap { display: flex; flex-direction: column; gap: 1.2vh; width: 100%; max-width: 860px; }
+.quiz-wrap { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 860px; }
 .q-text { margin-bottom: 1.2vh !important; }
 .btn-row { display: flex; gap: 0.8vw; flex-wrap: wrap; }
 .qbtn {
