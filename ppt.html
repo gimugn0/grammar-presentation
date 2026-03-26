@@ -8,7 +8,7 @@
 
 <style>
 /* ═══════════════════════════════════════
-   FONT — system sans, !important everywhere
+   RESET & FONT
 ═══════════════════════════════════════ */
 * {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -18,30 +18,47 @@
 }
 
 /* ═══════════════════════════════════════
-   DESIGN TOKENS
+   DESIGN TOKENS — single source of truth
 ═══════════════════════════════════════ */
 :root {
-  --bg:       #f5f4ef;
-  --surface:  #ffffff;
-  --text:     #181818;
-  --muted:    #6b6b6b;
-  --accent:   #007AFF;
-  --acbg:     #e8f2ff;
-  --border:   #e2e1db;
-  --tagbg:    #eeede8;
-  --green:    #15803d;
-  --greenbg:  #dcfce7;
-  --red:      #b91c1c;
-  --redbg:    #fee2e2;
-  --px:       68px;
-  --tag-top:  44px;
-  --body-top: 108px;
+  /* colours */
+  --bg:      #f5f4ef;
+  --surface: #ffffff;
+  --text:    #181818;
+  --muted:   #6b6b6b;
+  --accent:  #007AFF;
+  --acbg:    #e8f2ff;
+  --border:  #e2e1db;
+  --tagbg:   #eeede8;
+  --green:   #15803d;
+  --greenbg: #dcfce7;
+  --red:     #b91c1c;
+  --redbg:   #fee2e2;
+
+  /* layout — equal on all sides */
+  --pad:      48px;
+  --tag-top:  18px;
+  --body-top: 80px;
+  --nav-h:    64px;
+
+  /* ── TYPOGRAPHIC SCALE ──────────────────
+     Every text role defined once. No raw
+     px sizes anywhere in component rules.
+  ─────────────────────────────────────── */
+  --t-label:  11px;   /* ALL-CAPS labels, pill text, toc group */
+  --t-form:   15px;   /* tense form tags (have p.p, etc.)      */
+  --t-body:   16px;   /* card body, TOC items, quiz questions   */
+  --t-en:     16px;   /* English example sentences             */
+  --t-ko:     14px;   /* Korean translations                   */
+  --t-btn:    15px;   /* quiz answer buttons                   */
+  --t-fb:     14px;   /* quiz feedback                         */
+  --t-nav:    13px;   /* page counter                          */
 }
 
 body { background: var(--bg); }
 
 /* ═══════════════════════════════════════
-   HIGHLIGHT SPAN
+   HIGHLIGHT
 ═══════════════════════════════════════ */
 .highlight {
   color: var(--accent) !important;
@@ -53,7 +70,7 @@ body { background: var(--bg); }
 ═══════════════════════════════════════ */
 .reveal,
 .reveal .slides {
-  font-size: 16px !important;
+  font-size: var(--t-body) !important;
   color: var(--text) !important;
   background: var(--bg) !important;
   text-align: left !important;
@@ -64,15 +81,62 @@ body { background: var(--bg); }
   left: 0 !important;
   width: 100% !important;
   height: 100vh !important;
-  padding: var(--body-top) var(--px) 72px var(--px) !important;
+  padding: var(--body-top) var(--pad) var(--nav-h) var(--pad) !important;
   text-align: left !important;
   background: var(--bg) !important;
   display: block !important;
   overflow: hidden !important;
 }
+/* ── Journey slides — clip overflow so list scrolls inside ── */
+.reveal .slides section#slide-j1,
+.reveal .slides section#slide-j2 {
+  overflow: hidden !important;
+}
+
+.jwindow {
+  position: absolute !important;
+  top: 40% !important;
+  transform: translateY(-40%) !important;
+  left: var(--pad) !important;
+  right: var(--pad) !important;
+  bottom: var(--nav-h) !important;
+  overflow: hidden !important;
+}
+
+
+
+.journey {
+  width: 100%;
+  padding-top: 4px;
+  will-change: transform;
+}
+
+.jphase{display:flex;gap:1.1rem;}
+.jleft{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:34px;}
+.jdot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--t-label) !important;font-weight:700 !important;flex-shrink:0;border:1px solid;position:relative;z-index:1;}
+.jline{width:1px;flex:1;min-height:14px;background:#e5e5e5;margin:4px 0;}
+.jright{padding-bottom:1.3rem;flex:1;}
+.jlabel{font-size:var(--t-label) !important;font-weight:700 !important;letter-spacing:0.1em !important;text-transform:uppercase !important;margin-bottom:3px !important;}
+.jtitle{font-size:var(--t-body) !important;font-weight:500 !important;color:var(--text) !important;line-height:1.5 !important;}
+.jtags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
+.jtag{font-size:var(--t-label) !important;padding:2px 9px;border-radius:99px;border:1px solid var(--border);color:var(--muted) !important;background:var(--tagbg);}
+.jdot.purple{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489 !important;}
+.jdot.teal{background:#E1F5EE;border-color:#5DCAA5;color:#085041 !important;}
+.jdot.blue{background:#E6F1FB;border-color:#85B7EB;color:#0C447C !important;}
+.jdot.gray{background:#F1EFE8;border-color:#B4B2A9;color:#444441 !important;}
+.jdot.amber{background:#FAEEDA;border-color:#EF9F27;color:#633806 !important;}
+.jdot.coral{background:#FAECE7;border-color:#F0997B;color:#712B13 !important;}
+.jdot.green{background:#EAF3DE;border-color:#97C459;color:#27500A !important;}
+.jlbl-purple{color:#534AB7 !important;}
+.jlbl-teal{color:#0F6E56 !important;}
+.jlbl-blue{color:#185FA5 !important;}
+.jlbl-gray{color:#5F5E5A !important;}
+.jlbl-amber{color:#854F0B !important;}
+.jlbl-coral{color:#993C1D !important;}
+.jlbl-green{color:#3B6D11 !important;}
 
 /* ═══════════════════════════════════════
-   SQUIGGLY PROGRESS BAR — top: 0
+   SQUIGGLY PROGRESS BAR
 ═══════════════════════════════════════ */
 .reveal .progress {
   top: 0 !important;
@@ -82,19 +146,16 @@ body { background: var(--bg); }
   z-index: 1000;
   overflow: visible !important;
 }
-
 .reveal .progress span {
   background: var(--accent) !important;
   height: 3px !important;
   margin-top: 4px !important;
   display: block !important;
   position: relative !important;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1) !important;
   overflow: visible !important;
   border-radius: 0 2px 2px 0 !important;
 }
-
-/* Squiggly tail pinned to right edge of the bar */
 .reveal .progress span::after {
   content: '' !important;
   position: absolute !important;
@@ -107,24 +168,21 @@ body { background: var(--bg); }
   background-size: 24px 15px !important;
   animation: squiggle-bob 0.8s ease-in-out infinite alternate !important;
 }
-
 @keyframes squiggle-bob {
-  0%   { transform: translateY(0)      scaleX(1);    opacity: 1;    }
-  50%  { transform: translateY(-1.5px) scaleX(1.06); opacity: 0.9;  }
-  100% { transform: translateY(1.2px)  scaleX(0.95); opacity: 1;    }
+  0%   { transform: translateY(0)      scaleX(1);    }
+  50%  { transform: translateY(-1.5px) scaleX(1.06); }
+  100% { transform: translateY(1.2px)  scaleX(0.95); }
 }
-
-/* Hide controls */
 .reveal .controls { display: none !important; }
 
 /* ═══════════════════════════════════════
-   SUBTITLE PILL — fixed top-left
+   SUBTITLE PILL — same pixel position every slide
 ═══════════════════════════════════════ */
 .s-tag {
   position: absolute !important;
   top: var(--tag-top) !important;
-  left: var(--px) !important;
-  font-size: 10.5px !important;
+  left: var(--pad) !important;
+  font-size: var(--t-label) !important;
   font-weight: 600 !important;
   letter-spacing: 0.13em !important;
   text-transform: uppercase !important;
@@ -142,7 +200,7 @@ body { background: var(--bg); }
 .s-col {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 12px;
   height: 100%;
   justify-content: center;
 }
@@ -156,60 +214,143 @@ body { background: var(--bg); }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 var(--px) !important;
+  padding: 0 var(--pad) !important;
 }
 .hero .eyebrow {
-  font-size: 11px !important; font-weight: 500 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 18px !important;
+  font-size: var(--t-label) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+  margin-bottom: 16px !important;
 }
 .hero h1 {
-  font-size: clamp(44px, 6.5vw, 72px) !important;
-  font-weight: 700 !important; line-height: 1.06 !important;
-  color: var(--text) !important; margin-bottom: 20px !important;
-  max-width: 820px !important;
+  font-size: clamp(42px, 6vw, 68px) !important;
+  font-weight: 700 !important;
+  line-height: 1.06 !important;
+  color: var(--text) !important;
+  margin-bottom: 18px !important;
 }
 .hero .tagline {
-  font-size: 20px !important; font-weight: 300 !important;
-  color: var(--muted) !important; margin-bottom: 48px !important;
+  font-size: 20px !important;
+  font-weight: 300 !important;
+  color: var(--muted) !important;
 }
 .hero .presenter {
   position: absolute !important;
-  bottom: 88px !important; left: var(--px) !important;
-  font-size: 12px !important; color: var(--muted) !important;
+  bottom: calc(var(--nav-h) + 8px) !important;
+  left: var(--pad) !important;
+  font-size: var(--t-label) !important;
+  color: var(--muted) !important;
 }
-.hero .presenter span { color: var(--text) !important; font-weight: 600 !important; }
+.hero .presenter span {
+  color: var(--text) !important;
+  font-weight: 600 !important;
+}
 
 /* ═══════════════════════════════════════
-   INFO CARDS
+   SHARED CARD BASE — icard, ccard, quiz-q
+   all use identical padding & radius
 ═══════════════════════════════════════ */
-.icard {
+.icard, .ccard, .quiz-q {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 18px 22px;
-  max-width: 860px;
+  padding: 20px 24px;
+  width: 100%;
 }
-.icard .lbl {
-  font-size: 10px !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 7px !important;
+
+/* ALL-CAPS label inside every card */
+.lbl, .q-num {
+  font-size: var(--t-label) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+  margin-bottom: 8px !important;
 }
-.icard .val {
-  font-size: 17px !important; line-height: 1.65 !important;
+
+/* Main body text — val, desc, q-text all identical */
+.val, .desc, .q-text {
+  font-size: var(--t-body) !important;
+  line-height: 1.65 !important;
   color: var(--text) !important;
 }
-.icard .val em {
-  font-style: normal !important; font-weight: 700 !important;
+
+/* Tense form tag */
+.form {
+  font-size: var(--t-form) !important;
+  font-weight: 700 !important;
+  color: var(--accent) !important;
+  margin-bottom: 8px !important;
+}
+
+/* Emphasis inside .val */
+.val em {
+  font-style: normal !important;
+  font-weight: 700 !important;
   color: var(--accent) !important;
 }
-.icard .ex {
-  margin-top: 12px; padding: 12px 15px;
-  background: var(--tagbg); border-radius: 9px;
+
+/* Slightly muted desc in compare cards */
+.ccard .desc {
+  color: var(--muted) !important;
+  margin-bottom: 10px !important;
+}
+
+/* Example block — shared */
+.ex {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--tagbg);
+  border-radius: 9px;
   border-left: 3px solid var(--accent);
 }
-.icard .ex .en { font-size: 15px !important; font-weight: 500 !important; line-height: 1.6 !important; }
-.icard .ex .ko { font-size: 13px !important; color: var(--muted) !important; margin-top: 3px !important; }
+.ex .en {
+  font-size: var(--t-en) !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  color: var(--text) !important;
+}
+.ex .ko {
+  font-size: var(--t-ko) !important;
+  color: var(--muted) !important;
+  margin-top: 4px !important;
+  line-height: 1.5 !important;
+}
+
+/* ═══════════════════════════════════════
+   TOC
+═══════════════════════════════════════ */
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.toc-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: var(--t-body) !important;
+  font-weight: 400 !important;
+  color: var(--text) !important;
+}
+.toc-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--acbg);
+  color: var(--accent) !important;
+  font-size: var(--t-label) !important;
+  font-weight: 700 !important;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
 
 /* ═══════════════════════════════════════
    COMPARE GRID
@@ -218,54 +359,7 @@ body { background: var(--bg); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  max-width: 900px;
-}
-.ccard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-.ccard .lbl {
-  font-size: 10px !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 5px !important;
-}
-.ccard .form {
-  font-size: 14px !important; font-weight: 700 !important;
-  color: var(--accent) !important; margin-bottom: 7px !important;
-}
-.ccard .desc {
-  font-size: 13px !important; color: var(--muted) !important;
-  line-height: 1.55 !important; margin-bottom: 10px !important;
-}
-.ccard .ex {
-  background: var(--tagbg); padding: 10px 12px;
-  border-radius: 8px; border-left: 3px solid var(--accent);
-}
-.ccard .ex .en { font-size: 13px !important; font-weight: 500 !important; line-height: 1.6 !important; }
-.ccard .ex .ko { font-size: 12px !important; color: var(--muted) !important; margin-top: 2px !important; }
-
-/* ═══════════════════════════════════════
-   TOC
-═══════════════════════════════════════ */
-.toc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; max-width: 660px; }
-.toc-list li {
-  display: flex; align-items: center; gap: 13px;
-  padding: 13px 16px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 11px;
-  font-size: 15px !important; color: var(--text) !important;
-}
-.toc-list li.grp {
-  background: var(--tagbg);
-  font-size: 12px !important; font-weight: 600 !important; color: var(--muted) !important;
-}
-.toc-num {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: var(--acbg); color: var(--accent) !important;
-  font-size: 11px !important; font-weight: 700 !important;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 100%;
 }
 
 /* ═══════════════════════════════════════
@@ -273,9 +367,13 @@ body { background: var(--bg); }
 ═══════════════════════════════════════ */
 .badge {
   display: inline-block;
-  font-size: 10px !important; font-weight: 800 !important;
-  letter-spacing: 0.06em !important; text-transform: uppercase !important;
-  padding: 2px 7px; border-radius: 5px; margin-right: 6px;
+  font-size: var(--t-label) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-right: 6px;
 }
 .badge.ok { background: var(--greenbg); color: var(--green) !important; }
 .badge.no { background: var(--redbg);   color: var(--red)   !important; }
@@ -283,70 +381,82 @@ body { background: var(--bg); }
 /* ═══════════════════════════════════════
    QUIZ
 ═══════════════════════════════════════ */
-.quiz-wrap { display: flex; flex-direction: column; gap: 22px; max-width: 860px; }
-.quiz-q {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 18px 22px;
+.quiz-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
 }
-.quiz-q .q-num {
-  font-size: 10px !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
-  color: var(--muted) !important; margin-bottom: 7px !important;
-}
-.quiz-q .q-text {
-  font-size: 17px !important; font-weight: 500 !important;
-  color: var(--text) !important; line-height: 1.5 !important;
-  margin-bottom: 14px !important;
-}
-.btn-row { display: flex; gap: 9px; flex-wrap: wrap; }
+.q-text { margin-bottom: 14px !important; }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
 .qbtn {
-  padding: 8px 18px;
-  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
   background: var(--surface);
-  font-size: 14px !important; font-weight: 500 !important;
+  font-size: var(--t-btn) !important;
+  font-weight: 500 !important;
   color: var(--text) !important;
   cursor: pointer;
-  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.1s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
 }
 .qbtn:hover:not(:disabled) { background: var(--tagbg); }
 .qbtn:active { transform: scale(0.97); }
 .qbtn.correct {
-  background: var(--greenbg) !important; border-color: var(--green) !important;
-  color: var(--green) !important; font-weight: 700 !important;
+  background: var(--greenbg) !important;
+  border-color: var(--green) !important;
+  color: var(--green) !important;
+  font-weight: 700 !important;
 }
 .qbtn.wrong {
-  background: var(--redbg) !important; border-color: var(--red) !important;
+  background: var(--redbg) !important;
+  border-color: var(--red) !important;
   color: var(--red) !important;
 }
 .q-fb {
-  margin-top: 9px; font-size: 13px !important; font-weight: 600 !important; min-height: 18px;
+  margin-top: 10px;
+  font-size: var(--t-fb) !important;
+  font-weight: 600 !important;
+  min-height: 18px;
 }
 .q-fb.ok { color: var(--green) !important; }
 .q-fb.no { color: var(--red)   !important; }
 
 /* ═══════════════════════════════════════
-   BOTTOM NAV BAR
+   BOTTOM NAV
 ═══════════════════════════════════════ */
 #cnav {
-  position: fixed; bottom: 20px; left: 50%;
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
   transform: translateX(-50%);
-  display: flex; align-items: center; gap: 10px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 100px; padding: 7px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 7px 18px;
   z-index: 9999;
   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
 }
 #cnav button {
-  width: 32px; height: 32px; border: none; background: transparent;
+  width: 32px; height: 32px;
+  border: none; background: transparent;
   cursor: pointer; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  color: var(--text); transition: background 0.15s;
+  color: var(--text);
+  transition: background 0.15s;
 }
 #cnav button:hover { background: var(--tagbg); }
 #pgnum {
-  font-size: 12px !important; font-weight: 600 !important;
-  color: var(--muted) !important; min-width: 52px; text-align: center;
+  font-size: var(--t-nav) !important;
+  font-weight: 600 !important;
+  color: var(--muted) !important;
+  min-width: 52px;
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
 </style>
@@ -373,11 +483,12 @@ body { background: var(--bg); }
       <span class="s-tag">Table of Contents</span>
       <div class="s-col">
         <ul class="toc-list">
-          <li class="grp"><span class="toc-num">14</span>Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)</li>
-          <li><span class="toc-num">①</span>시제 비교: 현재 완료 / 단순 과거</li>
-          <li class="grp"><span class="toc-num">15</span>Unit 15 &nbsp;·&nbsp; 과거 완료 진행 (Past Perfect Continuous)</li>
-          <li><span class="toc-num">②</span>시제 비교 및 진행형 불가 예외 동사</li>
-          <li><span class="toc-num">✎</span>Interactive Mini Quiz</li>
+          <li><span class="toc-num">1</span>Unit 14 &nbsp;·&nbsp; 과거 완료 (Past Perfect)</li>
+          <li><span class="toc-num">2</span>시제 비교: 현재 완료 / 단순 과거</li>
+          <li><span class="toc-num">3</span>Unit 15 &nbsp;·&nbsp; 과거 완료 진행 (Past Perfect Continuous)</li>
+          <li><span class="toc-num">4</span>시제 비교 및 진행형 불가 예외 동사</li>
+          <li><span class="toc-num">5</span>인터랙티브 미니 퀴즈 (Interactive Mini Quiz)</li>
+          <li><span class="toc-num">6</span>AI 통합 프로젝트 제작기 (Making of A.I. Integrated Project)</li>
         </ul>
       </div>
     </section>
@@ -515,12 +626,12 @@ body { background: var(--bg); }
         </div>
         <div class="icard">
           <div class="lbl">올바른 표현</div>
-          <div class="val"><span class="badge ok">O</span> <strong>"We <span class="highlight">had known</span> each other for years."</strong></div>
+          <div class="val"><span class="badge ok">O</span> "We <span class="highlight">had known</span> each other for years."</div>
           <div class="ex"><div class="ko">우리는 수년 동안 서로 아는 사이였다.</div></div>
         </div>
         <div class="icard">
           <div class="lbl">틀린 표현</div>
-          <div class="val"><span class="badge no">X</span> <span style="color:#b91c1c">"We <span class="highlight" style="color:#b91c1c !important">had been knowing</span> each other for years."</span></div>
+          <div class="val"><span class="badge no">X</span> <span style="color:#b91c1c">"We had been knowing each other for years."</span></div>
         </div>
       </div>
     </section>
@@ -583,6 +694,61 @@ body { background: var(--bg); }
       </div>
     </section>
 
+    <!-- ── SLIDE 11: 개발 여정 (steps 1–4) ── -->
+    <section id="slide-j1">
+      <span class="s-tag">개발 여정. AI 통합 문법 타임라인</span>
+      <!-- clipping window: hides the journey list outside bounds -->
+      <div class="jwindow">
+        <!-- the journey list lives here; JS will animate its translateY -->
+        <div class="journey" id="journey-list">
+
+          <div class="jphase">
+            <div class="jleft"><div class="jdot purple">01</div><div class="jline"></div></div>
+            <div class="jright">
+              <div class="jlabel jlbl-purple">기획</div>
+              <div class="jtitle">Gemini로 아이디어 구체화 &amp; 워크플로우 설계</div>
+              <div class="jtags"><span class="jtag">Gemini</span><span class="jtag">JSON 스키마</span></div>
+            </div>
+          </div>
+
+          <div class="jphase">
+            <div class="jleft"><div class="jdot teal">02</div><div class="jline"></div></div>
+            <div class="jright">
+              <div class="jlabel jlbl-teal">코드 생성</div>
+              <div class="jtitle">Claude로 초기 UI 코드 작성</div>
+              <div class="jtags"><span class="jtag">Claude</span><span class="jtag">HTML/CSS/JS</span><span class="jtag">Canvas 타임라인</span></div>
+            </div>
+          </div>
+
+          <div class="jphase">
+            <div class="jleft"><div class="jdot blue">03</div><div class="jline"></div></div>
+            <div class="jright">
+              <div class="jlabel jlbl-blue">배포 &amp; 반복 수정</div>
+              <div class="jtitle">GitHub Pages 배포 후 Claude와 지속적 디버깅</div>
+              <div class="jtags"><span class="jtag">GitHub Pages</span><span class="jtag">Claude</span></div>
+            </div>
+          </div>
+
+          <div class="jphase">
+            <div class="jleft"><div class="jdot gray">04</div><div class="jline"></div></div>
+            <div class="jright">
+              <div class="jlabel jlbl-gray">시도 &amp; 판단</div>
+              <div class="jtitle">Antigravity 시도 → Claude로 충분하다고 판단, 포기</div>
+              <div class="jtags"><span class="jtag">Antigravity</span></div>
+            </div>
+          </div>
+
+        </div><!-- /journey -->
+      </div><!-- /jwindow -->
+    </section>
+
+    <!-- ── SLIDE 12: 개발 여정 (steps 5–7, scroll illusion) ── -->
+    <section id="slide-j2">
+      <span class="s-tag">개발 여정. AI 통합 문법 타임라인</span>
+      <!-- same clipping window, same list — JS clones & animates -->
+      <div class="jwindow" id="jwindow2"></div>
+    </section>
+
   </div>
 </div>
 
@@ -593,7 +759,7 @@ body { background: var(--bg); }
       <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-  <span id="pgnum">1 / 10</span>
+  <span id="pgnum">1 / 12</span>
   <button id="bnext" title="다음">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
       <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -633,6 +799,100 @@ body { background: var(--bg); }
   }
   Reveal.on('ready', updatePg);
   Reveal.on('slidechanged', updatePg);
+
+  /* ── Journey scroll illusion ──────────────────────────────
+     Slide 11 → shows steps 1–4 only (HTML only has 4 steps)
+     Slide 12 → renders full 7-step list, animates from the
+                position where steps 1–4 are visible, then
+                scrolls down to show steps 4–7
+  ─────────────────────────────────────────────────────── */
+  (function () {
+    const SLIDE_J1 = 10;
+    const SLIDE_J2 = 11;
+
+    const FULL_STEPS = [
+      { num:'01', color:'purple', label:'기획',          title:'Gemini로 아이디어 구체화 &amp; 워크플로우 설계',                        tags:['Gemini','JSON 스키마'] },
+      { num:'02', color:'teal',   label:'코드 생성',     title:'Claude로 초기 UI 코드 작성',                                           tags:['Claude','HTML/CSS/JS','Canvas 타임라인'] },
+      { num:'03', color:'blue',   label:'배포 &amp; 반복 수정', title:'GitHub Pages 배포 후 Claude와 지속적 디버깅',                    tags:['GitHub Pages','Claude'] },
+      { num:'04', color:'gray',   label:'시도 &amp; 판단', title:'Antigravity 시도 → Claude로 충분하다고 판단, 포기',                   tags:['Antigravity'] },
+      { num:'05', color:'amber',  label:'한계 발견',     title:'Mode 1이 샘플 데이터만 표시 — 실제 AI 분석 없음',                      tags:['Mock 데이터','개선 필요'] },
+      { num:'06', color:'coral',  label:'API 연동',      title:'Vercel 프록시 구축 + Gemini API 시도 → 무료 한도 초과',                 tags:['Vercel','Gemini API','프록시 서버'] },
+      { num:'07', color:'green',  label:'완성',          title:'Groq 정착 — 빠른 속도, 넉넉한 무료 토큰',                              tags:['Groq','Llama 3.3','실시간 분석'], last:true },
+    ];
+
+    function buildJourney () {
+      const wrap = document.createElement('div');
+      wrap.className = 'journey';
+      wrap.id = 'journey-list-2';
+      FULL_STEPS.forEach((s, i) => {
+        const phase = document.createElement('div');
+        phase.className = 'jphase';
+        const tagsHTML = s.tags.map(t => `<span class="jtag">${t}</span>`).join('');
+        const lineHTML = s.last ? '' : '<div class="jline"></div>';
+        phase.innerHTML = `
+          <div class="jleft"><div class="jdot ${s.color}">${s.num}</div>${lineHTML}</div>
+          <div class="jright">
+            <div class="jlabel jlbl-${s.color}">${s.label}</div>
+            <div class="jtitle">${s.title}</div>
+            <div class="jtags">${tagsHTML}</div>
+          </div>`;
+        wrap.appendChild(phase);
+      });
+      return wrap;
+    }
+
+    function setupJ2 () {
+      const win2 = document.getElementById('jwindow2');
+      if (!win2 || win2.hasChildNodes()) return;
+      const list = buildJourney();
+      list.style.transform = 'translateY(0px)';
+      win2.appendChild(list);
+    }
+
+    // Measure height of first 4 phases in the full list on slide 12
+    function getScrollAmount () {
+      const phases = document.querySelectorAll('#journey-list-2 .jphase');
+      let h = 0;
+      for (let i = 0; i < 4 && i < phases.length; i++) {
+        h += phases[i].getBoundingClientRect().height;
+      }
+      return h;
+    }
+
+    let animated = false;
+
+    function onSlideChange () {
+      const idx = Reveal.getIndices().h;
+
+      if (idx === SLIDE_J1) {
+        animated = false;
+        // reset slide 12 list if it exists
+        const list2 = document.getElementById('journey-list-2');
+        if (list2) {
+          list2.style.transition = 'none';
+          list2.style.transform  = 'translateY(0px)';
+        }
+      }
+
+      if (idx === SLIDE_J2) {
+        setupJ2();
+        const list2 = document.getElementById('journey-list-2');
+        if (!list2 || animated) return;
+
+        list2.style.transition = 'none';
+        list2.style.transform  = 'translateY(0px)';
+        list2.getBoundingClientRect(); // force reflow
+
+        const amt = getScrollAmount();
+        list2.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+        list2.style.transform  = `translateY(-${amt}px)`;
+        animated = true;
+      }
+    }
+
+    Reveal.on('slidechanged', onSlideChange);
+    Reveal.on('ready',        onSlideChange);
+  })();
 
   document.getElementById('bprev').onclick = () => Reveal.prev();
   document.getElementById('bnext').onclick = () => Reveal.next();
