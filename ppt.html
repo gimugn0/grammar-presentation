@@ -29,7 +29,7 @@
   --redbg:   #fee2e2;
 
   /* All layout in vw/vh so it scales with the window */
-  --pad:      12vw;
+  --pad:      6vw;
   --tag-top:  2.5vh;
   --body-top: 11vh;
   --nav-h:    8vh;
@@ -147,7 +147,7 @@ body { background: var(--bg); }
 /* ── Shared card base ── */
 .icard, .ccard, .quiz-q {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 1.2vw; padding: 1.8vh 1.8vw; width: 100%;
+  border-radius: 1.2vw; padding: 1.8vh 1.8vw; width: 100%; max-width: 860px;
 }
 
 .lbl, .q-num {
@@ -178,7 +178,8 @@ body { background: var(--bg); }
 .ex .ko { font-size: var(--t-ko) !important; color: var(--muted) !important; margin-top: 0.3vh !important; line-height: 1.5 !important; }
 
 /* ── TOC ── */
-.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.8vh; width: 100%; }
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.8vh; width: 100%; max-width: 860px; }
+
 .toc-list li {
   display: flex; align-items: center; gap: 1.2vw;
   padding: 1.2vh 1.5vw; background: var(--surface);
@@ -194,7 +195,7 @@ body { background: var(--bg); }
 }
 
 /* ── Compare grid ── */
-.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; width: 100%; }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; width: 100%; max-width: 860px; }
 
 /* ── Verdict badges ── */
 .badge {
@@ -207,7 +208,7 @@ body { background: var(--bg); }
 .badge.no { background: var(--redbg);   color: var(--red)   !important; }
 
 /* ── Quiz ── */
-.quiz-wrap { display: flex; flex-direction: column; gap: 1.2vh; width: 100%; }
+.quiz-wrap { display: flex; flex-direction: column; gap: 1.2vh; width: 100%; max-width: 860px; }
 .q-text { margin-bottom: 1.2vh !important; }
 .btn-row { display: flex; gap: 0.8vw; flex-wrap: wrap; }
 .qbtn {
