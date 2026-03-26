@@ -130,12 +130,12 @@ body { background: var(--bg); }
   color: var(--muted) !important; margin-bottom: 1.8vh !important;
 }
 .hero h1 {
-  font-size: 5.5vw !important; font-weight: 700 !important;
+  font-size: 3.2vw !important; font-weight: 700 !important;
   line-height: 1.06 !important; color: var(--text) !important;
   margin-bottom: 1.8vh !important;
 }
 .hero .tagline {
-  font-size: 1.8vw !important; font-weight: 300 !important;
+  font-size: 1.2vw !important; font-weight: 300 !important;
   color: var(--muted) !important;
 }
 .hero .presenter {
@@ -209,7 +209,17 @@ body { background: var(--bg); }
 .badge.ok { background: var(--greenbg); color: var(--green) !important; }
 .badge.no { background: var(--redbg);   color: var(--red)   !important; }
 
-/* ── Quiz ── */
+/* ── Quiz slides (9, 10) — larger text, centered ── */
+#slide-q1 .q-num, #slide-q2 .q-num { font-size: 1.1vw !important; }
+#slide-q1 .q-text, #slide-q2 .q-text { font-size: 1.6vw !important; }
+#slide-q1 .qbtn, #slide-q2 .qbtn { font-size: 1.4vw !important; padding: 10px 20px; }
+#slide-q1 .q-fb, #slide-q2 .q-fb { font-size: 1.3vw !important; }
+#slide-q1 .s-col, #slide-q2 .s-col { align-items: center; }
+
+/* ── Journey slides (11,12) — larger text, centered ── */
+#slide-j1 .jtitle, #slide-j2 .jtitle { font-size: 1.6vw !important; }
+#slide-j1 .jlabel, #slide-j2 .jlabel { font-size: 1.1vw !important; }
+#slide-j1 .jtag,   #slide-j2 .jtag   { font-size: 1.0vw !important; }
 .quiz-wrap { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 860px; }
 .q-text { margin-bottom: 1.2vh !important; }
 .btn-row { display: flex; gap: 0.8vw; flex-wrap: wrap; }
@@ -467,7 +477,7 @@ body { background: var(--bg); }
     </section>
 
     <!-- SLIDE 9: QUIZ 1 -->
-    <section>
+    <section id="slide-q1">
       <span class="s-tag">Quiz 1. Unit 14</span>
       <div class="s-col">
         <div class="quiz-wrap">
@@ -496,7 +506,7 @@ body { background: var(--bg); }
     </section>
 
     <!-- SLIDE 10: QUIZ 2 -->
-    <section>
+    <section id="slide-q2">
       <span class="s-tag">Quiz 2. Unit 15</span>
       <div class="s-col">
         <div class="quiz-wrap">
