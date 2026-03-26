@@ -1035,7 +1035,7 @@
 <header>
   <span class="logo-mark">Tl</span>
   <span class="logo-text">Grammar Timeline</span>
-  <span class="version-badge">v2.1 · Continuous Modes</span>
+  <span class="version-badge">v2.2 · Perfect Tense Focus</span>
 </header>
 
 <nav class="tab-nav">
@@ -2053,16 +2053,16 @@ m2GenerateBtn.addEventListener('click', async () => {
   const word1 = node1.inputEl.value.trim() || 'Event A';
   const word2 = node2.inputEl.value.trim() || 'Event B';
 
-  // Construct context-aware prompt based on Node Types
+  // Construct context-aware prompt based on Node Types explicitly requesting Perfect Tenses
   let promptInstruction = '';
   if (node1.type === 'point' && node2.type === 'point') {
-      promptInstruction = `"${word1}" happened first (use Past Perfect) and "${word2}" happened second (use Simple Past).`;
+      promptInstruction = `"${word1}" happened first. Use strictly Past Perfect for "${word1}" and Simple Past for "${word2}".`;
   } else if (node1.type === 'continuous' && node2.type === 'point') {
-      promptInstruction = `"${word1}" is an ongoing background action (Past Continuous) and "${word2}" interrupts it or happens during it (Simple Past).`;
+      promptInstruction = `"${word1}" was an ongoing action that continued up to the moment "${word2}" happened. Use strictly Past Perfect Continuous for "${word1}" and Simple Past for "${word2}".`;
   } else if (node1.type === 'point' && node2.type === 'continuous') {
-      promptInstruction = `"${word1}" happened first (Simple Past or Past Perfect) and then "${word2}" started as an ongoing action (Past Continuous).`;
+      promptInstruction = `"${word1}" had already completed by the time "${word2}" was ongoing. Use strictly Past Perfect for "${word1}" and Past Continuous for "${word2}".`;
   } else {
-      promptInstruction = `"${word1}" and "${word2}" were both happening simultaneously (use Past Continuous for both).`;
+      promptInstruction = `"${word1}" had been ongoing for some time while "${word2}" was also happening. Use Past Perfect Continuous for "${word1}" and Past Continuous for "${word2}".`;
   }
 
   m2ResultSection.classList.add('visible');
@@ -2108,22 +2108,37 @@ m2GenerateBtn.addEventListener('click', async () => {
     console.error(err);
     m2ResultText.innerHTML = '';
     
-    // Context-aware fallback responses
+    // Context-aware fallback responses aligned with Perfect Tenses
     let fallbackSentence, fallbackVerbs, fallbackNote;
+    
     if (node1.type === 'continuous' && node2.type === 'point') {
-        fallbackSentence = `While it was ${word1.toLowerCase()}ing, ${word2.toLowerCase()} happened.`;
+        fallbackSentence = `I had been ${word1.toLowerCase()}ing for hours when ${word2.toLowerCase()} suddenly happened.`;
         fallbackVerbs = [
-            { verb: `was ${word1.toLowerCase()}ing`, tense: 'past-continuous', explanation: 'Past Continuous — an ongoing background action.' },
-            { verb: 'happened', tense: 'past-simple', explanation: 'Simple Past — an event that occurred during the background action.' }
+            { verb: `had been ${word1.toLowerCase()}ing`, tense: 'past-perfect-continuous', explanation: 'Past Perfect Continuous — an ongoing action leading up to another past event.' },
+            { verb: 'happened', tense: 'past-simple', explanation: 'Simple Past — the event that interrupted or followed the ongoing action.' }
         ];
-        fallbackNote = 'The background action uses Past Continuous (was/were + -ing). The specific event that happens during it uses Simple Past.';
-    } else {
+        fallbackNote = 'The background action leading up to a point in the past uses Past Perfect Continuous (had been + -ing). The interrupting event uses Simple Past.';
+    } else if (node1.type === 'point' && node2.type === 'point') {
         fallbackSentence = `By the time ${word2.toLowerCase()} happened, ${word1.toLowerCase()} had already occurred.`;
         fallbackVerbs = [
           { verb: 'had already occurred', tense: 'past-perfect', explanation: 'Past Perfect — completed before the reference point.' },
           { verb: 'happened',             tense: 'past-simple',  explanation: 'Simple Past — the anchor/reference point event.' }
         ];
         fallbackNote = 'The earlier event uses Past Perfect (had + past participle). The later event uses Simple Past as the anchor.';
+    } else if (node1.type === 'point' && node2.type === 'continuous') {
+        fallbackSentence = `After ${word1.toLowerCase()} had finished, ${word2.toLowerCase()} was happening.`;
+        fallbackVerbs = [
+            { verb: `had finished`, tense: 'past-perfect', explanation: 'Past Perfect — action completed before the continuous action.' },
+            { verb: `was happening`, tense: 'past-continuous', explanation: 'Past Continuous — the ongoing action.' }
+        ];
+        fallbackNote = 'The completed earlier action uses Past Perfect, while the later ongoing state uses Past Continuous.';
+    } else {
+        fallbackSentence = `While we had been ${word1.toLowerCase()}ing for a while, they were ${word2.toLowerCase()}ing.`;
+        fallbackVerbs = [
+            { verb: `had been ${word1.toLowerCase()}ing`, tense: 'past-perfect-continuous', explanation: 'Past Perfect Continuous — earlier ongoing action.' },
+            { verb: `were ${word2.toLowerCase()}ing`, tense: 'past-continuous', explanation: 'Past Continuous — later ongoing action.' }
+        ];
+        fallbackNote = 'Both were ongoing, but one started significantly earlier.';
     }
 
     renderVerbSentence(m2ResultText, fallbackSentence, fallbackVerbs);
