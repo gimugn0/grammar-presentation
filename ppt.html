@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Past Perfect & Past Perfect Continuous</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
 
 <style>
-/* ═══════════════════════════════════════
-   RESET & FONT
-═══════════════════════════════════════ */
 * {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                Helvetica, Arial, sans-serif !important;
@@ -17,11 +14,7 @@
   margin: 0; padding: 0;
 }
 
-/* ═══════════════════════════════════════
-   DESIGN TOKENS — single source of truth
-═══════════════════════════════════════ */
 :root {
-  /* colours */
   --bg:      #f5f4ef;
   --surface: #ffffff;
   --text:    #181818;
@@ -35,42 +28,33 @@
   --red:     #b91c1c;
   --redbg:   #fee2e2;
 
-  /* layout — equal on all sides */
-  --pad:      96px;
-  --tag-top:  18px;
-  --body-top: 80px;
-  --nav-h:    64px;
+  /* All layout in vw/vh so it scales with the window */
+  --pad:      6vw;
+  --tag-top:  2.5vh;
+  --body-top: 11vh;
+  --nav-h:    8vh;
+  --gap:      1.2vh;
 
-  /* ── TYPOGRAPHIC SCALE ──────────────────
-     Every text role defined once. No raw
-     px sizes anywhere in component rules.
-  ─────────────────────────────────────── */
-  --t-label:  11px;   /* ALL-CAPS labels, pill text, toc group */
-  --t-form:   15px;   /* tense form tags (have p.p, etc.)      */
-  --t-body:   16px;   /* card body, TOC items, quiz questions   */
-  --t-en:     16px;   /* English example sentences             */
-  --t-ko:     14px;   /* Korean translations                   */
-  --t-btn:    15px;   /* quiz answer buttons                   */
-  --t-fb:     14px;   /* quiz feedback                         */
-  --t-nav:    13px;   /* page counter                          */
+  /* Typography in vw so text scales with window width */
+  --t-label:  1.4vw;
+  --t-form:   1.8vw;
+  --t-body:   1.9vw;
+  --t-en:     1.9vw;
+  --t-ko:     1.6vw;
+  --t-btn:    1.7vw;
+  --t-fb:     1.6vw;
+  --t-nav:    1.4vw;
 }
 
 body { background: var(--bg); }
 
-/* ═══════════════════════════════════════
-   HIGHLIGHT
-═══════════════════════════════════════ */
 .highlight {
   color: var(--accent) !important;
   font-weight: 700 !important;
 }
 
-/* ═══════════════════════════════════════
-   REVEAL BASE
-═══════════════════════════════════════ */
 .reveal,
 .reveal .slides {
-  font-size: var(--t-body) !important;
   color: var(--text) !important;
   background: var(--bg) !important;
   text-align: left !important;
@@ -80,92 +64,33 @@ body { background: var(--bg); }
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: 100vh !important;
+  height: 100% !important;
   padding: var(--body-top) var(--pad) var(--nav-h) var(--pad) !important;
   text-align: left !important;
   background: var(--bg) !important;
   display: block !important;
   overflow: hidden !important;
 }
-/* ── Journey slides — clip overflow so list scrolls inside ── */
-.reveal .slides section#slide-j1,
-.reveal .slides section#slide-j2 {
-  overflow: hidden !important;
-}
 
-.jwindow {
-  position: absolute !important;
-  top: 40% !important;
-  transform: translateY(-40%) !important;
-  left: var(--pad) !important;
-  right: var(--pad) !important;
-  bottom: var(--nav-h) !important;
-  overflow: hidden !important;
-}
-
-
-
-.journey {
-  width: 100%;
-  padding-top: 4px;
-  will-change: transform;
-}
-
-.jphase{display:flex;gap:1.1rem;}
-.jleft{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:34px;}
-.jdot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--t-label) !important;font-weight:700 !important;flex-shrink:0;border:1px solid;position:relative;z-index:1;}
-.jline{width:1px;flex:1;min-height:14px;background:#e5e5e5;margin:4px 0;}
-.jright{padding-bottom:1.3rem;flex:1;}
-.jlabel{font-size:var(--t-label) !important;font-weight:700 !important;letter-spacing:0.1em !important;text-transform:uppercase !important;margin-bottom:3px !important;}
-.jtitle{font-size:var(--t-body) !important;font-weight:500 !important;color:var(--text) !important;line-height:1.5 !important;}
-.jtags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
-.jtag{font-size:var(--t-label) !important;padding:2px 9px;border-radius:99px;border:1px solid var(--border);color:var(--muted) !important;background:var(--tagbg);}
-.jdot.purple{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489 !important;}
-.jdot.teal{background:#E1F5EE;border-color:#5DCAA5;color:#085041 !important;}
-.jdot.blue{background:#E6F1FB;border-color:#85B7EB;color:#0C447C !important;}
-.jdot.gray{background:#F1EFE8;border-color:#B4B2A9;color:#444441 !important;}
-.jdot.amber{background:#FAEEDA;border-color:#EF9F27;color:#633806 !important;}
-.jdot.coral{background:#FAECE7;border-color:#F0997B;color:#712B13 !important;}
-.jdot.green{background:#EAF3DE;border-color:#97C459;color:#27500A !important;}
-.jlbl-purple{color:#534AB7 !important;}
-.jlbl-teal{color:#0F6E56 !important;}
-.jlbl-blue{color:#185FA5 !important;}
-.jlbl-gray{color:#5F5E5A !important;}
-.jlbl-amber{color:#854F0B !important;}
-.jlbl-coral{color:#993C1D !important;}
-.jlbl-green{color:#3B6D11 !important;}
-
-/* ═══════════════════════════════════════
-   SQUIGGLY PROGRESS BAR
-═══════════════════════════════════════ */
+/* ── Progress bar ── */
 .reveal .progress {
-  top: 0 !important;
-  bottom: auto !important;
-  height: 12px !important;
-  background: transparent !important;
-  z-index: 1000;
-  overflow: visible !important;
+  top: 0 !important; bottom: auto !important;
+  height: 12px !important; background: transparent !important;
+  z-index: 1000; overflow: visible !important;
 }
 .reveal .progress span {
   background: var(--accent) !important;
-  height: 3px !important;
-  margin-top: 4px !important;
-  display: block !important;
-  position: relative !important;
+  height: 3px !important; margin-top: 4px !important;
+  display: block !important; position: relative !important;
   transition: width 0.5s cubic-bezier(0.4,0,0.2,1) !important;
-  overflow: visible !important;
-  border-radius: 0 2px 2px 0 !important;
+  overflow: visible !important; border-radius: 0 2px 2px 0 !important;
 }
 .reveal .progress span::after {
-  content: '' !important;
-  position: absolute !important;
-  right: -20px !important;
-  top: -6px !important;
-  width: 24px !important;
-  height: 15px !important;
+  content: '' !important; position: absolute !important;
+  right: -20px !important; top: -6px !important;
+  width: 24px !important; height: 15px !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 7.5 C2.5 2,5 2,7.5 7.5 C10 13,12.5 13,15 7.5 C17.5 2,20 2,22 6 C23 8,24 8,24 8' stroke='%23007AFF' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-size: 24px 15px !important;
+  background-repeat: no-repeat !important; background-size: 24px 15px !important;
   animation: squiggle-bob 0.8s ease-in-out infinite alternate !important;
 }
 @keyframes squiggle-bob {
@@ -175,288 +100,190 @@ body { background: var(--bg); }
 }
 .reveal .controls { display: none !important; }
 
-/* ═══════════════════════════════════════
-   SUBTITLE PILL — same pixel position every slide
-═══════════════════════════════════════ */
+/* ── Subtitle pill ── */
 .s-tag {
   position: absolute !important;
-  top: var(--tag-top) !important;
-  left: var(--pad) !important;
-  font-size: var(--t-label) !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.13em !important;
-  text-transform: uppercase !important;
-  color: var(--accent) !important;
-  background: var(--acbg) !important;
-  padding: 5px 13px !important;
-  border-radius: 100px !important;
-  white-space: nowrap !important;
-  z-index: 20 !important;
+  top: var(--tag-top) !important; left: var(--pad) !important;
+  font-size: var(--t-label) !important; font-weight: 600 !important;
+  letter-spacing: 0.13em !important; text-transform: uppercase !important;
+  color: var(--accent) !important; background: var(--acbg) !important;
+  padding: 0.5vh 1vw !important; border-radius: 100px !important;
+  white-space: nowrap !important; z-index: 20 !important;
 }
 
-/* ═══════════════════════════════════════
-   CONTENT COLUMN
-═══════════════════════════════════════ */
+/* ── Content column ── */
 .s-col {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 100%;
-  justify-content: center;
+  display: flex; flex-direction: column;
+  gap: var(--gap); height: 100%; justify-content: center;
 }
 
-/* ═══════════════════════════════════════
-   TITLE SLIDE
-═══════════════════════════════════════ */
+/* ── Title slide ── */
 .hero {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; justify-content: center;
   padding: 0 var(--pad) !important;
 }
 .hero .eyebrow {
-  font-size: var(--t-label) !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: var(--muted) !important;
-  margin-bottom: 16px !important;
+  font-size: var(--t-label) !important; font-weight: 500 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 1.8vh !important;
 }
 .hero h1 {
-  font-size: clamp(42px, 6vw, 68px) !important;
-  font-weight: 700 !important;
-  line-height: 1.06 !important;
-  color: var(--text) !important;
-  margin-bottom: 18px !important;
+  font-size: 5.5vw !important; font-weight: 700 !important;
+  line-height: 1.06 !important; color: var(--text) !important;
+  margin-bottom: 1.8vh !important;
 }
 .hero .tagline {
-  font-size: 20px !important;
-  font-weight: 300 !important;
+  font-size: 1.8vw !important; font-weight: 300 !important;
   color: var(--muted) !important;
 }
 .hero .presenter {
   position: absolute !important;
-  bottom: calc(var(--nav-h) + 8px) !important;
-  left: var(--pad) !important;
-  font-size: var(--t-label) !important;
-  color: var(--muted) !important;
+  bottom: calc(var(--nav-h) + 1vh) !important; left: var(--pad) !important;
+  font-size: var(--t-label) !important; color: var(--muted) !important;
 }
-.hero .presenter span {
-  color: var(--text) !important;
-  font-weight: 600 !important;
-}
+.hero .presenter span { color: var(--text) !important; font-weight: 600 !important; }
 
-/* ═══════════════════════════════════════
-   SHARED CARD BASE — icard, ccard, quiz-q
-   all use identical padding & radius
-═══════════════════════════════════════ */
+/* ── Shared card base ── */
 .icard, .ccard, .quiz-q {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px 24px;
-  width: 100%;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 1.2vw; padding: 1.8vh 1.8vw; width: 100%;
 }
 
-/* ALL-CAPS label inside every card */
 .lbl, .q-num {
-  font-size: var(--t-label) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: var(--muted) !important;
-  margin-bottom: 8px !important;
+  font-size: var(--t-label) !important; font-weight: 700 !important;
+  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  color: var(--muted) !important; margin-bottom: 0.7vh !important;
 }
 
-/* Main body text — val, desc, q-text all identical */
 .val, .desc, .q-text {
-  font-size: var(--t-body) !important;
-  line-height: 1.65 !important;
+  font-size: var(--t-body) !important; line-height: 1.65 !important;
   color: var(--text) !important;
 }
 
-/* Tense form tag */
 .form {
-  font-size: var(--t-form) !important;
-  font-weight: 700 !important;
-  color: var(--accent) !important;
-  margin-bottom: 8px !important;
+  font-size: var(--t-form) !important; font-weight: 700 !important;
+  color: var(--accent) !important; margin-bottom: 0.7vh !important;
 }
 
-/* Emphasis inside .val */
-.val em {
-  font-style: normal !important;
-  font-weight: 700 !important;
-  color: var(--accent) !important;
-}
+.val em { font-style: normal !important; font-weight: 700 !important; color: var(--accent) !important; }
+.ccard .desc { color: var(--muted) !important; margin-bottom: 0.8vh !important; }
 
-/* Slightly muted desc in compare cards */
-.ccard .desc {
-  color: var(--muted) !important;
-  margin-bottom: 10px !important;
-}
-
-/* Example block — shared */
 .ex {
-  margin-top: 12px;
-  padding: 12px 14px;
-  background: var(--tagbg);
-  border-radius: 9px;
+  margin-top: 1vh; padding: 1vh 1.2vw;
+  background: var(--tagbg); border-radius: 0.8vw;
   border-left: 3px solid var(--accent);
 }
-.ex .en {
-  font-size: var(--t-en) !important;
-  font-weight: 500 !important;
-  line-height: 1.6 !important;
-  color: var(--text) !important;
-}
-.ex .ko {
-  font-size: var(--t-ko) !important;
-  color: var(--muted) !important;
-  margin-top: 4px !important;
-  line-height: 1.5 !important;
-}
+.ex .en { font-size: var(--t-en) !important; font-weight: 500 !important; line-height: 1.6 !important; color: var(--text) !important; }
+.ex .ko { font-size: var(--t-ko) !important; color: var(--muted) !important; margin-top: 0.3vh !important; line-height: 1.5 !important; }
 
-/* ═══════════════════════════════════════
-   TOC
-═══════════════════════════════════════ */
-.toc-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
+/* ── TOC ── */
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.8vh; width: 100%; }
 .toc-list li {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: var(--t-body) !important;
-  font-weight: 400 !important;
-  color: var(--text) !important;
+  display: flex; align-items: center; gap: 1.2vw;
+  padding: 1.2vh 1.5vw; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 1vw;
+  font-size: var(--t-body) !important; font-weight: 400 !important; color: var(--text) !important;
 }
 .toc-num {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: var(--acbg);
-  color: var(--accent) !important;
-  font-size: var(--t-label) !important;
-  font-weight: 700 !important;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  width: 2.2vw; height: 2.2vw; min-width: 24px; min-height: 24px;
+  border-radius: 50%; background: var(--acbg);
+  color: var(--accent) !important; font-size: var(--t-label) !important;
+  font-weight: 700 !important; display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0;
 }
 
-/* ═══════════════════════════════════════
-   COMPARE GRID
-═══════════════════════════════════════ */
-.cgrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  width: 100%;
-}
+/* ── Compare grid ── */
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; width: 100%; }
 
-/* ═══════════════════════════════════════
-   VERDICT BADGES
-═══════════════════════════════════════ */
+/* ── Verdict badges ── */
 .badge {
-  display: inline-block;
-  font-size: var(--t-label) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  padding: 2px 7px;
-  border-radius: 5px;
-  margin-right: 6px;
+  display: inline-block; font-size: var(--t-label) !important;
+  font-weight: 800 !important; letter-spacing: 0.06em !important;
+  text-transform: uppercase !important; padding: 0.2vh 0.5vw;
+  border-radius: 5px; margin-right: 0.5vw;
 }
 .badge.ok { background: var(--greenbg); color: var(--green) !important; }
 .badge.no { background: var(--redbg);   color: var(--red)   !important; }
 
-/* ═══════════════════════════════════════
-   QUIZ
-═══════════════════════════════════════ */
-.quiz-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-.q-text { margin-bottom: 14px !important; }
-
-.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-
+/* ── Quiz ── */
+.quiz-wrap { display: flex; flex-direction: column; gap: 1.2vh; width: 100%; }
+.q-text { margin-bottom: 1.2vh !important; }
+.btn-row { display: flex; gap: 0.8vw; flex-wrap: wrap; }
 .qbtn {
-  padding: 10px 22px;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  font-size: var(--t-btn) !important;
-  font-weight: 500 !important;
-  color: var(--text) !important;
-  cursor: pointer;
+  padding: 0.8vh 1.5vw; border: 1.5px solid var(--border); border-radius: 0.6vw;
+  background: var(--surface); font-size: var(--t-btn) !important;
+  font-weight: 500 !important; color: var(--text) !important; cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
 }
 .qbtn:hover:not(:disabled) { background: var(--tagbg); }
 .qbtn:active { transform: scale(0.97); }
-.qbtn.correct {
-  background: var(--greenbg) !important;
-  border-color: var(--green) !important;
-  color: var(--green) !important;
-  font-weight: 700 !important;
-}
-.qbtn.wrong {
-  background: var(--redbg) !important;
-  border-color: var(--red) !important;
-  color: var(--red) !important;
-}
-.q-fb {
-  margin-top: 10px;
-  font-size: var(--t-fb) !important;
-  font-weight: 600 !important;
-  min-height: 18px;
-}
+.qbtn.correct { background: var(--greenbg) !important; border-color: var(--green) !important; color: var(--green) !important; font-weight: 700 !important; }
+.qbtn.wrong   { background: var(--redbg)   !important; border-color: var(--red)   !important; color: var(--red)   !important; }
+.q-fb { margin-top: 0.8vh; font-size: var(--t-fb) !important; font-weight: 600 !important; min-height: 1.5vh; }
 .q-fb.ok { color: var(--green) !important; }
 .q-fb.no { color: var(--red)   !important; }
 
-/* ═══════════════════════════════════════
-   BOTTOM NAV
-═══════════════════════════════════════ */
+/* ── Journey slides ── */
+.reveal .slides section#slide-j1,
+.reveal .slides section#slide-j2 { overflow: hidden !important; }
+
+.jwindow {
+  position: absolute !important;
+  top: 40% !important; transform: translateY(-40%) !important;
+  left: var(--pad) !important; right: var(--pad) !important;
+  bottom: var(--nav-h) !important; overflow: hidden !important;
+}
+
+.journey { width: 100%; padding-top: 0.4vh; will-change: transform; }
+.jphase { display: flex; gap: 1vw; }
+.jleft  { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 2.5vw; min-width: 28px; }
+.jdot   {
+  width: 2.5vw; height: 2.5vw; min-width: 28px; min-height: 28px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: var(--t-label) !important; font-weight: 700 !important;
+  flex-shrink: 0; border: 1px solid; position: relative; z-index: 1;
+}
+.jline  { width: 1px; flex: 1; min-height: 1vh; background: #e5e5e5; margin: 3px 0; }
+.jright { padding-bottom: 1.8vh; flex: 1; }
+.jlabel { font-size: var(--t-label) !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; margin-bottom: 0.3vh !important; }
+.jtitle { font-size: var(--t-body) !important; font-weight: 500 !important; color: var(--text) !important; line-height: 1.5 !important; }
+.jtags  { display: flex; flex-wrap: wrap; gap: 0.4vw; margin-top: 0.5vh; }
+.jtag   { font-size: var(--t-label) !important; padding: 0.2vh 0.7vw; border-radius: 99px; border: 1px solid var(--border); color: var(--muted) !important; background: var(--tagbg); }
+
+.jdot.purple { background:#EEEDFE; border-color:#AFA9EC; color:#3C3489 !important; }
+.jdot.teal   { background:#E1F5EE; border-color:#5DCAA5; color:#085041 !important; }
+.jdot.blue   { background:#E6F1FB; border-color:#85B7EB; color:#0C447C !important; }
+.jdot.gray   { background:#F1EFE8; border-color:#B4B2A9; color:#444441 !important; }
+.jdot.amber  { background:#FAEEDA; border-color:#EF9F27; color:#633806 !important; }
+.jdot.coral  { background:#FAECE7; border-color:#F0997B; color:#712B13 !important; }
+.jdot.green  { background:#EAF3DE; border-color:#97C459; color:#27500A !important; }
+.jlbl-purple { color:#534AB7 !important; }
+.jlbl-teal   { color:#0F6E56 !important; }
+.jlbl-blue   { color:#185FA5 !important; }
+.jlbl-gray   { color:#5F5E5A !important; }
+.jlbl-amber  { color:#854F0B !important; }
+.jlbl-coral  { color:#993C1D !important; }
+.jlbl-green  { color:#3B6D11 !important; }
+
+/* ── Bottom nav ── */
 #cnav {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 7px 18px;
-  z-index: 9999;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  position: fixed; bottom: 1.5vh; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 0.8vw;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 100px; padding: 0.6vh 1.5vw;
+  z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.07);
 }
 #cnav button {
-  width: 32px; height: 32px;
-  border: none; background: transparent;
-  cursor: pointer; border-radius: 50%;
+  width: 2.5vw; height: 2.5vw; min-width: 28px; min-height: 28px;
+  border: none; background: transparent; cursor: pointer; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  color: var(--text);
-  transition: background 0.15s;
+  color: var(--text); transition: background 0.15s;
 }
 #cnav button:hover { background: var(--tagbg); }
 #pgnum {
-  font-size: var(--t-nav) !important;
-  font-weight: 600 !important;
-  color: var(--muted) !important;
-  min-width: 52px;
-  text-align: center;
+  font-size: var(--t-nav) !important; font-weight: 600 !important;
+  color: var(--muted) !important; min-width: 4vw; text-align: center;
   font-variant-numeric: tabular-nums;
 }
 </style>
@@ -466,7 +293,7 @@ body { background: var(--bg); }
 <div class="reveal">
   <div class="slides">
 
-    <!-- ── SLIDE 1: TITLE ── -->
+    <!-- SLIDE 1: TITLE -->
     <section>
       <div class="hero">
         <div class="eyebrow">English Grammar · Unit 14 &amp; 15</div>
@@ -478,7 +305,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 2: TOC ── -->
+    <!-- SLIDE 2: TOC -->
     <section>
       <span class="s-tag">Table of Contents</span>
       <div class="s-col">
@@ -493,7 +320,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 3: Unit 14 핵심 ── -->
+    <!-- SLIDE 3: Unit 14 핵심 -->
     <section>
       <span class="s-tag">Unit 14. Past Perfect</span>
       <div class="s-col">
@@ -516,7 +343,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 4: Unit 14 비교(1) ── -->
+    <!-- SLIDE 4: Unit 14 비교(1) -->
     <section>
       <span class="s-tag">Unit 14. Present Perfect vs Past Perfect</span>
       <div class="s-col">
@@ -543,7 +370,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 5: Unit 14 비교(2) ── -->
+    <!-- SLIDE 5: Unit 14 비교(2) -->
     <section>
       <span class="s-tag">Unit 14. Simple Past vs Past Perfect</span>
       <div class="s-col">
@@ -570,7 +397,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 6: Unit 15 핵심 ── -->
+    <!-- SLIDE 6: Unit 15 핵심 -->
     <section>
       <span class="s-tag">Unit 15. Past Perfect Continuous</span>
       <div class="s-col">
@@ -589,7 +416,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 7: Unit 15 비교 ── -->
+    <!-- SLIDE 7: Unit 15 비교 -->
     <section>
       <span class="s-tag">Unit 15. Present vs Past Continuous</span>
       <div class="s-col">
@@ -616,7 +443,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 8: Unit 15 예외 ── -->
+    <!-- SLIDE 8: Unit 15 예외 -->
     <section>
       <span class="s-tag">Unit 15. Non-Continuous Verbs</span>
       <div class="s-col">
@@ -636,7 +463,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 9: QUIZ 1 ── -->
+    <!-- SLIDE 9: QUIZ 1 -->
     <section>
       <span class="s-tag">Quiz 1. Unit 14</span>
       <div class="s-col">
@@ -665,7 +492,7 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 10: QUIZ 2 ── -->
+    <!-- SLIDE 10: QUIZ 2 -->
     <section>
       <span class="s-tag">Quiz 2. Unit 15</span>
       <div class="s-col">
@@ -694,14 +521,11 @@ body { background: var(--bg); }
       </div>
     </section>
 
-    <!-- ── SLIDE 11: 개발 여정 (steps 1–4) ── -->
+    <!-- SLIDE 11: Journey steps 1–4 -->
     <section id="slide-j1">
       <span class="s-tag">개발 여정. AI 통합 문법 타임라인</span>
-      <!-- clipping window: hides the journey list outside bounds -->
       <div class="jwindow">
-        <!-- the journey list lives here; JS will animate its translateY -->
         <div class="journey" id="journey-list">
-
           <div class="jphase">
             <div class="jleft"><div class="jdot purple">01</div><div class="jline"></div></div>
             <div class="jright">
@@ -710,7 +534,6 @@ body { background: var(--bg); }
               <div class="jtags"><span class="jtag">Gemini</span><span class="jtag">JSON 스키마</span></div>
             </div>
           </div>
-
           <div class="jphase">
             <div class="jleft"><div class="jdot teal">02</div><div class="jline"></div></div>
             <div class="jright">
@@ -719,7 +542,6 @@ body { background: var(--bg); }
               <div class="jtags"><span class="jtag">Claude</span><span class="jtag">HTML/CSS/JS</span><span class="jtag">Canvas 타임라인</span></div>
             </div>
           </div>
-
           <div class="jphase">
             <div class="jleft"><div class="jdot blue">03</div><div class="jline"></div></div>
             <div class="jright">
@@ -728,7 +550,6 @@ body { background: var(--bg); }
               <div class="jtags"><span class="jtag">GitHub Pages</span><span class="jtag">Claude</span></div>
             </div>
           </div>
-
           <div class="jphase">
             <div class="jleft"><div class="jdot gray">04</div><div class="jline"></div></div>
             <div class="jright">
@@ -737,22 +558,19 @@ body { background: var(--bg); }
               <div class="jtags"><span class="jtag">Antigravity</span></div>
             </div>
           </div>
-
-        </div><!-- /journey -->
-      </div><!-- /jwindow -->
+        </div>
+      </div>
     </section>
 
-    <!-- ── SLIDE 12: 개발 여정 (steps 5–7, scroll illusion) ── -->
+    <!-- SLIDE 12: Journey scroll illusion -->
     <section id="slide-j2">
       <span class="s-tag">개발 여정. AI 통합 문법 타임라인</span>
-      <!-- same clipping window, same list — JS clones & animates -->
       <div class="jwindow" id="jwindow2"></div>
     </section>
 
   </div>
 </div>
 
-<!-- Bottom nav -->
 <div id="cnav">
   <button id="bprev" title="이전">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -767,7 +585,7 @@ body { background: var(--bg); }
   </button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script>
   function pick(btn, fbId, correct) {
     btn.closest('.btn-row').querySelectorAll('.qbtn').forEach(b => b.disabled = true);
@@ -800,31 +618,22 @@ body { background: var(--bg); }
   Reveal.on('ready', updatePg);
   Reveal.on('slidechanged', updatePg);
 
-  /* ── Journey scroll illusion ──────────────────────────────
-     Slide 11 → shows steps 1–4 only (HTML only has 4 steps)
-     Slide 12 → renders full 7-step list, animates from the
-                position where steps 1–4 are visible, then
-                scrolls down to show steps 4–7
-  ─────────────────────────────────────────────────────── */
   (function () {
-    const SLIDE_J1 = 10;
-    const SLIDE_J2 = 11;
-
+    const SLIDE_J1 = 10, SLIDE_J2 = 11;
     const FULL_STEPS = [
-      { num:'01', color:'purple', label:'기획',          title:'Gemini로 아이디어 구체화 &amp; 워크플로우 설계',                        tags:['Gemini','JSON 스키마'] },
-      { num:'02', color:'teal',   label:'코드 생성',     title:'Claude로 초기 UI 코드 작성',                                           tags:['Claude','HTML/CSS/JS','Canvas 타임라인'] },
-      { num:'03', color:'blue',   label:'배포 &amp; 반복 수정', title:'GitHub Pages 배포 후 Claude와 지속적 디버깅',                    tags:['GitHub Pages','Claude'] },
-      { num:'04', color:'gray',   label:'시도 &amp; 판단', title:'Antigravity 시도 → Claude로 충분하다고 판단, 포기',                   tags:['Antigravity'] },
-      { num:'05', color:'amber',  label:'한계 발견',     title:'Mode 1이 샘플 데이터만 표시 — 실제 AI 분석 없음',                      tags:['Mock 데이터','개선 필요'] },
-      { num:'06', color:'coral',  label:'API 연동',      title:'Vercel 프록시 구축 + Gemini API 시도 → 무료 한도 초과',                 tags:['Vercel','Gemini API','프록시 서버'] },
-      { num:'07', color:'green',  label:'완성',          title:'Groq 정착 — 빠른 속도, 넉넉한 무료 토큰',                              tags:['Groq','Llama 3.3','실시간 분석'], last:true },
+      { num:'01', color:'purple', label:'기획',             title:'Gemini로 아이디어 구체화 &amp; 워크플로우 설계',              tags:['Gemini','JSON 스키마'] },
+      { num:'02', color:'teal',   label:'코드 생성',        title:'Claude로 초기 UI 코드 작성',                                 tags:['Claude','HTML/CSS/JS','Canvas 타임라인'] },
+      { num:'03', color:'blue',   label:'배포 &amp; 반복 수정', title:'GitHub Pages 배포 후 Claude와 지속적 디버깅',             tags:['GitHub Pages','Claude'] },
+      { num:'04', color:'gray',   label:'시도 &amp; 판단',  title:'Antigravity 시도 → Claude로 충분하다고 판단, 포기',          tags:['Antigravity'] },
+      { num:'05', color:'amber',  label:'한계 발견',        title:'Mode 1이 샘플 데이터만 표시 — 실제 AI 분석 없음',             tags:['Mock 데이터','개선 필요'] },
+      { num:'06', color:'coral',  label:'API 연동',         title:'Vercel 프록시 구축 + Gemini API 시도 → 무료 한도 초과',      tags:['Vercel','Gemini API','프록시 서버'] },
+      { num:'07', color:'green',  label:'완성',             title:'Groq 정착 — 빠른 속도, 넉넉한 무료 토큰',                   tags:['Groq','Llama 3.3','실시간 분석'], last:true },
     ];
 
-    function buildJourney () {
+    function buildJourney() {
       const wrap = document.createElement('div');
-      wrap.className = 'journey';
-      wrap.id = 'journey-list-2';
-      FULL_STEPS.forEach((s, i) => {
+      wrap.className = 'journey'; wrap.id = 'journey-list-2';
+      FULL_STEPS.forEach(s => {
         const phase = document.createElement('div');
         phase.className = 'jphase';
         const tagsHTML = s.tags.map(t => `<span class="jtag">${t}</span>`).join('');
@@ -841,7 +650,7 @@ body { background: var(--bg); }
       return wrap;
     }
 
-    function setupJ2 () {
+    function setupJ2() {
       const win2 = document.getElementById('jwindow2');
       if (!win2 || win2.hasChildNodes()) return;
       const list = buildJourney();
@@ -849,49 +658,38 @@ body { background: var(--bg); }
       win2.appendChild(list);
     }
 
-    // Measure height of first 4 phases in the full list on slide 12
-    function getScrollAmount () {
+    function getScrollAmount() {
       const phases = document.querySelectorAll('#journey-list-2 .jphase');
       let h = 0;
-      for (let i = 0; i < 4 && i < phases.length; i++) {
-        h += phases[i].getBoundingClientRect().height;
-      }
+      for (let i = 0; i < 4 && i < phases.length; i++) h += phases[i].getBoundingClientRect().height;
       return h;
     }
 
     let animated = false;
 
-    function onSlideChange () {
+    function onSlideChange() {
       const idx = Reveal.getIndices().h;
-
       if (idx === SLIDE_J1) {
         animated = false;
-        // reset slide 12 list if it exists
-        const list2 = document.getElementById('journey-list-2');
-        if (list2) {
-          list2.style.transition = 'none';
-          list2.style.transform  = 'translateY(0px)';
-        }
+        const l2 = document.getElementById('journey-list-2');
+        if (l2) { l2.style.transition = 'none'; l2.style.transform = 'translateY(0px)'; }
       }
-
       if (idx === SLIDE_J2) {
         setupJ2();
-        const list2 = document.getElementById('journey-list-2');
-        if (!list2 || animated) return;
-
-        list2.style.transition = 'none';
-        list2.style.transform  = 'translateY(0px)';
-        list2.getBoundingClientRect(); // force reflow
-
+        const l2 = document.getElementById('journey-list-2');
+        if (!l2 || animated) return;
+        l2.style.transition = 'none';
+        l2.style.transform = 'translateY(0px)';
+        l2.getBoundingClientRect();
         const amt = getScrollAmount();
-        list2.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-        list2.style.transform  = `translateY(-${amt}px)`;
+        l2.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+        l2.style.transform = `translateY(-${amt}px)`;
         animated = true;
       }
     }
 
     Reveal.on('slidechanged', onSlideChange);
-    Reveal.on('ready',        onSlideChange);
+    Reveal.on('ready', onSlideChange);
   })();
 
   document.getElementById('bprev').onclick = () => Reveal.prev();
